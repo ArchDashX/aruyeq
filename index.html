@@ -35,15 +35,8 @@
         }
 
         /* --- JAPOŃSKIE TŁO ANIMOWANE --- */
-        .bg-decor { 
-            position: fixed; inset: 0; z-index: -1; pointer-events: none; 
-            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%); overflow: hidden;
-        }
-        .bg-waves {
-            position: absolute; bottom: -50px; left: -10%; width: 120%; height: 300px;
-            background-image: radial-gradient(circle at 50% 100%, transparent 25px, rgba(43, 43, 138, 0.08) 26px, transparent 27px) 0 0 / 50px 25px, radial-gradient(circle at 50% 100%, transparent 25px, rgba(200, 16, 46, 0.06) 26px, transparent 27px) 25px 0 / 50px 25px;
-            animation: waveMove 20s linear infinite;
-        }
+        .bg-decor { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%); overflow: hidden; }
+        .bg-waves { position: absolute; bottom: -50px; left: -10%; width: 120%; height: 300px; background-image: radial-gradient(circle at 50% 100%, transparent 25px, rgba(43, 43, 138, 0.08) 26px, transparent 27px) 0 0 / 50px 25px, radial-gradient(circle at 50% 100%, transparent 25px, rgba(200, 16, 46, 0.06) 26px, transparent 27px) 25px 0 / 50px 25px; animation: waveMove 20s linear infinite; }
         @keyframes waveMove { from { transform: translateX(0); } to { transform: translateX(-50px); } }
         .bg-circle { position: absolute; border-radius: 50%; opacity: 0.7; animation: float 15s ease-in-out infinite alternate; }
         .bg-circle:nth-child(1) { width: 300px; height: 300px; top: -100px; left: -100px; background: radial-gradient(circle, rgba(200, 16, 46, 0.15) 0%, transparent 70%); animation-duration: 12s; }
@@ -53,62 +46,55 @@
         .bg-line { position: absolute; top: -100px; width: 1px; height: 150px; background: linear-gradient(to bottom, transparent, rgba(43, 43, 138, 0.15), transparent); animation: fall linear infinite; }
         @keyframes fall { to { transform: translateY(110vh); } }
 
-        /* --- ANIMACJE WEJŚCIA --- */
+        /* --- ANIMACJE --- */
         .animate-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .animate-up.visible { opacity: 1; transform: translateY(0); }
         .card.animate-card { opacity: 0; transform: translateY(30px) scale(0.98); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .card.animate-card.visible { opacity: 1; transform: translateY(0) scale(1); }
 
-        /* --- EKRAN WYBORU URZĄDZENIA --- */
-        #device-selector {
-            position: fixed; inset: 0; z-index: 10000;
-            background: var(--bg-base);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 2rem;
-            transition: opacity 0.4s ease;
-        }
+        /* --- EKRAN WYBORU --- */
+        #device-selector { position: fixed; inset: 0; z-index: 10000; background: var(--bg-base); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; transition: opacity 0.4s ease; }
         #device-selector.hidden { opacity: 0; pointer-events: none; }
-        
         .selector-title { font-size: 1.5rem; font-weight: 800; color: var(--navy); margin-bottom: 0.5rem; letter-spacing: 2px; }
         .selector-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem; text-align: center; }
-        
         .device-options { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-        .device-btn {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            width: 100px; height: 100px;
-            background: var(--white); border: 2px solid var(--border-color); border-radius: 16px;
-            cursor: pointer; transition: var(--transition); font-family: var(--font-main);
-            color: var(--text-main); gap: 10px;
-        }
+        .device-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100px; height: 100px; background: var(--white); border: 2px solid var(--border-color); border-radius: 16px; cursor: pointer; transition: var(--transition); font-family: var(--font-main); color: var(--text-main); gap: 10px; }
         .device-btn:hover { border-color: var(--navy); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
         .device-btn svg { width: 32px; height: 32px; stroke: var(--navy); }
         .device-btn span { font-weight: 600; font-size: 0.85rem; }
 
-        /* --- WIDOKI (Wymuszone rozmiary) --- */
-        .view-mobile .card { max-width: 380px; padding: 2rem 1.5rem; }
-        .view-mobile .brand { font-size: 1.8rem; letter-spacing: 4px; }
-        
+        /* --- GŁÓWNA KARTA --- */
+        .card { width: 100%; max-width: 440px; background: var(--surface); padding: 2.5rem 2rem; border-radius: var(--radius); box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); position: relative; z-index: 1; display: flex; flex-direction: column; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: max-width 0.4s ease, padding 0.4s ease; }
+
+        /* --- DYNAMICZNE UKŁADY (KLASY NA BODY) --- */
+        .view-mobile .card { max-width: 340px; padding: 1.5rem; }
+        .view-mobile .brand { font-size: 1.6rem; letter-spacing: 4px; }
+        .view-mobile .tagline { font-size: 0.65rem; letter-spacing: 3px; margin-bottom: 1.2rem; }
+        .view-mobile .description { font-size: 0.85rem; margin-bottom: 1.5rem; }
+        .view-mobile .link-btn { padding: 0.8rem 1rem; font-size: 0.85rem; }
+        .view-mobile .logo { width: 80px; height: 80px; }
+        .view-mobile .logo-sun { width: 30px; height: 30px; }
+        .view-mobile .logo-bridge { width: 55px; height: 20px; border-width: 2px; }
+        .view-mobile .seal { width: 28px; height: 28px; }
+        .view-mobile .seal::before { width: 10px; height: 10px; }
+        .view-mobile .bg-lines, .view-mobile .bg-circle { display: none; }
+
         .view-tablet .card { max-width: 520px; padding: 3rem 2.5rem; }
-        .view-tablet .brand { font-size: 2.4rem; }
+        .view-tablet .brand { font-size: 2.4rem; letter-spacing: 8px; }
+        .view-tablet .description { font-size: 1rem; }
         
         .view-desktop .card { max-width: 600px; padding: 4rem 3rem; }
-        .view-desktop .brand { font-size: 2.6rem; }
+        .view-desktop .brand { font-size: 2.6rem; letter-spacing: 10px; }
         .view-desktop .description { font-size: 1.1rem; }
         .view-desktop .link-btn { padding: 1.2rem 1.5rem; font-size: 1rem; }
+        .view-desktop .logo { width: 120px; height: 120px; }
 
-        /* --- KARTA --- */
-        .card { 
-            width: 100%; max-width: 440px; background: var(--surface); padding: 2.5rem 2rem; border-radius: var(--radius); 
-            box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); position: relative; z-index: 1; 
-            display: flex; flex-direction: column; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            transition: max-width 0.4s ease, padding 0.4s ease;
-        }
-
+        /* --- RESZTA ELEMENTÓW --- */
         .seal { position: absolute; top: 1.5rem; right: 1.5rem; width: 34px; height: 34px; border: 2px solid var(--red); border-radius: 6px; display: flex; align-items: center; justify-content: center; transform: rotate(6deg); opacity: 0.85; }
         .seal::before { content: ''; width: 14px; height: 14px; background-color: var(--red); border-radius: 3px; transform: rotate(45deg); }
 
         .logo-wrap { display: flex; justify-content: center; margin-bottom: 1.5rem; }
-        .logo { width: 100px; height: 100px; border-radius: 50%; background: var(--navy); position: relative; overflow: hidden; border: 3px solid var(--white); box-shadow: var(--shadow-sm); }
+        .logo { width: 100px; height: 100px; border-radius: 50%; background: var(--navy); position: relative; overflow: hidden; border: 3px solid var(--white); box-shadow: var(--shadow-sm); transition: width 0.3s, height 0.3s; }
         .logo-sun { position: absolute; top: 18%; left: 30%; width: 40px; height: 40px; background: var(--red); border-radius: 50%; }
         .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 70px; height: 25px; border: 2px solid var(--white); border-bottom: none; border-radius: 50px 50px 0 0; }
         .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: var(--white); }
@@ -126,7 +112,7 @@
         .link-btn:hover .link-icon { color: var(--red); }
 
         .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); text-align: center; }
-        .copyright { display: inline-block; font-size: 0.75rem; color: var(--text-muted); text-decoration: none; transition: var(--transition); line-height: 1.5; }
+        .copyright { display: inline-block; font-size: 0.75rem; color: var(--text-muted); text-decoration: none; transition: var(--transition); line-height: 1.5; cursor: pointer; }
         .copyright:hover { color: var(--navy); }
         .copyright strong { display: block; color: var(--text-main); font-size: 0.85rem; margin-bottom: 2px; }
 
@@ -144,9 +130,9 @@
         @media (max-width: 480px) { .cookie-actions { flex-direction: column; } }
     </style>
 </head>
-<body class="view-desktop"> <!-- Domyślnie desktop, JS to nadpisze -->
+<body>
 
-    <!-- Ekran wyboru urządzenia -->
+    <!-- Ekran wyboru -->
     <div id="device-selector">
         <div class="selector-title">WYBIERZ URZĄDZENIE</div>
         <div class="selector-subtitle">Dopasujemy widok do Twojego ekranu</div>
@@ -192,7 +178,7 @@
             </nav>
         </section>
         <footer class="footer animate-up">
-            <a href="https://archdashx.github.io/aruyeq-regulamin/index.html" class="copyright"><strong>&copy; 2026 ARUYEQ.</strong>All rights reserved.<br><span>(Click to view Terms of Service)</span></a>
+            <a onclick="resetDevice()" class="copyright"><strong>&copy; 2026 ARUYEQ.</strong>All rights reserved.<br><span>(Click to view Terms of Service)</span></a>
         </footer>
     </main>
 
@@ -208,38 +194,44 @@
         const DEVICE_KEY = 'aruyeq_device_pref';
         const CONSENT_KEY = 'aruyeq_cookie_consent';
 
-        // 1. Wykrywanie urządzenia
-        function detectDevice() {
-            const ua = navigator.userAgent;
-            if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return 'tablet';
-            if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) return 'mobile';
-            return 'desktop';
-        }
-
-        // 2. Ustawienie widoku
-        function applyDevice(device) {
+        function setDevice(device) {
             document.body.className = 'view-' + device;
             document.getElementById('device-selector').classList.add('hidden');
             localStorage.setItem(DEVICE_KEY, device);
+            initAnimations(); // Ponowne odpalenie animacji po zmianie widoku
         }
 
-        // 3. Zapis z przycisku
-        function setDevice(device) {
-            applyDevice(device);
+        function resetDevice() {
+            localStorage.removeItem(DEVICE_KEY);
+            document.getElementById('device-selector').classList.remove('hidden');
         }
 
-        // 4. Inicjalizacja przy starcie
+        function initAnimations() {
+            const elements = document.querySelectorAll('.animate-up');
+            const card = document.getElementById('main-card');
+            
+            // Reset klas
+            card.classList.remove('visible');
+            elements.forEach(el => el.classList.remove('visible'));
+
+            // Wymuszenie reflow
+            void card.offsetWidth;
+
+            // Ponowne dodanie klas
+            requestAnimationFrame(() => { card.classList.add('visible'); });
+            elements.forEach((el, index) => {
+                setTimeout(() => { el.classList.add('visible'); }, 200 + (index * 100));
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const savedDevice = localStorage.getItem(DEVICE_KEY);
-            const detectedDevice = detectDevice();
 
             if (!savedDevice) {
-                // Jeśli nie ma zapisu, pokazujemy wybór
                 document.getElementById('device-selector').classList.remove('hidden');
-                // Podpowiadamy urządzenie (opcjonalnie: można dodać podświetlenie przycisku, ale nie jest to wymagane)
             } else {
-                // Jeśli jest zapis, od razu aplikujemy
-                applyDevice(savedDevice);
+                document.body.className = 'view-' + savedDevice;
+                document.getElementById('device-selector').classList.add('hidden');
             }
 
             // Tło - generowanie linii
@@ -254,13 +246,7 @@
                 linesContainer.appendChild(line);
             }
 
-            // Animacje kaskadowe
-            const elements = document.querySelectorAll('.animate-up');
-            const card = document.getElementById('main-card');
-            requestAnimationFrame(() => { card.classList.add('visible'); });
-            elements.forEach((el, index) => {
-                setTimeout(() => { el.classList.add('visible'); }, 200 + (index * 100));
-            });
+            initAnimations();
 
             // Cookies
             if (!localStorage.getItem(CONSENT_KEY)) {
