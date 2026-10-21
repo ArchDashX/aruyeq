@@ -1,3 +1,4 @@
+<!-- plik: index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,7 +95,7 @@
             to { transform: translateY(110vh); } 
         }
 
-        /* --- KARTA --- */
+        /* --- KARTA I ANIMACJE WEJŚCIA --- */
         .animate-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .animate-up.visible { opacity: 1; transform: translateY(0); }
         .card.animate-card { opacity: 0; transform: translateY(30px) scale(0.98); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -112,6 +113,7 @@
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
 
+        /* Czerwona pieczęć (Hanko) */
         .seal {
             position: absolute; top: 1.5rem; right: 1.5rem; width: 34px; height: 34px;
             border: 2px solid var(--red); border-radius: 6px;
@@ -171,7 +173,7 @@
     </div>
 
     <main class="card animate-card" id="main-card">
-        <div class="seal"></div>
+        <div class="seal"></div> <!-- PIECZĘĆ WRÓCIŁA -->
         <div class="logo-wrap animate-up"><div class="logo" aria-hidden="true"><div class="logo-sun"></div><div class="logo-bridge"></div><div class="logo-water"></div></div></div>
         <header class="animate-up"><h1 class="brand">ARUYEQ</h1><p class="tagline">"I use Arch btw"</p></header>
         <section class="animate-up">
@@ -202,7 +204,6 @@
     </div>
 
     <script>
-        // Tło - generowanie linii (deszcz)
         const linesContainer = document.getElementById('bg-lines');
         for (let i = 0; i < 20; i++) {
             const line = document.createElement('div');
@@ -214,7 +215,6 @@
             linesContainer.appendChild(line);
         }
 
-        // Animacje wejścia
         document.addEventListener("DOMContentLoaded", () => {
             const elements = document.querySelectorAll('.animate-up');
             const card = document.getElementById('main-card');
