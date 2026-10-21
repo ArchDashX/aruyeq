@@ -38,12 +38,6 @@
             z-index: 0;
             filter: grayscale(100%) contrast(120%); 
             pointer-events: none;
-            animation: fadeInBg 2s ease-out forwards;
-        }
-
-        @keyframes fadeInBg {
-            from { opacity: 0; }
-            to { opacity: 0.08; }
         }
 
         .bg-lines {
@@ -57,25 +51,17 @@
             position: absolute;
             border: 1px solid rgba(43, 43, 138, 0.1);
             border-radius: 50%;
-            animation: scaleIn 1.5s ease-out forwards;
-            opacity: 0;
         }
         .line:nth-child(1) {
             width: 300px; height: 300px;
             top: -100px; left: -100px;
-            transform: rotate(15deg) scale(0.8);
+            transform: rotate(15deg);
             border-color: rgba(200, 16, 46, 0.05);
-            animation-delay: 0.2s;
         }
         .line:nth-child(2) {
             width: 400px; height: 150px;
             bottom: -50px; right: -100px;
-            transform: rotate(-10deg) scale(0.8);
-            animation-delay: 0.4s;
-        }
-
-        @keyframes scaleIn {
-            to { opacity: 1; transform: rotate(var(--rot)) scale(1); }
+            transform: rotate(-10deg);
         }
 
         /* --- GŁÓWNA KARTA --- */
@@ -91,20 +77,6 @@
             position: relative;
             z-index: 1;
             border: 1px solid #eaeaea;
-            /* Animacja pojawiania się karty */
-            animation: cardEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            opacity: 0;
-            transform: translateY(30px) rotate(-0.5deg);
-        }
-
-        @keyframes cardEntry {
-            to { opacity: 1; transform: translateY(0) rotate(-0.5deg); }
-        }
-
-        /* --- POSZCZEGÓLNE ELEMENTY (Kaskadowe pojawianie) --- */
-        .seal, .logo-container, .brand, .tagline, .description, .footer {
-            opacity: 0;
-            animation: fadeUp 0.8s ease-out forwards;
         }
 
         .seal {
@@ -118,7 +90,6 @@
             align-items: center;
             justify-content: center;
             transform: rotate(8deg);
-            animation-delay: 0.8s;
         }
         .seal::before {
             content: '';
@@ -133,7 +104,6 @@
             justify-content: center;
             margin-bottom: 1.5rem;
             transform: translateX(-3px);
-            animation-delay: 1s;
         }
 
         .logo {
@@ -179,7 +149,6 @@
             letter-spacing: 6px;
             margin-bottom: 0.2rem;
             transform: translateX(2px);
-            animation-delay: 1.2s;
         }
 
         .tagline {
@@ -191,16 +160,15 @@
             font-weight: 700;
             margin-bottom: 1.8rem;
             transform: rotate(-0.5deg);
-            animation-delay: 1.4s;
         }
 
+        /* --- WIDOK PUBLICZNY --- */
         .description {
             font-size: 0.95rem;
             color: #555;
             line-height: 1.6;
             text-align: center;
             margin-bottom: 2rem;
-            animation-delay: 1.6s;
         }
         
         .description a {
@@ -208,6 +176,12 @@
             font-weight: 600;
             text-decoration: none;
             border-bottom: 1px dashed #c8102e;
+            transition: all 0.2s ease;
+        }
+        
+        .description a:hover {
+            color: #c8102e;
+            border-bottom: 1px solid #c8102e;
         }
 
         .links {
@@ -228,23 +202,18 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: all 0.2s ease;
-            
-            /* Kaskadowe pojawianie się przycisków */
-            opacity: 0;
-            animation: fadeUp 0.6s ease-out forwards;
         }
 
-        /* Opóźnienia dla każdego przycisku z osobna (żeby leciały jeden po drugim) */
-        .btn:nth-child(1) { animation-delay: 1.8s; transform: rotate(-1deg); margin-left: -5px; margin-right: 10px; }
-        .btn:nth-child(2) { animation-delay: 1.9s; transform: rotate(1.2deg); margin-left: 8px; margin-right: -4px; }
-        .btn:nth-child(3) { animation-delay: 2.0s; transform: rotate(-0.6deg); margin-left: -2px; margin-right: 12px; }
-        .btn:nth-child(4) { animation-delay: 2.1s; transform: rotate(1.5deg); margin-left: 12px; margin-right: 0px; }
-        .btn:nth-child(5) { animation-delay: 2.2s; transform: rotate(-1.2deg); margin-left: 0px; margin-right: 8px; }
-        .btn:nth-child(6) { animation-delay: 2.3s; transform: rotate(0.8deg); margin-left: 6px; margin-right: -6px; }
-        .btn:nth-child(7) { animation-delay: 2.4s; transform: rotate(-0.9deg); margin-left: 10px; margin-right: 2px; }
-        .btn:nth-child(8) { animation-delay: 2.5s; transform: rotate(1.1deg); margin-left: -2px; margin-right: 9px; }
+        /* Krzywe ułożenie */
+        .btn:nth-child(1) { transform: rotate(-1deg); margin-left: -5px; margin-right: 10px; }
+        .btn:nth-child(2) { transform: rotate(1.2deg); margin-left: 8px; margin-right: -4px; }
+        .btn:nth-child(3) { transform: rotate(-0.6deg); margin-left: -2px; margin-right: 12px; }
+        .btn:nth-child(4) { transform: rotate(1.5deg); margin-left: 12px; margin-right: 0px; }
+        .btn:nth-child(5) { transform: rotate(-1.2deg); margin-left: 0px; margin-right: 8px; }
+        .btn:nth-child(6) { transform: rotate(0.8deg); margin-left: 6px; margin-right: -6px; }
+        .btn:nth-child(7) { transform: rotate(-0.9deg); margin-left: 10px; margin-right: 2px; }
+        .btn:nth-child(8) { transform: rotate(1.1deg); margin-left: -2px; margin-right: 9px; }
 
-        /* Efekt najechania (znosi rotację) */
         .btn:hover {
             background: #f0f2f5;
             border-color: #b0b5c0;
@@ -257,12 +226,7 @@
             font-size: 1.1rem;
             width: 24px;
             text-align: center;
-        }
-
-        /* --- ANIMACJA DLA WSZYSTKICH ELEMENTÓW --- */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            color: #111;
         }
 
         /* --- WIDOK ADMINA --- */
@@ -270,8 +234,10 @@
         
         .login-title { text-align: center; font-size: 1.1rem; color: #555; margin-bottom: 1.5rem; font-weight: 600; }
         .input-group { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
-        .input-group input { padding: 1rem; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; outline: none; background: #fcfcfc; }
-        .login-btn { width: 100%; padding: 1rem; background: #2b2b8a; color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .input-group input { padding: 1rem; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; background: #fcfcfc; }
+        .input-group input:focus { border-color: #2b2b8a; }
+        .login-btn { width: 100%; padding: 1rem; background: #2b2b8a; color: #fff; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+        .login-btn:hover { background: #1e1e6b; }
         .error-msg { color: #c8102e; text-align: center; font-size: 0.85rem; margin-bottom: 1rem; display: none; font-weight: 600; }
         
         #admin-panel-content { display: none; }
@@ -286,7 +252,8 @@
             color: #999;
             text-align: center;
             line-height: 1.5;
-            animation-delay: 2.8s;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
         }
 
         @media (max-width: 480px) {
@@ -298,8 +265,8 @@
 
     <div class="bg-image"></div>
     <div class="bg-lines">
-        <div class="line" style="--rot: 15deg;"></div>
-        <div class="line" style="--rot: -10deg;"></div>
+        <div class="line"></div>
+        <div class="line"></div>
     </div>
 
     <div class="card">
