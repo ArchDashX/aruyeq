@@ -7,13 +7,12 @@
     <meta name="theme-color" content="#faf9f6">
     <title>ARUYEQ | Arch Linux</title>
     
-    <!-- Preconnect dla szybszego ładowania czcionek -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ZMIENNE GLOBALNE (Custom Properties) --- */
+        /* --- ZMIENNE GLOBALNE --- */
         :root {
             --bg-paper: #faf9f6;
             --text-main: #333333;
@@ -53,7 +52,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- TŁO (Czysty CSS, Zero Obrazków) --- */
+        /* --- TŁO --- */
         .bg-decorations {
             position: fixed;
             inset: 0;
@@ -62,24 +61,26 @@
             overflow: hidden;
         }
 
-        /* Japońskie okręgi w tle */
         .bg-circle {
             position: absolute;
             border: 1px solid rgba(43, 43, 138, 0.08);
             border-radius: 50%;
+            animation: scaleIn 1.5s ease-out forwards;
+            opacity: 0;
         }
         .bg-circle:nth-child(1) {
             width: 400px; height: 400px;
             top: -150px; left: -150px;
             border-color: rgba(200, 16, 46, 0.05);
+            animation-delay: 0.2s;
         }
         .bg-circle:nth-child(2) {
             width: 500px; height: 200px;
             bottom: -80px; right: -150px;
             transform: rotate(-15deg);
+            animation-delay: 0.4s;
         }
 
-        /* Japoński wzór fal (Seigaiha) */
         .bg-waves {
             position: absolute;
             bottom: 0; left: 0; right: 0;
@@ -88,6 +89,29 @@
             background-image: 
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(43, 43, 138, 0.06) 21px, transparent 22px) 0 0 / 40px 20px,
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(200, 16, 46, 0.04) 21px, transparent 22px) 20px 0 / 40px 20px;
+            animation: fadeInBg 2s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* --- ANIMACJE --- */
+        @keyframes cardEntry {
+            from { opacity: 0; transform: translateY(30px) rotate(-0.5deg); }
+            to { opacity: 1; transform: translateY(0) rotate(-0.5deg); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 0.5; }
         }
 
         /* --- KARTA GŁÓWNA --- */
@@ -99,11 +123,26 @@
             padding: 2.5rem 2rem;
             border-radius: 4px;
             box-shadow: var(--shadow-card);
-            transform: rotate(-0.5deg);
             position: relative;
             z-index: 1;
             border: 1px solid var(--border-light);
+            /* Animacja karty */
+            opacity: 0;
+            animation: cardEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
+
+        /* Elementy do animacji kaskadowej */
+        .seal, .logo-wrapper, .brand-title, .tagline, .description, .site-footer {
+            opacity: 0;
+            animation: fadeUp 0.8s ease-out forwards;
+        }
+
+        .seal { animation-delay: 0.8s; }
+        .logo-wrapper { animation-delay: 1.0s; }
+        .brand-title { animation-delay: 1.2s; }
+        .tagline { animation-delay: 1.4s; }
+        .description { animation-delay: 1.6s; }
+        .site-footer { animation-delay: 2.8s; }
 
         /* Pieczęć */
         .seal {
@@ -123,7 +162,7 @@
             transform: rotate(45deg);
         }
 
-        /* Logo (Czysty CSS) */
+        /* Logo */
         .logo-wrapper {
             display: flex; justify-content: center;
             margin-bottom: 1.5rem;
@@ -203,7 +242,7 @@
             outline: none;
         }
 
-        /* --- LINKI (Przyciski) --- */
+        /* --- LINKI --- */
         .links-nav {
             display: flex;
             flex-direction: column;
@@ -222,18 +261,23 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: var(--transition);
+            
+            /* Kaskadowe pojawianie się */
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out forwards;
         }
 
-        /* "Krzywy" układ (zachowany dla klimatu) */
-        .link-btn:nth-child(1) { transform: rotate(-1deg); margin-left: -5px; margin-right: 10px; }
-        .link-btn:nth-child(2) { transform: rotate(1.2deg); margin-left: 8px; margin-right: -4px; }
-        .link-btn:nth-child(3) { transform: rotate(-0.6deg); margin-left: -2px; margin-right: 12px; }
-        .link-btn:nth-child(4) { transform: rotate(1.5deg); margin-left: 12px; margin-right: 0px; }
-        .link-btn:nth-child(5) { transform: rotate(-1.2deg); margin-left: 0px; margin-right: 8px; }
-        .link-btn:nth-child(6) { transform: rotate(0.8deg); margin-left: 6px; margin-right: -6px; }
-        .link-btn:nth-child(7) { transform: rotate(-0.9deg); margin-left: 10px; margin-right: 2px; }
-        .link-btn:nth-child(8) { transform: rotate(1.1deg); margin-left: -2px; margin-right: 9px; }
+        /* Opóźnienia dla każdego przycisku (Dynamiczne) */
+        .link-btn:nth-child(1) { animation-delay: 1.8s; transform: rotate(-1deg); margin-left: -5px; margin-right: 10px; }
+        .link-btn:nth-child(2) { animation-delay: 1.9s; transform: rotate(1.2deg); margin-left: 8px; margin-right: -4px; }
+        .link-btn:nth-child(3) { animation-delay: 2.0s; transform: rotate(-0.6deg); margin-left: -2px; margin-right: 12px; }
+        .link-btn:nth-child(4) { animation-delay: 2.1s; transform: rotate(1.5deg); margin-left: 12px; margin-right: 0px; }
+        .link-btn:nth-child(5) { animation-delay: 2.2s; transform: rotate(-1.2deg); margin-left: 0px; margin-right: 8px; }
+        .link-btn:nth-child(6) { animation-delay: 2.3s; transform: rotate(0.8deg); margin-left: 6px; margin-right: -6px; }
+        .link-btn:nth-child(7) { animation-delay: 2.4s; transform: rotate(-0.9deg); margin-left: 10px; margin-right: 2px; }
+        .link-btn:nth-child(8) { animation-delay: 2.5s; transform: rotate(1.1deg); margin-left: -2px; margin-right: 9px; }
 
+        /* Efekt najechania - znosi rotację i unosi przycisk */
         .link-btn:hover, .link-btn:focus {
             background: #f0f2f5;
             border-color: #b0b5c0;
@@ -250,97 +294,26 @@
             color: var(--text-main);
         }
 
-        /* --- WIDOK ADMINA (Ukryty) --- */
-        #admin-view {
-            display: none;
-        }
+        /* --- WIDOK ADMINA --- */
+        #admin-view { display: none; }
 
-        .admin-title {
-            text-align: center;
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .input-field {
-            padding: 1rem;
-            border: 1px solid var(--border-dark);
-            border-radius: 8px;
-            font-family: var(--font-main);
-            font-size: 0.9rem;
-            background: #fcfcfc;
-            transition: var(--transition);
-        }
-        .input-field:focus {
-            border-color: var(--navy);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(43, 43, 138, 0.1);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: var(--navy);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-family: var(--font-main);
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .submit-btn:hover {
-            background: var(--navy-dark);
-        }
-
-        .error-msg {
-            color: var(--red);
-            text-align: center;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            display: none;
-            font-weight: 600;
-        }
-
-        .admin-panel-content {
-            display: none;
-        }
-
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .admin-header h2 {
-            color: var(--navy);
-            font-size: 1.2rem;
-        }
-        .logout-btn {
-            background: var(--red);
-            color: var(--white);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: var(--transition);
-        }
-        .logout-btn:hover {
-            background: #a00d25;
-        }
+        .admin-title { text-align: center; font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; font-weight: 600; }
+        
+        .login-form { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+        
+        .input-field { padding: 1rem; border: 1px solid var(--border-dark); border-radius: 8px; font-family: var(--font-main); font-size: 0.9rem; background: #fcfcfc; transition: var(--transition); }
+        .input-field:focus { border-color: var(--navy); outline: none; box-shadow: 0 0 0 3px rgba(43, 43, 138, 0.1); }
+        
+        .submit-btn { width: 100%; padding: 1rem; background: var(--navy); color: var(--white); border: none; border-radius: 8px; font-family: var(--font-main); font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--transition); }
+        .submit-btn:hover { background: var(--navy-dark); }
+        
+        .error-msg { color: var(--red); text-align: center; font-size: 0.85rem; margin-bottom: 1rem; display: none; font-weight: 600; }
+        
+        .admin-panel-content { display: none; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .admin-header h2 { color: var(--navy); font-size: 1.2rem; }
+        .logout-btn { background: var(--red); color: var(--white); border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.8rem; transition: var(--transition); }
+        .logout-btn:hover { background: #a00d25; }
 
         /* --- STOPKA --- */
         .site-footer {
@@ -361,19 +334,16 @@
 </head>
 <body oncontextmenu="return false;">
 
-    <!-- TŁO (Czysty CSS) -->
     <div class="bg-decorations" aria-hidden="true">
         <div class="bg-circle"></div>
         <div class="bg-circle"></div>
         <div class="bg-waves"></div>
     </div>
 
-    <!-- GŁÓWNA KARTA -->
     <main class="card">
         
         <div class="seal" aria-hidden="true"></div>
 
-        <!-- Logo -->
         <div class="logo-wrapper">
             <div class="logo" aria-hidden="true">
                 <div class="logo-sun"></div>
@@ -387,7 +357,6 @@
             <p class="tagline">"I use Arch btw"</p>
         </header>
 
-        <!-- WIDOK PUBLICZNY -->
         <section id="public-view" aria-label="Profile Links">
             <p class="description">
                 I create content about <a href="https://archlinux.org/" target="_blank" rel="noopener noreferrer">Arch Linux</a>, 
@@ -397,34 +366,18 @@
             </p>
 
             <nav class="links-nav" aria-label="Social Media Links">
-                <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn" aria-label="X (Twitter)">
-                    <span class="link-icon">𝕏</span> X (Twitter)
-                </a>
-                <a href="#" class="link-btn" onclick="copyDiscord(event)" aria-label="Discord: @aruyeq (Copy)">
-                    <span class="link-icon">›</span> Discord: @aruyeq
-                </a>
-                <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn" aria-label="YouTube">
-                    <span class="link-icon">▶</span> YouTube
-                </a>
-                <a href="https://rumble.com/user/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-btn" aria-label="Rumble">
-                    <span class="link-icon">▷</span> Rumble
-                </a>
-                <a href="https://github.com/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-btn" aria-label="GitHub">
-                    <span class="link-icon">⌥</span> GitHub
-                </a>
-                <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" rel="noopener noreferrer" class="link-btn" aria-label="Steam">
-                    <span class="link-icon">◈</span> Steam
-                </a>
-                <a href="https://tiktok.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn" aria-label="TikTok">
-                    <span class="link-icon">♪</span> TikTok
-                </a>
-                <a href="https://www.roblox.com/pl/users/4366923635/profile" target="_blank" rel="noopener noreferrer" class="link-btn" aria-label="Roblox">
-                    <span class="link-icon">◆</span> Roblox
-                </a>
+                <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">𝕏</span> X (Twitter)</a>
+                <a href="#" class="link-btn" onclick="copyDiscord(event)"><span class="link-icon">›</span> Discord: @aruyeq</a>
+                <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">▶</span> YouTube</a>
+                <a href="https://rumble.com/user/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">▷</span> Rumble</a>
+                <a href="https://github.com/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">⌥</span> GitHub</a>
+                <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">◈</span> Steam</a>
+                <a href="https://tiktok.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">♪</span> TikTok</a>
+                <a href="https://www.roblox.com/pl/users/4366923635/profile" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">◆</span> Roblox</a>
             </nav>
         </section>
 
-        <!-- WIDOK ADMINA (Routing #admin) -->
+        <!-- WIDOK ADMINA -->
         <section id="admin-view" aria-label="Admin Access">
             <h2 class="admin-title">System Authorization</h2>
             <div class="error-msg" id="error-msg" role="alert">Access denied. Invalid credentials.</div>
@@ -447,7 +400,6 @@
             </div>
         </section>
 
-        <!-- STOPKA -->
         <footer class="site-footer" id="public-footer">
             &copy; 2026 ARUYEQ.<br>All rights reserved.
         </footer>
@@ -457,19 +409,14 @@
     <script>
         'use strict';
 
-        /* --- 1. OCHRONA DEWELOPERSKA --- */
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
                 return false;
             }
         };
-        setInterval(() => {
-            console.clear();
-            console.log("%cSTOP! System protected.", "color: #c8102e; font-size: 20px; font-weight: bold;");
-        }, 2000);
+        setInterval(() => { console.clear(); console.log("%cSTOP! System protected.", "color: #c8102e; font-size: 20px; font-weight: bold;"); }, 2000);
 
-        /* --- 2. BEZPIECZNE HASZOWANIE (Web Crypto API) --- */
         async function sha256(message) {
             const msgBuffer = new TextEncoder().encode(message);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -477,11 +424,9 @@
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
         
-        // Hashe dla: admin / admin
         const HASH_USER = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; 
         const HASH_PASS = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 
-        /* --- 3. ROUTING I LOGIKA --- */
         const DOM = {
             publicView: document.getElementById('public-view'),
             adminView: document.getElementById('admin-view'),
@@ -494,13 +439,10 @@
         };
 
         function checkRoute() {
-            const hash = window.location.hash;
-            
-            if (hash === '#admin') {
+            if (window.location.hash === '#admin') {
                 DOM.publicView.style.display = 'none';
                 DOM.publicFooter.style.display = 'none';
                 DOM.adminView.style.display = 'block';
-                
                 DOM.loginForm.style.display = 'flex';
                 DOM.adminContent.style.display = 'none';
                 DOM.userInput.value = '';
@@ -517,11 +459,8 @@
 
         async function handleLogin(e) {
             e.preventDefault();
-            const user = DOM.userInput.value;
-            const pass = DOM.passInput.value;
-
-            const inputUserHash = await sha256(user);
-            const inputPassHash = await sha256(pass);
+            const inputUserHash = await sha256(DOM.userInput.value);
+            const inputPassHash = await sha256(DOM.passInput.value);
 
             if (inputUserHash === HASH_USER && inputPassHash === HASH_PASS) {
                 DOM.loginForm.style.display = 'none';
@@ -533,11 +472,8 @@
             }
         }
 
-        function logout() {
-            window.location.hash = ''; 
-        }
+        function logout() { window.location.hash = ''; }
 
-        /* --- 4. FUNKCJE POMOCNICZE --- */
         function copyDiscord(e) {
             e.preventDefault();
             navigator.clipboard.writeText('@aruyeq').then(() => {
