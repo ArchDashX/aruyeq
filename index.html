@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ARUYEQ - Arch Linux, Hyprland and system customisation.">
-    <meta name="theme-color" content="#faf9f6">
     <title>ARUYEQ | Arch Linux</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ZMIENNE GLOBALNE --- */
+        /* --- ZMIENNE --- */
         :root {
             --bg-paper: #fbfbf9;
             --text-main: #2c2c2c;
@@ -29,12 +28,8 @@
             --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* --- RESET & BAZA --- */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* --- RESET --- */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: var(--font-main);
@@ -51,173 +46,91 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- TŁO (Premium) --- */
+        /* --- TŁO --- */
         .bg-decorations {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
+            position: fixed; inset: 0; z-index: -1;
+            pointer-events: none; overflow: hidden;
             background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%);
         }
-
-        /* Pulsująca poświata z tyłu */
         .glow {
-            position: absolute;
-            width: 600px;
-            height: 600px;
+            position: absolute; width: 600px; height: 600px;
             background: radial-gradient(circle, rgba(209, 18, 48, 0.05) 0%, transparent 60%);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
             animation: pulseGlow 8s ease-in-out infinite alternate;
         }
-
         .glow-navy {
-            position: absolute;
-            width: 800px;
-            height: 800px;
+            position: absolute; width: 800px; height: 800px;
             background: radial-gradient(circle, rgba(35, 35, 107, 0.04) 0%, transparent 60%);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
             animation: pulseGlow 10s ease-in-out infinite alternate-reverse;
         }
-
         @keyframes pulseGlow {
             0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
             100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
         }
-
-        /* Fale na dole */
         .bg-waves {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 250px;
+            position: absolute; bottom: 0; left: 0; right: 0; height: 250px;
             opacity: 0.4;
             background-image: 
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(35, 35, 107, 0.1) 21px, transparent 22px) 0 0 / 40px 20px,
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(209, 18, 48, 0.06) 21px, transparent 22px) 20px 0 / 40px 20px;
-            animation: fadeInBg 2s ease-out forwards;
         }
-
-        @keyframes fadeInBg { from { opacity: 0; } to { opacity: 0.4; } }
 
         /* --- KARTA --- */
         .card {
-            width: 100%;
-            max-width: 420px;
+            width: 100%; max-width: 420px;
             background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             padding: 2.5rem 2rem;
-            border-radius: 16px; /* Bardziej miękkie rogi */
+            border-radius: 16px;
             box-shadow: var(--shadow-premium);
             border: 1px solid rgba(255, 255, 255, 0.5);
             border-top: 1px solid rgba(255, 255, 255, 0.8);
-            position: relative;
-            z-index: 1;
-            opacity: 0;
-            animation: cardEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            position: relative; z-index: 1;
+            opacity: 0; animation: cardEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-
         @keyframes cardEntry {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Pieczęć */
-        .seal {
-            position: absolute;
-            top: 1.5rem; right: 1.5rem;
-            width: 34px; height: 34px;
-            border: 2px solid var(--red);
-            border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
-            transform: rotate(6deg);
-            opacity: 0;
-            animation: fadeUp 0.6s ease-out 0.8s forwards;
-        }
-        .seal::before {
-            content: '';
-            width: 14px; height: 14px;
-            background-color: var(--red);
-            border-radius: 3px;
-            transform: rotate(45deg);
-        }
-
-        /* Logo */
-        .logo-wrapper {
-            display: flex; justify-content: center;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease-out 1s forwards;
-        }
-        .logo {
-            width: 110px; height: 110px;
-            border-radius: 50%;
-            background: var(--navy);
-            position: relative;
-            overflow: hidden;
-            border: 4px solid var(--white);
-            box-shadow: 0 10px 25px rgba(35, 35, 107, 0.2);
-            transform: rotate(2deg);
-            transition: var(--transition-smooth);
-        }
-        .logo:hover { transform: rotate(0deg) scale(1.05); }
-        
-        .logo-sun { position: absolute; top: 18%; left: 30%; width: 45px; height: 45px; background: var(--red); border-radius: 50%; }
-        .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 75px; height: 28px; border: 3px solid var(--white); border-bottom: none; border-radius: 50px 50px 0 0; }
-        .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: var(--white); }
-
-        /* Typografia */
-        .brand-title {
-            font-size: 2.2rem; font-weight: 800; color: var(--navy);
-            text-align: center; letter-spacing: 8px; margin-bottom: 0.2rem;
-            opacity: 0; animation: fadeUp 0.6s ease-out 1.2s forwards;
-        }
-        .tagline {
-            font-size: 0.75rem; color: var(--red); text-align: center;
-            text-transform: uppercase; letter-spacing: 4px; font-weight: 700;
-            margin-bottom: 2rem;
-            opacity: 0; animation: fadeUp 0.6s ease-out 1.3s forwards;
-        }
-
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Opis */
-        .description {
-            font-size: 0.95rem; color: var(--text-muted);
-            text-align: center; margin-bottom: 2.2rem; line-height: 1.7;
-            opacity: 0; animation: fadeUp 0.6s ease-out 1.4s forwards;
+        /* Pieczęć i Logo */
+        .seal {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            width: 34px; height: 34px;
+            border: 2px solid var(--red); border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            transform: rotate(6deg); opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.8s forwards;
         }
-        .description a {
-            color: var(--text-main); font-weight: 600; text-decoration: none;
-            border-bottom: 1px dashed var(--red); transition: var(--transition-smooth);
-        }
+        .seal::before { content: ''; width: 14px; height: 14px; background-color: var(--red); border-radius: 3px; transform: rotate(45deg); }
+        .logo-wrapper { display: flex; justify-content: center; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.6s ease-out 1s forwards; }
+        .logo { width: 110px; height: 110px; border-radius: 50%; background: var(--navy); position: relative; overflow: hidden; border: 4px solid var(--white); box-shadow: 0 10px 25px rgba(35, 35, 107, 0.2); transform: rotate(2deg); transition: var(--transition-smooth); }
+        .logo:hover { transform: rotate(0deg) scale(1.05); }
+        .logo-sun { position: absolute; top: 18%; left: 30%; width: 45px; height: 45px; background: var(--red); border-radius: 50%; }
+        .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 75px; height: 28px; border: 3px solid var(--white); border-bottom: none; border-radius: 50px 50px 0 0; }
+        .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: var(--white); }
+
+        /* Typografia */
+        .brand-title { font-size: 2.2rem; font-weight: 800; color: var(--navy); text-align: center; letter-spacing: 8px; margin-bottom: 0.2rem; opacity: 0; animation: fadeUp 0.6s ease-out 1.2s forwards; }
+        .tagline { font-size: 0.75rem; color: var(--red); text-align: center; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.6s ease-out 1.3s forwards; }
+        .description { font-size: 0.95rem; color: var(--text-muted); text-align: center; margin-bottom: 2.2rem; line-height: 1.7; opacity: 0; animation: fadeUp 0.6s ease-out 1.4s forwards; }
+        .description a { color: var(--text-main); font-weight: 600; text-decoration: none; border-bottom: 1px dashed var(--red); transition: var(--transition-smooth); }
         .description a:hover { color: var(--red); border-bottom-style: solid; }
 
-        /* --- LINKI --- */
+        /* Linki */
         .links-nav { display: flex; flex-direction: column; gap: 0.8rem; }
-
         .link-btn {
-            display: flex; align-items: center;
-            padding: 1rem 1.2rem;
-            text-decoration: none;
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(0,0,0,0.05);
-            border-radius: 10px;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: var(--transition-smooth);
-            opacity: 0;
-            animation: fadeUp 0.5s ease-out forwards;
+            display: flex; align-items: center; padding: 1rem 1.2rem; text-decoration: none;
+            background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(0,0,0,0.05); border-radius: 10px;
+            color: var(--text-main); font-weight: 600; font-size: 0.9rem;
+            transition: var(--transition-smooth); opacity: 0; animation: fadeUp 0.5s ease-out forwards;
             backdrop-filter: blur(5px);
         }
-
-        /* Zachowany "krzywy" układ, ale subtelniejszy */
         .link-btn:nth-child(1) { animation-delay: 1.5s; transform: rotate(-0.8deg); margin-right: 5px; }
         .link-btn:nth-child(2) { animation-delay: 1.6s; transform: rotate(0.5deg); margin-left: 5px; }
         .link-btn:nth-child(3) { animation-delay: 1.7s; transform: rotate(-0.4deg); margin-right: 8px; }
@@ -226,24 +139,52 @@
         .link-btn:nth-child(6) { animation-delay: 2.0s; transform: rotate(0.6deg); margin-left: 4px; }
         .link-btn:nth-child(7) { animation-delay: 2.1s; transform: rotate(-0.5deg); margin-right: 6px; }
         .link-btn:nth-child(8) { animation-delay: 2.2s; transform: rotate(0.8deg); margin-left: 6px; }
-
-        /* Efekt najechania - podniesienie i wyprostowanie */
-        .link-btn:hover {
-            background: var(--white);
-            border-color: rgba(209, 18, 48, 0.2);
-            transform: rotate(0deg) translateY(-3px) !important;
-            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.08);
-            color: var(--navy);
-        }
-
-        .link-icon {
-            margin-right: 15px; font-size: 1.1rem;
-            width: 24px; text-align: center; color: var(--text-main);
-            transition: var(--transition-smooth);
-        }
+        .link-btn:hover { background: var(--white); border-color: rgba(209, 18, 48, 0.2); transform: rotate(0deg) translateY(-3px) !important; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.08); color: var(--navy); }
+        .link-icon { margin-right: 15px; font-size: 1.1rem; width: 24px; text-align: center; color: var(--text-main); transition: var(--transition-smooth); }
         .link-btn:hover .link-icon { color: var(--red); }
 
-        /* --- PANEL ADMINA --- */
+        /* --- MODAL (Regulamin / Prywatność) --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            z-index: 9999; display: none; justify-content: center; align-items: center;
+            padding: 1rem; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        
+        .modal-content {
+            background: #ffffff; width: 100%; max-width: 600px;
+            max-height: 85vh; overflow-y: auto;
+            border-radius: 16px; padding: 2.5rem 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative; transform: translateY(20px); transition: transform 0.3s ease;
+            text-align: left;
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem;
+            background: #f0f0f0; border: none; width: 36px; height: 36px;
+            border-radius: 50%; font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .modal-close:hover { background: #e0e0e0; }
+        
+        .modal-content h2 { color: var(--navy); font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
+        .modal-content h3 { color: var(--navy); font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .modal-content p, .modal-content ul { font-size: 0.9rem; color: #555; line-height: 1.6; margin-bottom: 1rem; }
+        .modal-content ul { padding-left: 1.5rem; }
+        .modal-content li { margin-bottom: 0.5rem; }
+        .modal-content strong { color: #333; }
+
+        /* --- STOPKA --- */
+        .site-footer { margin-top: 2.5rem; font-size: 0.7rem; color: #999; text-align: center; line-height: 1.6; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.05); opacity: 0; animation: fadeUp 0.6s ease-out 2.5s forwards; }
+        .footer-links { margin-top: 0.5rem; }
+        .footer-links a { color: #999; text-decoration: none; margin: 0 5px; cursor: pointer; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--red); }
+
+        /* --- ADMIN --- */
         #admin-view { display: none; }
         .admin-title { text-align: center; font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; font-weight: 600; }
         .login-form { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
@@ -258,17 +199,10 @@
         .logout-btn { background: var(--red); color: var(--white); border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.8rem; transition: var(--transition-smooth); }
         .logout-btn:hover { background: #a00d25; }
 
-        /* --- STOPKA --- */
-        .site-footer {
-            margin-top: 2.5rem; font-size: 0.7rem; color: #999;
-            text-align: center; line-height: 1.6; padding-top: 1rem;
-            border-top: 1px solid rgba(0,0,0,0.05);
-            opacity: 0; animation: fadeUp 0.6s ease-out 2.5s forwards;
-        }
-
         @media (max-width: 480px) {
             .card { padding: 2rem 1.5rem; }
             .brand-title { font-size: 1.8rem; letter-spacing: 5px; }
+            .modal-content { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -281,9 +215,7 @@
     </div>
 
     <main class="card">
-        
         <div class="seal" aria-hidden="true"></div>
-
         <div class="logo-wrapper">
             <div class="logo" aria-hidden="true">
                 <div class="logo-sun"></div>
@@ -340,89 +272,54 @@
         </section>
 
         <footer class="site-footer" id="public-footer">
-            &copy; 2026 ARUYEQ.<br>All rights reserved.
+            &copy; 2026 ARUYEQ. Wszelkie prawa zastrzeżone.
+            <div class="footer-links">
+                <a onclick="openModal('privacy')">Polityka Prywatności</a> | 
+                <a onclick="openModal('terms')">Regulamin</a>
+            </div>
         </footer>
-
     </main>
 
-    <script>
-        'use strict';
+    <!-- ========================================== -->
+    <!-- MODAL: REGULAMIN I POLITYKA PRYWATNOŚCI    -->
+    <!-- ========================================== -->
+    <div class="modal-overlay" id="legal-modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(event)">&times;</button>
+            
+            <!-- TREŚĆ: POLITYKA PRYWATNOŚCI -->
+            <div id="modal-privacy" style="display: none;">
+                <h2>Polityka Prywatności (Privacy Policy)</h2>
+                <p><strong>Ostatnia aktualizacja:</strong> 2026</p>
+                
+                <h3>1. Postanowienia ogólne</h3>
+                <p>Niniejsza Polityka Prywatności określa zasady przetwarzania i ochrony danych osobowych użytkowników odwiedzających stronę ARUYEQ. Strona ma charakter wyłącznie informacyjny (tzw. link-in-bio) i nie prowadzi sprzedaży ani nie wymaga rejestracji.</p>
 
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.onkeydown = function(e) {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
-                return false;
-            }
-        };
-        setInterval(() => { console.clear(); console.log("%cSTOP! System protected.", "color: #d11230; font-size: 20px; font-weight: bold;"); }, 2000);
+                <h3>2. Jakie dane zbieramy?</h3>
+                <p>Strona została zaprojektowana z myślą o maksymalnej prywatności. <strong>Nie zbieramy, nie przechowujemy ani nie przetwarzamy żadnych Twoich danych osobowych</strong> (takich jak imię, nazwisko, adres e-mail, adres IP).</p>
+                <ul>
+                    <li>Nie używamy plików cookies (ciasteczek) do śledzenia.</li>
+                    <li>Nie stosujemy zewnętrznych narzędzi analitycznych (np. Google Analytics).</li>
+                    <li>Wszystkie animacje i tła są generowane lokalnie w Twojej przeglądarce.</li>
+                </ul>
 
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-        
-        const HASH_USER = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; 
-        const HASH_PASS = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
+                <h3>3. Linki do stron zewnętrznych</h3>
+                <p>Nasza strona zawiera linki do zewnętrznych platform (X, YouTube, GitHub, Discord, itp.). Po kliknięciu w link opuszczasz naszą stronę i przechodzisz do serwisu, który posiada własną, niezależną Politykę Prywatności. Nie ponosimy odpowiedzialności za praktyki stosowane przez te serwisy.</p>
 
-        const DOM = {
-            publicView: document.getElementById('public-view'),
-            adminView: document.getElementById('admin-view'),
-            publicFooter: document.getElementById('public-footer'),
-            loginForm: document.getElementById('login-form'),
-            adminContent: document.getElementById('admin-panel-content'),
-            errorMsg: document.getElementById('error-msg'),
-            userInput: document.getElementById('username'),
-            passInput: document.getElementById('password')
-        };
+                <h3>4. Prawa autorskie (Copyright)</h3>
+                <p>Wszelkie treści, w tym kod źródłowy, projekt graficzny logo (most, słońce) oraz teksty, są własnością twórcy ARUYEQ i podlegają ochronie prawnej. Zabrania się kopiowania, modyfikowania lub rozpowszechniania bez pisemnej zgody.</p>
 
-        function checkRoute() {
-            if (window.location.hash === '#admin') {
-                DOM.publicView.style.display = 'none';
-                DOM.publicFooter.style.display = 'none';
-                DOM.adminView.style.display = 'block';
-                DOM.loginForm.style.display = 'flex';
-                DOM.adminContent.style.display = 'none';
-                DOM.userInput.value = '';
-                DOM.passInput.value = '';
-            } else {
-                DOM.publicView.style.display = 'block';
-                DOM.publicFooter.style.display = 'block';
-                DOM.adminView.style.display = 'none';
-            }
-        }
+                <h3>5. Kontakt</h3>
+                <p>W razie jakichkolwiek pytań dotyczących prywatności, prosimy o kontakt przez jeden z podanych kanałów (np. Discord: @aruyeq).</p>
+            </div>
 
-        window.addEventListener('hashchange', checkRoute);
-        checkRoute();
+            <!-- TREŚĆ: REGULAMIN -->
+            <div id="modal-terms" style="display: none;">
+                <h2>Regulamin korzystania z serwisu (Terms of Service)</h2>
+                <p><strong>Ostatnia aktualizacja:</strong> 2026</p>
 
-        async function handleLogin(e) {
-            e.preventDefault();
-            const inputUserHash = await sha256(DOM.userInput.value);
-            const inputPassHash = await sha256(DOM.passInput.value);
+                <h3>1. Akceptacja regulaminu</h3>
+                <p>Korzystając z tej strony, akceptujesz niniejszy Regulamin. Jeśli nie zgadzasz się z którymkolwiek z punktów, prosimy o natychmiastowe opuszczenie strony.</p>
 
-            if (inputUserHash === HASH_USER && inputPassHash === HASH_PASS) {
-                DOM.loginForm.style.display = 'none';
-                DOM.adminContent.style.display = 'block';
-                DOM.errorMsg.style.display = 'none';
-            } else {
-                DOM.errorMsg.style.display = 'block';
-                setTimeout(() => { DOM.errorMsg.style.display = 'none'; }, 3000);
-            }
-        }
-
-        function logout() { window.location.hash = ''; }
-
-        function copyDiscord(e) {
-            e.preventDefault();
-            navigator.clipboard.writeText('@aruyeq').then(() => {
-                const btn = e.currentTarget;
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<span class="link-icon">✓</span> Copied!';
-                setTimeout(() => { btn.innerHTML = originalText; }, 2000);
-            });
-        }
-    </script>
-
-</body>
-</html>
+                <h3>2. Charakter strony</h3>
+                <p>Strona ARUYEQ to prywatny projekt in
