@@ -52,6 +52,27 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* --- ANIMACJE (Zdefiniowane na sztywno, żeby działały zawsze) --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes cardEntry {
+            from { opacity: 0; transform: translateY(40px) rotate(-0.5deg); }
+            to { opacity: 1; transform: translateY(0) rotate(-0.5deg); }
+        }
+
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 0.5; }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         /* --- TŁO --- */
         .bg-decorations {
             position: fixed;
@@ -65,8 +86,8 @@
             position: absolute;
             border: 1px solid rgba(43, 43, 138, 0.08);
             border-radius: 50%;
-            animation: scaleIn 1.5s ease-out forwards;
             opacity: 0;
+            animation: scaleIn 1.5s ease-out forwards;
         }
         .bg-circle:nth-child(1) {
             width: 400px; height: 400px;
@@ -85,33 +106,11 @@
             position: absolute;
             bottom: 0; left: 0; right: 0;
             height: 250px;
-            opacity: 0.5;
+            opacity: 0;
             background-image: 
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(43, 43, 138, 0.06) 21px, transparent 22px) 0 0 / 40px 20px,
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(200, 16, 46, 0.04) 21px, transparent 22px) 20px 0 / 40px 20px;
-            animation: fadeInBg 2s ease-out forwards;
-            opacity: 0;
-        }
-
-        /* --- ANIMACJE --- */
-        @keyframes cardEntry {
-            from { opacity: 0; transform: translateY(30px) rotate(-0.5deg); }
-            to { opacity: 1; transform: translateY(0) rotate(-0.5deg); }
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes fadeInBg {
-            from { opacity: 0; }
-            to { opacity: 0.5; }
+            animation: fadeInBg 2s ease-out 0.5s forwards;
         }
 
         /* --- KARTA GŁÓWNA --- */
@@ -131,7 +130,7 @@
             animation: cardEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        /* Elementy do animacji kaskadowej */
+        /* Elementy, które wchodzą kaskadowo */
         .seal, .logo-wrapper, .brand-title, .tagline, .description, .site-footer {
             opacity: 0;
             animation: fadeUp 0.8s ease-out forwards;
@@ -142,7 +141,7 @@
         .brand-title { animation-delay: 1.2s; }
         .tagline { animation-delay: 1.4s; }
         .description { animation-delay: 1.6s; }
-        .site-footer { animation-delay: 2.8s; }
+        .site-footer { animation-delay: 3.0s; }
 
         /* Pieczęć */
         .seal {
@@ -267,7 +266,7 @@
             animation: fadeUp 0.6s ease-out forwards;
         }
 
-        /* Opóźnienia dla każdego przycisku (Dynamiczne) */
+        /* Opóźnienia dla przycisków */
         .link-btn:nth-child(1) { animation-delay: 1.8s; transform: rotate(-1deg); margin-left: -5px; margin-right: 10px; }
         .link-btn:nth-child(2) { animation-delay: 1.9s; transform: rotate(1.2deg); margin-left: 8px; margin-right: -4px; }
         .link-btn:nth-child(3) { animation-delay: 2.0s; transform: rotate(-0.6deg); margin-left: -2px; margin-right: 12px; }
@@ -277,7 +276,7 @@
         .link-btn:nth-child(7) { animation-delay: 2.4s; transform: rotate(-0.9deg); margin-left: 10px; margin-right: 2px; }
         .link-btn:nth-child(8) { animation-delay: 2.5s; transform: rotate(1.1deg); margin-left: -2px; margin-right: 9px; }
 
-        /* Efekt najechania - znosi rotację i unosi przycisk */
+        /* Efekt najechania */
         .link-btn:hover, .link-btn:focus {
             background: #f0f2f5;
             border-color: #b0b5c0;
@@ -298,17 +297,12 @@
         #admin-view { display: none; }
 
         .admin-title { text-align: center; font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; font-weight: 600; }
-        
         .login-form { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
-        
         .input-field { padding: 1rem; border: 1px solid var(--border-dark); border-radius: 8px; font-family: var(--font-main); font-size: 0.9rem; background: #fcfcfc; transition: var(--transition); }
         .input-field:focus { border-color: var(--navy); outline: none; box-shadow: 0 0 0 3px rgba(43, 43, 138, 0.1); }
-        
         .submit-btn { width: 100%; padding: 1rem; background: var(--navy); color: var(--white); border: none; border-radius: 8px; font-family: var(--font-main); font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--transition); }
         .submit-btn:hover { background: var(--navy-dark); }
-        
         .error-msg { color: var(--red); text-align: center; font-size: 0.85rem; margin-bottom: 1rem; display: none; font-weight: 600; }
-        
         .admin-panel-content { display: none; }
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 1rem; margin-bottom: 1.5rem; }
         .admin-header h2 { color: var(--navy); font-size: 1.2rem; }
@@ -377,7 +371,6 @@
             </nav>
         </section>
 
-        <!-- WIDOK ADMINA -->
         <section id="admin-view" aria-label="Admin Access">
             <h2 class="admin-title">System Authorization</h2>
             <div class="error-msg" id="error-msg" role="alert">Access denied. Invalid credentials.</div>
