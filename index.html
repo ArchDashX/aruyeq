@@ -145,15 +145,15 @@
         /* --- COOKIE BANNER --- */
         .cookie-banner {
             position: fixed;
-            bottom: 1rem; left: 50%; transform: translateX(-50%) translateY(150%);
+            bottom: 20px; left: 50%; transform: translateX(-50%) translateY(200%); /* Schowany poza ekran */
             width: calc(100% - 2rem); max-width: 500px;
             background: var(--white);
             border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.25);
             padding: 1.5rem;
-            z-index: 9999;
-            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            border: 1px solid rgba(0,0,0,0.05);
+            z-index: 99999;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.08);
         }
         .cookie-banner.show { transform: translateX(-50%) translateY(0); }
         
@@ -274,7 +274,7 @@
     </main>
 
     <!-- ========================================== -->
-    <!-- COOKIE BANNER (Pojawia się na dole ekranu) -->
+    <!-- COOKIE BANNER (Pokazuje się ZAWSZE)        -->
     <!-- ========================================== -->
     <div class="cookie-banner" id="cookie-banner">
         <div class="cookie-text">
@@ -283,8 +283,8 @@
         
         <!-- GŁÓWNE PRZYCISKI -->
         <div class="cookie-buttons" id="main-buttons">
-            <button class="cookie-btn btn-accept" onclick="setCookies('all')">Accept All</button>
-            <button class="cookie-btn btn-necessary" onclick="setCookies('necessary')">Only Necessary</button>
+            <button class="cookie-btn btn-accept" onclick="setCookies()">Accept All</button>
+            <button class="cookie-btn btn-necessary" onclick="setCookies()">Only Necessary</button>
             <button class="cookie-btn btn-customize" onclick="toggleSettings()">Customize</button>
         </div>
 
@@ -320,7 +320,7 @@
                     <span class="slider"></span>
                 </label>
             </div>
-            <button class="save-settings-btn" onclick="saveCustomSettings()">Save Preferences</button>
+            <button class="save-settings-btn" onclick="setCookies()">Save Preferences</button>
         </div>
     </div>
 
@@ -334,15 +334,17 @@
         };
         setInterval(() => { console.clear(); console.log("%cSTOP! System protected.", "color: #d11230; font-size: 20px; font-weight: bold;"); }, 2000);
 
-        // --- COOKIE LOGIC ---
+        // --- COOKIE LOGIC (ZAWSZE POKAZUJE) ---
         const cookieBanner = document.getElementById('cookie-banner');
         const cookieSettings = document.getElementById('cookie-settings');
         const mainButtons = document.getElementById('main-buttons');
 
-        // Sprawdź, czy użytkownik już dokonał wyboru (localStorage)
-        if (!localStorage.getItem('cookieConsent')) {
-            setTimeout(() => { cookieBanner.classList.add('show'); }, 1500); // Pojawia się po 1.5s
-        }
+        // Wymuszenie pokazania banera po 1 sekundzie od wejścia
+        window.addEventListener('load', () => {
+            setTimeout(() => { 
+                cookieBanner.classList.add('show'); 
+            }, 1000); 
+        });
 
-        function setCookies(type) {
-            localStorage.setItem('cookieConsent', type);
+        function toggleSettings() {
+            mainButtons.style.display = 'none
