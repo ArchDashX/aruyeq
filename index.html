@@ -260,8 +260,8 @@
         </div>
         
         <div class="cookie-buttons" id="main-buttons">
-            <button class="cookie-btn btn-accept" onclick="setCookies()">Accept All</button>
-            <button class="cookie-btn btn-necessary" onclick="setCookies()">Only Necessary</button>
+            <button class="cookie-btn btn-accept" onclick="setCookies('all')">Accept All</button>
+            <button class="cookie-btn btn-necessary" onclick="setCookies('necessary')">Only Necessary</button>
             <button class="cookie-btn btn-customize" onclick="toggleSettings()">Customize</button>
         </div>
 
@@ -296,7 +296,7 @@
                     <span class="slider"></span>
                 </label>
             </div>
-            <button class="save-settings-btn" onclick="setCookies()">Save Preferences</button>
+            <button class="save-settings-btn" onclick="setCookies('custom')">Save Preferences</button>
         </div>
     </div>
 
@@ -308,21 +308,34 @@
         const cookieSettings = document.getElementById('cookie-settings');
         const mainButtons = document.getElementById('main-buttons');
 
-        // Pokazuje baner po 1 sekundzie od pełnego załadowania strony
-        window.addEventListener('load', () => {
-            setTimeout(() => { 
-                cookieBanner.classList.add('show'); 
-            }, 1000); 
-        });
+        // 1. Sprawdź, czy użytkownik już zaakceptował cookies
+        if (!localStorage.getItem('cookieConsent')) {
+            window.addEventListener('load', () => {
+                setTimeout(() => { 
+                    cookieBanner.classList.add('show'); 
+                }, 1000); 
+            });
+        }
+
+        // 2. Zapis wyboru i ukrycie banera
+        function setCookies(type) {
+            if (type === 'all') {
+                localStorage.setItem('cookieConsent', 'all');
+            } else if (type === 'necessary') {
+                localStorage.setItem('cookieConsent', 'necessary');
+            } else if (type === 'custom') {
+                const analytics = document.getElementById('cookie-analytics').checked;
+                const marketing = document.getElementById('cookie-marketing').checked;
+                localStorage.setItem('cookieConsent', JSON.stringify({ necessary: true, analytics, marketing }));
+            }
+            
+            cookieBanner.classList.remove('show');
+            setTimeout(() => { cookieBanner.style.display = 'none'; }, 500);
+        }
 
         function toggleSettings() {
             mainButtons.style.display = 'none';
             cookieSettings.classList.add('show');
-        }
-
-        function setCookies() {
-            cookieBanner.classList.remove('show');
-            setTimeout(() => { cookieBanner.style.display = 'none'; }, 500);
         }
 
         // --- FUNKCJE POMOCNICZE ---
