@@ -1,10 +1,8 @@
-<!-- plik: index.html (główna strona) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ARUYEQ - Arch Linux, Hyprland and system customisation.">
     <title>ARUYEQ | Arch Linux</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,74 +17,101 @@
             --transition: all 0.2s ease; 
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-main); background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 2rem 1rem; line-height: 1.5; -webkit-font-smoothing: antialiased; position: relative; overflow-x: hidden; }
         
+        body { 
+            font-family: var(--font-main); 
+            background-color: var(--bg-base); 
+            color: var(--text-main); 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 2rem 1rem; 
+            line-height: 1.5; 
+            -webkit-font-smoothing: antialiased; 
+            position: relative; 
+            overflow-x: hidden; 
+        }
+
         /* --- JAPOŃSKIE TŁO ANIMOWANE --- */
         .bg-decor { 
-            position: fixed; inset: 0; z-index: -1; pointer-events: none; 
+            position: fixed; 
+            inset: 0; 
+            z-index: -1; 
+            pointer-events: none; 
             background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%); 
             overflow: hidden;
         }
-        
-        /* Fale (Seigaiha) */
+
         .bg-waves {
-            position: absolute; bottom: -50px; left: -10%; width: 120%; height: 300px;
+            position: absolute; 
+            bottom: -50px; 
+            left: -10%; 
+            width: 120%; 
+            height: 300px;
             background-image: 
-                radial-gradient(circle at 50% 100%, transparent 25px, rgba(43, 43, 138, 0.05) 26px, transparent 27px) 0 0 / 50px 25px,
-                radial-gradient(circle at 50% 100%, transparent 25px, rgba(200, 16, 46, 0.04) 26px, transparent 27px) 25px 0 / 50px 25px;
+                radial-gradient(circle at 50% 100%, transparent 25px, rgba(43, 43, 138, 0.08) 26px, transparent 27px) 0 0 / 50px 25px,
+                radial-gradient(circle at 50% 100%, transparent 25px, rgba(200, 16, 46, 0.06) 26px, transparent 27px) 25px 0 / 50px 25px;
             animation: waveMove 20s linear infinite;
         }
-        @keyframes waveMove {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50px); }
+        @keyframes waveMove { 
+            from { transform: translateX(0); } 
+            to { transform: translateX(-50px); } 
         }
 
-        /* Pływające okręgi (Słońce/Księżyc) */
         .bg-circle { 
-            position: absolute; border-radius: 50%; opacity: 0.6;
-            animation: float 15s ease-in-out infinite alternate;
+            position: absolute; 
+            border-radius: 50%; 
+            opacity: 0.7; 
+            animation: float 15s ease-in-out infinite alternate; 
         }
         .bg-circle:nth-child(1) { 
             width: 300px; height: 300px; top: -100px; left: -100px; 
-            background: radial-gradient(circle, rgba(200, 16, 46, 0.1) 0%, transparent 70%);
-            animation-duration: 12s;
+            background: radial-gradient(circle, rgba(200, 16, 46, 0.15) 0%, transparent 70%); 
+            animation-duration: 12s; 
         }
         .bg-circle:nth-child(2) { 
             width: 400px; height: 400px; bottom: -150px; right: -100px; 
-            background: radial-gradient(circle, rgba(43, 43, 138, 0.08) 0%, transparent 70%);
-            animation-duration: 18s;
-            animation-delay: -5s;
+            background: radial-gradient(circle, rgba(43, 43, 138, 0.1) 0%, transparent 70%); 
+            animation-duration: 18s; 
+            animation-delay: -5s; 
         }
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 50px) scale(1.1); }
+        @keyframes float { 
+            0% { transform: translate(0, 0) scale(1); } 
+            100% { transform: translate(30px, 50px) scale(1.1); } 
         }
 
-        /* Delikatne pionowe linie (jak deszcz) */
         .bg-lines { position: absolute; inset: 0; }
-        .bg-line {
-            position: absolute; top: -100px; width: 1px; height: 150px;
-            background: linear-gradient(to bottom, transparent, rgba(43, 43, 138, 0.1), transparent);
-            animation: fall linear infinite;
+        .bg-line { 
+            position: absolute; 
+            top: -100px; 
+            width: 1px; 
+            height: 150px; 
+            background: linear-gradient(to bottom, transparent, rgba(43, 43, 138, 0.15), transparent); 
+            animation: fall linear infinite; 
         }
-        @keyframes fall {
-            to { transform: translateY(110vh); }
+        @keyframes fall { 
+            to { transform: translateY(110vh); } 
         }
 
         /* --- KARTA --- */
-        .card { 
-            width: 100%; max-width: 440px; background: var(--surface); padding: 2.5rem 2rem; border-radius: var(--radius); 
-            box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); position: relative; z-index: 1; 
-            display: flex; flex-direction: column; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-        }
-
-        /* Animacje wejścia */
         .animate-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .animate-up.visible { opacity: 1; transform: translateY(0); }
         .card.animate-card { opacity: 0; transform: translateY(30px) scale(0.98); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .card.animate-card.visible { opacity: 1; transform: translateY(0) scale(1); }
 
-        /* Pieczęć (Hanko) */
+        .card { 
+            width: 100%; max-width: 440px; 
+            background: var(--surface); 
+            padding: 2.5rem 2rem; 
+            border-radius: var(--radius); 
+            box-shadow: var(--shadow-lg); 
+            border: 1px solid var(--border-color); 
+            position: relative; z-index: 1; 
+            display: flex; flex-direction: column; 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        }
+
         .seal {
             position: absolute; top: 1.5rem; right: 1.5rem; width: 34px; height: 34px;
             border: 2px solid var(--red); border-radius: 6px;
@@ -177,7 +202,7 @@
     </div>
 
     <script>
-        // Generowanie animowanych pionowych linii (deszcz)
+        // Tło - generowanie linii (deszcz)
         const linesContainer = document.getElementById('bg-lines');
         for (let i = 0; i < 20; i++) {
             const line = document.createElement('div');
@@ -189,22 +214,17 @@
             linesContainer.appendChild(line);
         }
 
-        // Animacja wejścia
+        // Animacje wejścia
         document.addEventListener("DOMContentLoaded", () => {
             const elements = document.querySelectorAll('.animate-up');
             const card = document.getElementById('main-card');
-            
             requestAnimationFrame(() => { card.classList.add('visible'); });
-
             elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('visible');
-                }, 200 + (index * 100));
+                setTimeout(() => { el.classList.add('visible'); }, 200 + (index * 100));
             });
         });
 
         const CONSENT_KEY = 'aruyeq_cookie_consent';
-        
         if (!localStorage.getItem(CONSENT_KEY)) {
             setTimeout(() => { document.getElementById('cookie-banner').classList.add('show'); }, 1500);
         }
