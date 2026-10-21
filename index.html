@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ARUYEQ - Arch Linux, Hyprland and system customisation.">
     <title>ARUYEQ | Arch Linux</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -123,7 +122,7 @@
         .link-icon { margin-right: 15px; font-size: 1.1rem; width: 24px; text-align: center; color: var(--text-main); transition: var(--transition-smooth); }
         .link-btn:hover .link-icon { color: var(--red); }
 
-        /* --- NOWA STOPKA (KLIKALNA) --- */
+        /* --- STOPKA --- */
         .site-footer {
             margin-top: 2.5rem; padding-top: 1.5rem;
             border-top: 1px solid rgba(0,0,0,0.05);
@@ -131,29 +130,18 @@
             text-align: center;
         }
         .copyright-btn {
-            display: inline-block;
-            font-size: 0.8rem;
-            color: #777;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            border: 1px dashed transparent;
-            line-height: 1.6;
+            display: inline-block; font-size: 0.8rem; color: #777;
+            cursor: pointer; transition: var(--transition-smooth);
+            padding: 0.8rem 1rem; border-radius: 8px;
+            border: 1px dashed transparent; line-height: 1.6;
         }
         .copyright-btn:hover {
-            color: var(--navy);
-            background: rgba(255,255,255,0.6);
+            color: var(--navy); background: rgba(255,255,255,0.6);
             border-color: rgba(35, 35, 107, 0.2);
         }
-        .copyright-btn strong {
-            display: block;
-            font-size: 0.9rem;
-            color: var(--text-main);
-            margin-bottom: 2px;
-        }
+        .copyright-btn strong { display: block; font-size: 0.9rem; color: var(--text-main); margin-bottom: 2px; }
 
-        /* --- MODAL --- */
+        /* --- MODAL Z ZAKŁADKAMI --- */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
@@ -164,29 +152,53 @@
         
         .modal-content {
             background: #ffffff; width: 100%; max-width: 600px;
-            max-height: 85vh; overflow-y: auto;
-            border-radius: 16px; padding: 2.5rem 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            max-height: 85vh; display: flex; flex-direction: column;
+            border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             position: relative; transform: translateY(20px); transition: transform 0.3s ease;
-            text-align: left;
+            overflow: hidden;
         }
         .modal-overlay.active .modal-content { transform: translateY(0); }
         
         .modal-close {
-            position: absolute; top: 1rem; right: 1rem;
+            position: absolute; top: 1rem; right: 1rem; z-index: 10;
             background: #f0f0f0; border: none; width: 36px; height: 36px;
             border-radius: 50%; font-size: 1.2rem; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             transition: background 0.2s;
         }
         .modal-close:hover { background: #e0e0e0; }
-        
-        .modal-content h2 { color: var(--navy); font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
-        .modal-content h3 { color: var(--navy); font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
-        .modal-content p, .modal-content ul { font-size: 0.9rem; color: #555; line-height: 1.6; margin-bottom: 1rem; }
-        .modal-content ul { padding-left: 1.5rem; }
-        .modal-content li { margin-bottom: 0.5rem; }
-        .modal-content strong { color: #333; }
+
+        /* Zakładki (Tabs) */
+        .modal-tabs {
+            display: flex; border-bottom: 1px solid #eee;
+            background: #fcfcfc; border-radius: 16px 16px 0 0;
+        }
+        .tab-btn {
+            flex: 1; padding: 1.2rem; background: none; border: none;
+            font-family: var(--font-main); font-weight: 600; font-size: 0.95rem;
+            color: #777; cursor: pointer; transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-btn:hover { color: var(--navy); background: #f4f4f4; }
+        .tab-btn.active {
+            color: var(--navy); border-bottom-color: var(--navy);
+            background: #ffffff;
+        }
+
+        /* Treść zakładek */
+        .modal-body {
+            padding: 2rem; overflow-y: auto; flex: 1;
+        }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .modal-body h2 { color: var(--navy); font-size: 1.3rem; margin-bottom: 1rem; }
+        .modal-body h3 { color: var(--navy); font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .modal-body p, .modal-body ul { font-size: 0.9rem; color: #555; line-height: 1.6; margin-bottom: 1rem; }
+        .modal-body ul { padding-left: 1.5rem; }
+        .modal-body li { margin-bottom: 0.5rem; }
+        .modal-body strong { color: #333; }
 
         /* --- ADMIN --- */
         #admin-view { display: none; }
@@ -206,7 +218,8 @@
         @media (max-width: 480px) {
             .card { padding: 2rem 1.5rem; }
             .brand-title { font-size: 1.8rem; letter-spacing: 5px; }
-            .modal-content { padding: 1.5rem; }
+            .modal-body { padding: 1.5rem; }
+            .tab-btn { padding: 1rem 0.5rem; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -275,9 +288,8 @@
             </div>
         </section>
 
-        <!-- NOWA STOPKA (KLIKALNA) -->
         <footer class="site-footer" id="public-footer">
-            <div class="copyright-btn" onclick="openModal()" role="button" tabindex="0" aria-label="Zobacz prawa autorskie i regulamin">
+            <div class="copyright-btn" onclick="openModal()" role="button" tabindex="0">
                 <strong>&copy; 2026 ARUYEQ.</strong>
                 All rights reserved.
                 <br><span style="font-size: 0.7rem; color: #aaa; margin-top: 4px; display: inline-block;">(Kliknij, aby zobaczyć regulamin)</span>
@@ -285,50 +297,36 @@
         </footer>
     </main>
 
-    <!-- MODAL -->
+    <!-- MODAL Z ZAKŁADKAMI -->
     <div class="modal-overlay" id="legal-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal(event)">&times;</button>
             
-            <div>
-                <h2>Regulamin i Prawa Autorskie</h2>
-                <p><strong>Ostatnia aktualizacja:</strong> 2026</p>
-
-                <h3>1. Prawa autorskie (Copyright)</h3>
-                <p><strong>&copy; 2026 ARUYEQ. Wszelkie prawa zastrzeżone (All rights reserved).</strong></p>
-                <ul>
-                    <li>Wszelkie treści, w tym kod źródłowy (HTML, CSS, JS), projekt graficzny logo (most, słońce) oraz teksty, są własnością twórcy ARUYEQ.</li>
-                    <li>Zabrania się kopiowania, modyfikowania lub rozpowszechniania kodu i grafiki bez pisemnej zgody autora.</li>
-                    <li>Wizerunek logo jest znakiem rozpoznawczym twórcy.</li>
-                </ul>
-
-                <h3>2. Polityka Prywatności (Privacy Policy)</h3>
-                <p>Strona ma charakter wyłącznie informacyjny i <strong>nie zbiera, nie przechowuje ani nie przetwarza żadnych danych osobowych</strong>.</p>
-                <ul>
-                    <li>Nie używamy plików cookies do śledzenia.</li>
-                    <li>Nie stosujemy zewnętrznych narzędzi analitycznych (np. Google Analytics).</li>
-                    <li>Wszystkie animacje i tła są generowane lokalnie w Twojej przeglądarce.</li>
-                </ul>
-
-                <h3>3. Linki do stron zewnętrznych</h3>
-                <p>Strona zawiera linki do platform zewnętrznych (X, YouTube, GitHub, Discord, itp.). Po kliknięciu opuszczasz naszą stronę i przechodzisz do serwisu, który posiada własną Politykę Prywatności. Nie ponosimy odpowiedzialności za praktyki stosowane przez te serwisy.</p>
-
-                <h3>4. Regulamin korzystania z serwisu (Terms of Service)</h3>
-                <p>Korzystając z tej strony, akceptujesz niniejszy Regulamin.</p>
-                <ul>
-                    <li>Strona to prywatny projekt informacyjny promujący Arch Linux i Hyprland.</li>
-                    <li>Strona nie świadczy usług komercyjnych.</li>
-                    <li>Strona jest dostarczana w stanie "takim, jakim jest" (as-is). Twórca nie ponosi odpowiedzialności za szkody wynikające z korzystania z linków zewnętrznych.</li>
-                </ul>
-
-                <h3>5. Kontakt</h3>
-                <p>W razie pytań prosimy o kontakt przez jeden z podanych kanałów (np. Discord: @aruyeq).</p>
+            <!-- Przyciski zakładek -->
+            <div class="modal-tabs">
+                <button class="tab-btn active" onclick="switchTab('terms', this)">Regulamin</button>
+                <button class="tab-btn" onclick="switchTab('privacy', this)">Polityka Prywatności</button>
             </div>
-        </div>
-    </div>
 
-    <script>
-        'use strict';
+            <!-- Treść -->
+            <div class="modal-body">
+                <!-- ZAKŁADKA 1: REGULAMIN -->
+                <div id="tab-terms" class="tab-content active">
+                    <h2>Regulamin korzystania z serwisu</h2>
+                    <p><strong>Ostatnia aktualizacja:</strong> 2026</p>
 
-        // --- SYSTEM ZABEZPIECZEŃ ---
-        document.addEventListener('contextmenu', event => event.p
+                    <h3>1. Postanowienia ogólne</h3>
+                    <p>Niniejszy Regulamin określa zasady korzystania ze strony ARUYEQ. Strona ma charakter wyłącznie informacyjny (tzw. link-in-bio) i nie prowadzi sprzedaży ani nie wymaga rejestracji.</p>
+
+                    <h3>2. Prawa autorskie (Copyright)</h3>
+                    <p><strong>&copy; 2026 ARUYEQ. Wszelkie prawa zastrzeżone (All rights reserved).</strong></p>
+                    <ul>
+                        <li>Wszelkie treści, w tym kod źródłowy (HTML, CSS, JS), projekt graficzny logo (most, słońce) oraz teksty, są własnością twórcy ARUYEQ.</li>
+                        <li>Zabrania się kopiowania, modyfikowania lub rozpowszechniania kodu i grafiki bez pisemnej zgody autora.</li>
+                        <li>Wizerunek logo jest znakiem rozpoznawczym twórcy.</li>
+                    </ul>
+
+                    <h3>3. Odpowiedzialność</h3>
+                    <p>Strona jest dostarczana w stanie "takim, jakim jest" (as-is). Twórca nie ponosi odpowiedzialności za szkody wynikające z korzystania z linków zewnętrznych ani za ewentualne błędy w działaniu kodu.</p>
+
+                    <h3>4. Linki do stron zewnętrznych</h3>
