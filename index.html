@@ -145,7 +145,7 @@
         /* --- COOKIE BANNER --- */
         .cookie-banner {
             position: fixed;
-            bottom: 20px; left: 50%; transform: translateX(-50%) translateY(200%); /* Schowany poza ekran */
+            bottom: 20px; left: 50%; transform: translateX(-50%) translateY(200%);
             width: calc(100% - 2rem); max-width: 500px;
             background: var(--white);
             border-radius: 12px;
@@ -199,7 +199,7 @@
         }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
 
     <div class="bg-decorations" aria-hidden="true">
         <div class="glow"></div>
@@ -222,7 +222,7 @@
             <p class="tagline">"I use Arch btw"</p>
         </header>
 
-        <section id="public-view" aria-label="Profile Links">
+        <section id="public-view">
             <p class="description">
                 I create content about <a href="https://archlinux.org/" target="_blank" rel="noopener noreferrer">Arch Linux</a>, 
                 <a href="https://omarchy.org/" target="_blank" rel="noopener noreferrer">Omarchy</a> and 
@@ -242,29 +242,7 @@
             </nav>
         </section>
 
-        <section id="admin-view" aria-label="Admin Access">
-            <h2 class="admin-title">System Authorization</h2>
-            <div class="error-msg" id="error-msg" role="alert">Access denied. Invalid credentials.</div>
-            
-            <form id="login-form" class="login-form" onsubmit="handleLogin(event)">
-                <input type="text" id="username" class="input-field" placeholder="Identifier" autocomplete="off" required aria-label="Login">
-                <input type="password" id="password" class="input-field" placeholder="Access Key" autocomplete="off" required aria-label="Password">
-                <button type="submit" class="submit-btn">Verify</button>
-            </form>
-
-            <div id="admin-panel-content">
-                <div class="admin-header">
-                    <h2>Admin Panel</h2>
-                    <button class="logout-btn" onclick="logout()">Logout</button>
-                </div>
-                <p class="description" style="border: 1px solid rgba(0,0,0,0.05); padding: 1rem; border-radius: 10px; background: rgba(255,255,255,0.5);">
-                    <strong>Authentication successful.</strong><br>
-                    Welcome to the ARUYEQ management system.
-                </p>
-            </div>
-        </section>
-
-        <footer class="site-footer" id="public-footer">
+        <footer class="site-footer">
             <a href="https://archdashx.github.io/aruyeq-regulamin/index.html" class="copyright-link">
                 <strong>&copy; 2026 ARUYEQ.</strong>
                 All rights reserved.
@@ -274,21 +252,19 @@
     </main>
 
     <!-- ========================================== -->
-    <!-- COOKIE BANNER (Pokazuje się ZAWSZE)        -->
+    <!-- COOKIE BANNER                              -->
     <!-- ========================================== -->
     <div class="cookie-banner" id="cookie-banner">
         <div class="cookie-text">
             We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. Read our <a href="https://archdashx.github.io/aruyeq-regulamin/index.html" target="_blank">Privacy Policy</a>.
         </div>
         
-        <!-- GŁÓWNE PRZYCISKI -->
         <div class="cookie-buttons" id="main-buttons">
             <button class="cookie-btn btn-accept" onclick="setCookies()">Accept All</button>
             <button class="cookie-btn btn-necessary" onclick="setCookies()">Only Necessary</button>
             <button class="cookie-btn btn-customize" onclick="toggleSettings()">Customize</button>
         </div>
 
-        <!-- USTAWIENIA ZAAWANSOWANE -->
         <div class="cookie-settings" id="cookie-settings">
             <div class="setting-item">
                 <div class="setting-info">
@@ -327,19 +303,12 @@
     <script>
         'use strict';
 
-        // --- SYSTEM ZABEZPIECZEŃ ---
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.onkeydown = function(e) {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) return false;
-        };
-        setInterval(() => { console.clear(); console.log("%cSTOP! System protected.", "color: #d11230; font-size: 20px; font-weight: bold;"); }, 2000);
-
-        // --- COOKIE LOGIC (ZAWSZE POKAZUJE) ---
+        // --- COOKIE LOGIC ---
         const cookieBanner = document.getElementById('cookie-banner');
         const cookieSettings = document.getElementById('cookie-settings');
         const mainButtons = document.getElementById('main-buttons');
 
-        // Wymuszenie pokazania banera po 1 sekundzie od wejścia
+        // Pokazuje baner po 1 sekundzie
         window.addEventListener('load', () => {
             setTimeout(() => { 
                 cookieBanner.classList.add('show'); 
@@ -347,4 +316,26 @@
         });
 
         function toggleSettings() {
-            mainButtons.style.display = 'none
+            mainButtons.style.display = 'none';
+            cookieSettings.classList.add('show');
+        }
+
+        function setCookies() {
+            cookieBanner.classList.remove('show');
+            setTimeout(() => { cookieBanner.style.display = 'none'; }, 500);
+        }
+
+        // --- FUNKCJE POMOCNICZE ---
+        function copyDiscord(e) {
+            e.preventDefault();
+            navigator.clipboard.writeText('@aruyeq').then(() => {
+                const btn = e.currentTarget;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="link-icon">✓</span> Copied!';
+                setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+            });
+        }
+    </script>
+
+</body>
+</html>
