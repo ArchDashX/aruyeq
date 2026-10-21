@@ -222,7 +222,7 @@
             <p class="tagline">"I use Arch btw"</p>
         </header>
 
-        <section id="public-view">
+        <section>
             <p class="description">
                 I create content about <a href="https://archlinux.org/" target="_blank" rel="noopener noreferrer">Arch Linux</a>, 
                 <a href="https://omarchy.org/" target="_blank" rel="noopener noreferrer">Omarchy</a> and 
@@ -308,7 +308,7 @@
         const cookieSettings = document.getElementById('cookie-settings');
         const mainButtons = document.getElementById('main-buttons');
 
-        // Pokazuje baner po 1 sekundzie
+        // Pokazuje baner po 1 sekundzie od pełnego załadowania strony
         window.addEventListener('load', () => {
             setTimeout(() => { 
                 cookieBanner.classList.add('show'); 
