@@ -36,90 +36,75 @@
 
         /* --- JAPOŃSKIE TŁO ANIMOWANE --- */
         .bg-decor { 
-            position: fixed; 
-            inset: 0; 
-            z-index: -1; 
-            pointer-events: none; 
-            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%); 
-            overflow: hidden;
+            position: fixed; inset: 0; z-index: -1; pointer-events: none; 
+            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%); overflow: hidden;
         }
-
         .bg-waves {
-            position: absolute; 
-            bottom: -50px; 
-            left: -10%; 
-            width: 120%; 
-            height: 300px;
-            background-image: 
-                radial-gradient(circle at 50% 100%, transparent 25px, rgba(43, 43, 138, 0.08) 26px, transparent 27px) 0 0 / 50px 25px,
-                radial-gradient(circle at 50% 100%, transparent 25px, rgba(200, 16, 46, 0.06) 26px, transparent 27px) 25px 0 / 50px 25px;
+            position: absolute; bottom: -50px; left: -10%; width: 120%; height: 300px;
+            background-image: radial-gradient(circle at 50% 100%, transparent 25px, rgba(43, 43, 138, 0.08) 26px, transparent 27px) 0 0 / 50px 25px, radial-gradient(circle at 50% 100%, transparent 25px, rgba(200, 16, 46, 0.06) 26px, transparent 27px) 25px 0 / 50px 25px;
             animation: waveMove 20s linear infinite;
         }
-        @keyframes waveMove { 
-            from { transform: translateX(0); } 
-            to { transform: translateX(-50px); } 
-        }
-
-        .bg-circle { 
-            position: absolute; 
-            border-radius: 50%; 
-            opacity: 0.7; 
-            animation: float 15s ease-in-out infinite alternate; 
-        }
-        .bg-circle:nth-child(1) { 
-            width: 300px; height: 300px; top: -100px; left: -100px; 
-            background: radial-gradient(circle, rgba(200, 16, 46, 0.15) 0%, transparent 70%); 
-            animation-duration: 12s; 
-        }
-        .bg-circle:nth-child(2) { 
-            width: 400px; height: 400px; bottom: -150px; right: -100px; 
-            background: radial-gradient(circle, rgba(43, 43, 138, 0.1) 0%, transparent 70%); 
-            animation-duration: 18s; 
-            animation-delay: -5s; 
-        }
-        @keyframes float { 
-            0% { transform: translate(0, 0) scale(1); } 
-            100% { transform: translate(30px, 50px) scale(1.1); } 
-        }
-
+        @keyframes waveMove { from { transform: translateX(0); } to { transform: translateX(-50px); } }
+        .bg-circle { position: absolute; border-radius: 50%; opacity: 0.7; animation: float 15s ease-in-out infinite alternate; }
+        .bg-circle:nth-child(1) { width: 300px; height: 300px; top: -100px; left: -100px; background: radial-gradient(circle, rgba(200, 16, 46, 0.15) 0%, transparent 70%); animation-duration: 12s; }
+        .bg-circle:nth-child(2) { width: 400px; height: 400px; bottom: -150px; right: -100px; background: radial-gradient(circle, rgba(43, 43, 138, 0.1) 0%, transparent 70%); animation-duration: 18s; animation-delay: -5s; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 50px) scale(1.1); } }
         .bg-lines { position: absolute; inset: 0; }
-        .bg-line { 
-            position: absolute; 
-            top: -100px; 
-            width: 1px; 
-            height: 150px; 
-            background: linear-gradient(to bottom, transparent, rgba(43, 43, 138, 0.15), transparent); 
-            animation: fall linear infinite; 
-        }
-        @keyframes fall { 
-            to { transform: translateY(110vh); } 
-        }
+        .bg-line { position: absolute; top: -100px; width: 1px; height: 150px; background: linear-gradient(to bottom, transparent, rgba(43, 43, 138, 0.15), transparent); animation: fall linear infinite; }
+        @keyframes fall { to { transform: translateY(110vh); } }
 
-        /* --- KARTA I ANIMACJE WEJŚCIA --- */
+        /* --- ANIMACJE WEJŚCIA --- */
         .animate-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .animate-up.visible { opacity: 1; transform: translateY(0); }
         .card.animate-card { opacity: 0; transform: translateY(30px) scale(0.98); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .card.animate-card.visible { opacity: 1; transform: translateY(0) scale(1); }
 
+        /* --- EKRAN WYBORU URZĄDZENIA --- */
+        #device-selector {
+            position: fixed; inset: 0; z-index: 10000;
+            background: var(--bg-base);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 2rem;
+            transition: opacity 0.4s ease;
+        }
+        #device-selector.hidden { opacity: 0; pointer-events: none; }
+        
+        .selector-title { font-size: 1.5rem; font-weight: 800; color: var(--navy); margin-bottom: 0.5rem; letter-spacing: 2px; }
+        .selector-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem; text-align: center; }
+        
+        .device-options { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .device-btn {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 100px; height: 100px;
+            background: var(--white); border: 2px solid var(--border-color); border-radius: 16px;
+            cursor: pointer; transition: var(--transition); font-family: var(--font-main);
+            color: var(--text-main); gap: 10px;
+        }
+        .device-btn:hover { border-color: var(--navy); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .device-btn svg { width: 32px; height: 32px; stroke: var(--navy); }
+        .device-btn span { font-weight: 600; font-size: 0.85rem; }
+
+        /* --- WIDOKI (Wymuszone rozmiary) --- */
+        .view-mobile .card { max-width: 380px; padding: 2rem 1.5rem; }
+        .view-mobile .brand { font-size: 1.8rem; letter-spacing: 4px; }
+        
+        .view-tablet .card { max-width: 520px; padding: 3rem 2.5rem; }
+        .view-tablet .brand { font-size: 2.4rem; }
+        
+        .view-desktop .card { max-width: 600px; padding: 4rem 3rem; }
+        .view-desktop .brand { font-size: 2.6rem; }
+        .view-desktop .description { font-size: 1.1rem; }
+        .view-desktop .link-btn { padding: 1.2rem 1.5rem; font-size: 1rem; }
+
+        /* --- KARTA --- */
         .card { 
-            width: 100%; max-width: 440px; 
-            background: var(--surface); 
-            padding: 2.5rem 2rem; 
-            border-radius: var(--radius); 
-            box-shadow: var(--shadow-lg); 
-            border: 1px solid var(--border-color); 
-            position: relative; z-index: 1; 
-            display: flex; flex-direction: column; 
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            width: 100%; max-width: 440px; background: var(--surface); padding: 2.5rem 2rem; border-radius: var(--radius); 
+            box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); position: relative; z-index: 1; 
+            display: flex; flex-direction: column; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            transition: max-width 0.4s ease, padding 0.4s ease;
         }
 
-        /* Czerwona pieczęć (Hanko) */
-        .seal {
-            position: absolute; top: 1.5rem; right: 1.5rem; width: 34px; height: 34px;
-            border: 2px solid var(--red); border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
-            transform: rotate(6deg); opacity: 0.85;
-        }
+        .seal { position: absolute; top: 1.5rem; right: 1.5rem; width: 34px; height: 34px; border: 2px solid var(--red); border-radius: 6px; display: flex; align-items: center; justify-content: center; transform: rotate(6deg); opacity: 0.85; }
         .seal::before { content: ''; width: 14px; height: 14px; background-color: var(--red); border-radius: 3px; transform: rotate(45deg); }
 
         .logo-wrap { display: flex; justify-content: center; margin-bottom: 1.5rem; }
@@ -128,19 +113,14 @@
         .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 70px; height: 25px; border: 2px solid var(--white); border-bottom: none; border-radius: 50px 50px 0 0; }
         .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: var(--white); }
 
-        .brand { font-size: 2rem; font-weight: 800; color: var(--navy); text-align: center; letter-spacing: 6px; margin-bottom: 0.2rem; }
+        .brand { font-size: 2rem; font-weight: 800; color: var(--navy); text-align: center; letter-spacing: 6px; margin-bottom: 0.2rem; transition: var(--transition); }
         .tagline { font-size: 0.75rem; color: var(--red); text-align: center; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; margin-bottom: 1.8rem; }
         .description { font-size: 0.95rem; color: var(--text-muted); text-align: center; margin-bottom: 2rem; }
         .description a { color: var(--text-main); font-weight: 600; text-decoration: none; border-bottom: 1px dashed var(--red); transition: var(--transition); }
         .description a:hover { color: var(--red); border-bottom-style: solid; }
 
         .links { display: flex; flex-direction: column; gap: 0.8rem; }
-        .link-btn { 
-            display: flex; align-items: center; padding: 1rem 1.2rem; text-decoration: none; 
-            background: #fcfcfc; border: 1px solid var(--border-color); border-radius: 8px; 
-            color: var(--text-main); font-weight: 600; font-size: 0.9rem; 
-            transition: var(--transition);
-        }
+        .link-btn { display: flex; align-items: center; padding: 1rem 1.2rem; text-decoration: none; background: #fcfcfc; border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); font-weight: 600; font-size: 0.9rem; transition: var(--transition); }
         .link-btn:hover { background: #f4f6fa; border-color: #d0d5e0; transform: translateY(-2px); box-shadow: var(--shadow-sm); }
         .link-icon { margin-right: 15px; font-size: 1.1rem; width: 24px; text-align: center; color: var(--text-main); }
         .link-btn:hover .link-icon { color: var(--red); }
@@ -161,10 +141,31 @@
         .btn-necessary { background: #f0f0f0; color: var(--text-main); }
         .btn-necessary:hover { background: #e0e0e0; }
 
-        @media (max-width: 480px) { .card { padding: 2rem 1.5rem; } .brand { font-size: 1.8rem; letter-spacing: 4px; } .cookie-actions { flex-direction: column; } }
+        @media (max-width: 480px) { .cookie-actions { flex-direction: column; } }
     </style>
 </head>
-<body>
+<body class="view-desktop"> <!-- Domyślnie desktop, JS to nadpisze -->
+
+    <!-- Ekran wyboru urządzenia -->
+    <div id="device-selector">
+        <div class="selector-title">WYBIERZ URZĄDZENIE</div>
+        <div class="selector-subtitle">Dopasujemy widok do Twojego ekranu</div>
+        <div class="device-options">
+            <button class="device-btn" onclick="setDevice('mobile')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                <span>Mobile</span>
+            </button>
+            <button class="device-btn" onclick="setDevice('tablet')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                <span>Tablet</span>
+            </button>
+            <button class="device-btn" onclick="setDevice('desktop')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                <span>Desktop</span>
+            </button>
+        </div>
+    </div>
+
     <div class="bg-decor" aria-hidden="true">
         <div class="bg-circle"></div>
         <div class="bg-circle"></div>
@@ -173,7 +174,7 @@
     </div>
 
     <main class="card animate-card" id="main-card">
-        <div class="seal"></div> <!-- PIECZĘĆ WRÓCIŁA -->
+        <div class="seal"></div>
         <div class="logo-wrap animate-up"><div class="logo" aria-hidden="true"><div class="logo-sun"></div><div class="logo-bridge"></div><div class="logo-water"></div></div></div>
         <header class="animate-up"><h1 class="brand">ARUYEQ</h1><p class="tagline">"I use Arch btw"</p></header>
         <section class="animate-up">
@@ -204,30 +205,68 @@
     </div>
 
     <script>
-        const linesContainer = document.getElementById('bg-lines');
-        for (let i = 0; i < 20; i++) {
-            const line = document.createElement('div');
-            line.classList.add('bg-line');
-            line.style.left = Math.random() * 100 + '%';
-            line.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            line.style.animationDelay = Math.random() * 5 + 's';
-            line.style.opacity = Math.random() * 0.5 + 0.1;
-            linesContainer.appendChild(line);
+        const DEVICE_KEY = 'aruyeq_device_pref';
+        const CONSENT_KEY = 'aruyeq_cookie_consent';
+
+        // 1. Wykrywanie urządzenia
+        function detectDevice() {
+            const ua = navigator.userAgent;
+            if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return 'tablet';
+            if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) return 'mobile';
+            return 'desktop';
         }
 
+        // 2. Ustawienie widoku
+        function applyDevice(device) {
+            document.body.className = 'view-' + device;
+            document.getElementById('device-selector').classList.add('hidden');
+            localStorage.setItem(DEVICE_KEY, device);
+        }
+
+        // 3. Zapis z przycisku
+        function setDevice(device) {
+            applyDevice(device);
+        }
+
+        // 4. Inicjalizacja przy starcie
         document.addEventListener("DOMContentLoaded", () => {
+            const savedDevice = localStorage.getItem(DEVICE_KEY);
+            const detectedDevice = detectDevice();
+
+            if (!savedDevice) {
+                // Jeśli nie ma zapisu, pokazujemy wybór
+                document.getElementById('device-selector').classList.remove('hidden');
+                // Podpowiadamy urządzenie (opcjonalnie: można dodać podświetlenie przycisku, ale nie jest to wymagane)
+            } else {
+                // Jeśli jest zapis, od razu aplikujemy
+                applyDevice(savedDevice);
+            }
+
+            // Tło - generowanie linii
+            const linesContainer = document.getElementById('bg-lines');
+            for (let i = 0; i < 20; i++) {
+                const line = document.createElement('div');
+                line.classList.add('bg-line');
+                line.style.left = Math.random() * 100 + '%';
+                line.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                line.style.animationDelay = Math.random() * 5 + 's';
+                line.style.opacity = Math.random() * 0.5 + 0.1;
+                linesContainer.appendChild(line);
+            }
+
+            // Animacje kaskadowe
             const elements = document.querySelectorAll('.animate-up');
             const card = document.getElementById('main-card');
             requestAnimationFrame(() => { card.classList.add('visible'); });
             elements.forEach((el, index) => {
                 setTimeout(() => { el.classList.add('visible'); }, 200 + (index * 100));
             });
-        });
 
-        const CONSENT_KEY = 'aruyeq_cookie_consent';
-        if (!localStorage.getItem(CONSENT_KEY)) {
-            setTimeout(() => { document.getElementById('cookie-banner').classList.add('show'); }, 1500);
-        }
+            // Cookies
+            if (!localStorage.getItem(CONSENT_KEY)) {
+                setTimeout(() => { document.getElementById('cookie-banner').classList.add('show'); }, 1500);
+            }
+        });
 
         function setCookies(type) {
             localStorage.setItem(CONSENT_KEY, type);
