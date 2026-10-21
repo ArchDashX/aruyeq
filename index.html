@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARUYEQ | Arch Linux</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf9f6;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- TŁO --- */
+        .bg-image {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            opacity: 0.08; 
+            z-index: 0;
+            filter: grayscale(100%) contrast(120%); 
+            pointer-events: none;
+        }
+
+        .bg-lines {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .line {
+            position: absolute;
+            border: 1px solid rgba(43, 43, 138, 0.1);
+            border-radius: 50%;
+        }
+        .line:nth-child(1) {
+            width: 300px; height: 300px;
+            top: -100px; left: -100px;
+            transform: rotate(15deg);
+            border-color: rgba(200, 16, 46, 0.05);
+        }
+        .line:nth-child(2) {
+            width: 400px; height: 150px;
+            bottom: -50px; right: -100px;
+            transform: rotate(-10deg);
+        }
+
+        /* --- GŁÓWNA KARTA --- */
+        .card {
+            width: 100%;
+            max-width: 440px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem 2rem;
+            border-radius: 4px;
+            box-shadow: 8px 10px 0 rgba(0, 0, 0, 0.04);
+            transform: rotate(-0.5deg);
+            position: relative;
+            z-index: 1;
+            border: 1px solid #eaeaea;
+        }
+
+        .seal {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.5rem;
+            width: 32px;
+            height: 32px;
+            border: 2px solid #c8102e;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(8deg);
+            opacity: 0.85;
+        }
+        .seal::before {
+            content: '';
+            width: 12px; height: 12px;
+            background-color: #c8102e;
+            border-radius: 2px;
+            transform: rotate(45deg);
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transform: translateX(-3px);
+        }
+
+        .logo {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            background: #2b2b8a;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: rotate(2deg);
+        }
+
+        .sun {
+            position: absolute;
+            top: 18%; left: 30%;
+            width: 40px; height: 40px;
+            background: #c8102e;
+            border-radius: 50%;
+        }
+
+        .bridge {
+            position: absolute;
+            bottom: 18%; left: 15%;
+            width: 70px; height: 25px;
+            border: 2px solid #fff;
+            border-bottom: none;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .water {
+            position: absolute;
+            bottom: 0; left: -5%;
+            width: 110%; height: 30%;
+            background: #fff;
+        }
+
+        .brand {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2b2b8a;
+            text-align: center;
+            letter-spacing: 6px;
+            margin-bottom: 0.2rem;
+            transform: translateX(2px);
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            color: #c8102e;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 700;
+            margin-bottom: 1.8rem;
+            transform: rotate(-0.5deg);
+        }
+
+        /* --- WIDOK PUBLICZNY (Linki) --- */
+        .description {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .description a {
+            color: #111;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px dashed #c8102e;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            text-decoration: none;
+            background: #fcfcfc;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        /* Krzywe ułożenie */
+        .btn:nth-child(1) { transform: rotate(-1deg); margin-left: -5px; margin-right: 10px; }
+        .btn:nth-child(2) { transform: rotate(1.2deg); margin-left: 8px; margin-right: -4px; }
+        .btn:nth-child(3) { transform: rotate(-0.6deg); margin-left: -2px; margin-right: 12px; }
+        .btn:nth-child(4) { transform: rotate(1.5deg); margin-left: 12px; margin-right: 0px; }
+        .btn:nth-child(5) { transform: rotate(-1.2deg); margin-left: 0px; margin-right: 8px; }
+        .btn:nth-child(6) { transform: rotate(0.8deg); margin-left: 6px; margin-right: -6px; }
+        .btn:nth-child(7) { transform: rotate(-0.9deg); margin-left: 10px; margin-right: 2px; }
+        .btn:nth-child(8) { transform: rotate(1.1deg); margin-left: -2px; margin-right: 9px; }
+
+        .btn:hover {
+            background: #f0f2f5;
+            border-color: #b0b5c0;
+            transform: rotate(0deg) translateY(-2px) !important; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .icon {
+            margin-right: 15px;
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* --- WIDOK ADMINA (Logowanie/Panel) --- */
+        #admin-view {
+            display: none; /* Domyślnie ukryte */
+        }
+
+        .login-title {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group input {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            background: #fcfcfc;
+        }
+
+        .input-group input:focus { border-color: #2b2b8a; }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #2b2b8a;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .error-msg {
+            color: #c8102e;
+            text-align: center;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+            font-weight: 600;
+        }
+
+        #admin-panel-content {
+            display: none;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-header h2 { color: #2b2b8a; font-size: 1.2rem; }
+
+        .logout-btn {
+            background: #c8102e;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        /* Stopka */
+        .footer {
+            margin-top: 2.5rem;
+            font-size: 0.7rem;
+            color: #999;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div class="bg-image"></div>
+    <div class="bg-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <div class="card">
+        
+        <div class="seal"></div>
+
+        <div class="logo-container">
+            <div class="logo">
+                <div class="sun"></div>
+                <div class="bridge"></div>
+                <div class="water"></div>
+            </div>
+        </div>
+
+        <div class="brand">ARUYEQ</div>
+        <div class="tagline">"I use Arch btw"</div>
+
+        <!-- ========================================== -->
+        <!-- WIDOK PUBLICZNY (To widzą wszyscy)         -->
+        <!-- ========================================== -->
+        <div id="public-view">
+            <div class="description">
+                I create content about <a href="https://archlinux.org/" target="_blank">Arch Linux</a>, <a href="https://omarchy.org/" target="_blank">Omarchy</a> and <a href="https://hypr.land/" target="_blank">Hyprland</a> and system customisation.<br><br>
+                Speed, style and complete control, rather than a slow, bloated Windows system.
+            </div>
+
+            <div class="links">
+                <a href="https://x.com/aruyeq" target="_blank" class="btn"><span class="icon">𝕏</span> X (Twitter)</a>
+                <a href="#" class="btn"><span class="icon">›</span> Discord: @aruyeq</a>
+                <a href="https://youtube.com/@aruyeq" target="_blank" class="btn"><span class="icon">▶</span> YouTube</a>
+                <a href="https://rumble.com/user/ArchDashX" target="_blank" class="btn"><span class="icon">▷</span> Rumble</a>
+                <a href="https://github.com/ArchDashX" target="_blank" class="btn"><span class="icon">⌥</span> GitHub</a>
+                <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" class="btn"><span class="icon">◈</span> Steam</a>
+                <a href="https://tiktok.com/@aruyeq" target="_blank" class="btn"><span class="icon">♪</span> TikTok</a>
+                <a href="https://www.roblox.com/pl/users/4366923635/profile" target="_blank" class="btn"><span class="icon">◆</span> Roblox</a>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- WIDOK ADMINA (Ukryty, dostępny pod #admin) -->
+        <!-- ========================================== -->
+        <div id="admin-view">
+            <div class="login-title">Autoryzacja systemu</div>
+            
+            <div class="error-msg" id="error-msg">Odmowa dostępu. Błędne dane.</div>
+            
+            <!-- Formularz logowania -->
+            <div id="login-form">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Identyfikator" autocomplete="off">
+                    <input type="password" id="password" placeholder="Klucz dostępu" autocomplete="off">
+                </div>
+                <button class="login-btn" onclick="secureCheck()">Weryfikuj</button>
+            </div>
+
+            <!-- Panel po zalogowaniu -->
+            <div id="admin-panel-content">
+                <div class="admin-header">
+                    <h2>Panel Admina</h2>
+                    <button class="logout-btn" onclick="logout()">Wyloguj</button>
+                </div>
+                
+                <div class="description" style="margin-bottom: 1rem; border: 1px solid #eee; padding: 1rem; border-radius: 8px;">
+                    <strong>Zalogowano pomyślnie.</strong><br>
+                    Witaj w systemie zarządzania ARUYEQ.
+                </div>
+
+                <div class="footer" style="border-top: none;">
+                    System Zabezpieczony<br>&copy; 2026 ARUYEQ.
+                </div>
+            </div>
+        </div>
+
+        <!-- Stopka publiczna -->
+        <div class="footer" id="public-footer">
+            &copy; 2026 ARUYEQ.<br>Wszelkie prawa zastrzeżone.
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. SYSTEM ZABEZPIECZEŃ ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) return false;
+        };
+        setInterval(function() { console.clear(); console.log("%cSTOP! System chroniony.", "color: red; font-size: 20px; font-weight: bold;"); }, 2000);
+
+        // --- 2. HASHOWANIE SHA-256 ---
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        // Hashe dla: admin / admin
+        const HASH_USER = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; 
+        const HASH_PASS = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
+
+        // --- 3. ROUTING (Wykrywanie #admin) ---
+        function checkRoute() {
+            const hash = window.location.hash;
+            const publicView = document.getElementById('public-view');
+            const adminView = document.getElementById('admin-view');
+            const publicFooter = document.getElementById('public-footer');
+
+            if (hash === '#admin') {
+                publicView.style.display = 'none';
+                publicFooter.style.display = 'none';
+                adminView.style.display = 'block';
+                
+                // Reset formularza przy wejściu
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('admin-panel-content').style.display = 'none';
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            } else {
+                publicView.style.display = 'block';
+                publicFooter.style.display = 'block';
+                adminView.style.display = 'none';
+            }
+        }
+
+        // Nasłuchiwanie zmian w pasku adresu
+        window.addEventListener('hashchange', checkRoute);
+        
+        // Sprawdź przy starcie
+        checkRoute();
+
+        // --- 4. LOGIKA LOGOWANIA ---
+        async function secureCheck() {
+            const userInput = document.getElementById('username').value;
+            const passInput = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            const inputUserHash = await sha256(userInput);
+            const inputPassHash = await sha256(passInput);
+
+            if (inputUserHash === HASH_USER && inputPassHash === HASH_PASS) {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('admin-panel-content').style.display = 'block';
+                errorMsg.style.display = 'none';
+            } else {
+                errorMsg.style.display = 'block';
+                setTimeout(() => { errorMsg.style.display = 'none'; }, 3000);
+            }
+        }
+
+        function logout() {
+            window.location.hash = ''; // Wraca do normalnego widoku
+        }
+
+        document.getElementById('password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') secureCheck();
+        });
+    </script>
+
+</body>
+</html>
