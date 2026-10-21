@@ -142,26 +142,11 @@
         }
         .copyright-link strong { display: block; font-size: 0.9rem; color: var(--text-main); margin-bottom: 2px; }
 
-        /* --- ADMIN --- */
-        #admin-view { display: none; }
-        .admin-title { text-align: center; font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; font-weight: 600; }
-        .login-form { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
-        .input-field { padding: 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; font-family: var(--font-main); font-size: 0.9rem; background: rgba(255,255,255,0.7); transition: var(--transition-smooth); }
-        .input-field:focus { border-color: var(--navy); outline: none; background: #fff; box-shadow: 0 0 0 4px rgba(35, 35, 107, 0.1); }
-        .submit-btn { width: 100%; padding: 1rem; background: var(--navy); color: var(--white); border: none; border-radius: 10px; font-family: var(--font-main); font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--transition-smooth); }
-        .submit-btn:hover { background: var(--navy-light); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(35, 35, 107, 0.2); }
-        .error-msg { color: var(--red); text-align: center; font-size: 0.85rem; margin-bottom: 1rem; display: none; font-weight: 600; }
-        .admin-panel-content { display: none; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; }
-        .admin-header h2 { color: var(--navy); font-size: 1.2rem; }
-        .logout-btn { background: var(--red); color: var(--white); border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.8rem; transition: var(--transition-smooth); }
-        .logout-btn:hover { background: #a00d25; }
-
         /* --- COOKIE BANNER --- */
         .cookie-banner {
             position: fixed;
             bottom: 1rem; left: 50%; transform: translateX(-50%) translateY(150%);
-            width: calc(100% - 2rem); max-width: 600px;
+            width: calc(100% - 2rem); max-width: 500px;
             background: var(--white);
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
@@ -172,15 +157,15 @@
         }
         .cookie-banner.show { transform: translateX(-50%) translateY(0); }
         
-        .cookie-text { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6; }
+        .cookie-text { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.6; }
         .cookie-text a { color: var(--navy); font-weight: 600; text-decoration: none; }
         .cookie-text a:hover { text-decoration: underline; }
 
         .cookie-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; }
         .cookie-btn {
-            padding: 0.8rem 1.2rem; border-radius: 8px; font-family: var(--font-main);
+            padding: 0.8rem 1rem; border-radius: 8px; font-family: var(--font-main);
             font-weight: 600; font-size: 0.85rem; cursor: pointer; border: none;
-            transition: var(--transition-smooth); flex: 1;
+            transition: var(--transition-smooth); flex: 1; text-align: center;
         }
         .btn-accept { background: var(--navy); color: var(--white); }
         .btn-accept:hover { background: var(--navy-light); }
@@ -189,7 +174,6 @@
         .btn-customize { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
         .btn-customize:hover { background: rgba(35, 35, 107, 0.05); }
 
-        /* Ustawienia zaawansowane */
         .cookie-settings { display: none; margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1rem; }
         .cookie-settings.show { display: block; }
         
@@ -197,16 +181,15 @@
         .setting-info h4 { font-size: 0.9rem; color: var(--text-main); margin-bottom: 0.2rem; }
         .setting-info p { font-size: 0.75rem; color: var(--text-muted); }
         
-        /* Przełącznik (Switch) */
-        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--navy); }
         input:disabled + .slider { background-color: #e0e0e0; cursor: not-allowed; }
-        input:checked + .slider:before { transform: translateX(20px); }
+        input:checked + .slider:before { transform: translateX(18px); }
         
-        .save-settings-btn { width: 100%; margin-top: 0.5rem; padding: 0.8rem; background: var(--navy); color: var(--white); border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .save-settings-btn { width: 100%; margin-top: 0.5rem; padding: 0.8rem; background: var(--navy); color: var(--white); border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .save-settings-btn:hover { background: var(--navy-light); }
 
         @media (max-width: 480px) {
@@ -290,19 +273,22 @@
         </footer>
     </main>
 
-    <!-- COOKIE BANNER -->
+    <!-- ========================================== -->
+    <!-- COOKIE BANNER (Pojawia się na dole ekranu) -->
+    <!-- ========================================== -->
     <div class="cookie-banner" id="cookie-banner">
         <div class="cookie-text">
             We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. Read our <a href="https://archdashx.github.io/aruyeq-regulamin/index.html" target="_blank">Privacy Policy</a>.
         </div>
         
+        <!-- GŁÓWNE PRZYCISKI -->
         <div class="cookie-buttons" id="main-buttons">
             <button class="cookie-btn btn-accept" onclick="setCookies('all')">Accept All</button>
             <button class="cookie-btn btn-necessary" onclick="setCookies('necessary')">Only Necessary</button>
             <button class="cookie-btn btn-customize" onclick="toggleSettings()">Customize</button>
         </div>
 
-        <!-- Zaawansowane ustawienia -->
+        <!-- USTAWIENIA ZAAWANSOWANE -->
         <div class="cookie-settings" id="cookie-settings">
             <div class="setting-item">
                 <div class="setting-info">
@@ -324,4 +310,39 @@
                     <span class="slider"></span>
                 </label>
             </div>
-            <div class
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h4>Marketing</h4>
+                    <p>Used to track visitors across websites.</p>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="cookie-marketing">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <button class="save-settings-btn" onclick="saveCustomSettings()">Save Preferences</button>
+        </div>
+    </div>
+
+    <script>
+        'use strict';
+
+        // --- SYSTEM ZABEZPIECZEŃ ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) return false;
+        };
+        setInterval(() => { console.clear(); console.log("%cSTOP! System protected.", "color: #d11230; font-size: 20px; font-weight: bold;"); }, 2000);
+
+        // --- COOKIE LOGIC ---
+        const cookieBanner = document.getElementById('cookie-banner');
+        const cookieSettings = document.getElementById('cookie-settings');
+        const mainButtons = document.getElementById('main-buttons');
+
+        // Sprawdź, czy użytkownik już dokonał wyboru (localStorage)
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => { cookieBanner.classList.add('show'); }, 1500); // Pojawia się po 1.5s
+        }
+
+        function setCookies(type) {
+            localStorage.setItem('cookieConsent', type);
