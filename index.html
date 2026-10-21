@@ -4,424 +4,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARUYEQ | Zen Portfolio</title>
-    
+    <title>ARUYEQ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --washi-bg: #f7f5f0;
-            --charcoal: #2a2a2a;
-            --indigo: #1a2a40;
-            --vermilion: #b83a3a;
-            --sand: #e6e2d8;
+            --bg: #f9f8f6;
+            --text: #1a1a1a;
+            --text-light: #6b6b6b;
+            --accent: #c8312b;
+            --border: rgba(0, 0, 0, 0.08);
+            --font-serif: 'Instrument Serif', serif;
             --font-sans: 'Inter', sans-serif;
-            --font-serif: 'Noto Serif JP', serif;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
-            background-color: var(--washi-bg);
-            color: var(--charcoal);
+            background-color: var(--bg);
+            color: var(--text);
             font-family: var(--font-sans);
-            line-height: 1.6;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow-x: hidden;
-            position: relative;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- UKŁAD ASYMETRYCZNY (MA) --- */
-        .layout {
+        /* Delikatna tekstura papieru */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* --- GŁÓWNY UKŁAD --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- NAGŁÓWEK (MAŁE ELEMENTY) --- */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            margin-bottom: auto;
+        }
+
+        /* --- GŁÓWNA SEKCJA (HERO) --- */
+        .hero {
             display: grid;
             grid-template-columns: 1fr;
-            min-height: 100vh;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
+            gap: 3rem;
+            margin: 4rem 0;
         }
 
         @media (min-width: 900px) {
-            .layout {
-                grid-template-columns: 1fr 1fr;
-                align-items: center;
-                gap: 6rem;
-                padding: 6rem 4rem;
+            .hero {
+                grid-template-columns: 1.2fr 0.8fr;
+                align-items: end;
+                margin: 6rem 0;
             }
         }
 
-        /* --- LEWA STRONA: HERO --- */
-        .hero {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding-left: 2rem;
-            z-index: 2;
-            margin-bottom: 3rem;
-        }
-        @media (min-width: 900px) { .hero { margin-bottom: 0; } }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 10%;
-            height: 80%;
-            width: 2px;
-            background-color: var(--vermilion);
-        }
-
-        .enso {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-15deg) scaleX(1.05);
-            width: 300px;
-            height: 300px;
-            border: 2px solid rgba(42, 42, 42, 0.1);
-            border-radius: 50%;
-            z-index: -1;
-            border-right-color: transparent;
-            border-bottom-color: rgba(42, 42, 42, 0.05);
-        }
-
-        .kanji {
+        .hero-text h1 {
             font-family: var(--font-serif);
-            font-size: 1.2rem;
-            color: var(--vermilion);
-            letter-spacing: 4px;
-            margin-bottom: 1rem;
-            writing-mode: vertical-rl;
-            position: absolute;
-            right: -2rem;
-            top: 0;
-        }
-        @media (max-width: 900px) { .kanji { display: none; } }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: var(--indigo);
-            margin-bottom: 1rem;
-            line-height: 1.1;
-        }
-
-        .tagline {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            color: var(--charcoal);
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 400;
+            line-height: 0.9;
+            letter-spacing: -0.02em;
             margin-bottom: 2rem;
-            opacity: 0.8;
         }
 
-        .description {
+        .hero-text h1 span {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-text p {
             font-size: 1rem;
-            color: var(--charcoal);
-            opacity: 0.7;
-            max-width: 400px;
+            color: var(--text-light);
+            max-width: 350px;
+            line-height: 1.6;
         }
 
-        /* --- PRAWA STRONA: ZAKŁADKI I ZAWARTOŚĆ --- */
-        .content-section {
-            display: flex;
-            flex-direction: column;
-            z-index: 2;
+        .hero-text p a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--text);
+            transition: var(--transition);
         }
 
-        /* Zakładki */
-        .tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(42, 42, 42, 0.1);
-            padding-bottom: 0.5rem;
-        }
-        .tab-btn {
-            background: none;
-            border: none;
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--charcoal);
-            opacity: 0.5;
-            cursor: pointer;
-            padding: 0.5rem 0;
-            transition: opacity 0.3s ease;
-            position: relative;
-        }
-        .tab-btn.active {
-            opacity: 1;
-        }
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -0.6rem;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--vermilion);
+        .hero-text p a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
         }
 
-        /* Zawartość zakładek (stała wysokość, aby uniknąć skoków) */
-        .tab-wrapper {
-            position: relative;
-            min-height: 350px;
-        }
-        .tab-pane {
-            display: none;
-            animation: fadeIn 0.4s ease forwards;
-        }
-        .tab-pane.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Linki */
+        /* --- LINKI (REDAKCYJNE) --- */
         .links-list {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            border-top: 1px solid var(--border);
         }
+
         .link-item {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 1rem 0;
+            align-items: center;
+            padding: 1.5rem 0;
             text-decoration: none;
-            color: var(--charcoal);
-            border-bottom: 1px solid rgba(42, 42, 42, 0.05);
-            transition: all 0.3s ease;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
+
         .link-item:hover {
-            padding-left: 0.5rem;
-            border-bottom-color: var(--vermilion);
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
-        .link-name {
+
+        .link-item::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; width: 2px; height: 100%;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+            transform-origin: bottom;
+        }
+
+        .link-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .link-title {
+            font-size: 1.2rem;
             font-weight: 400;
-            font-size: 0.95rem;
+        }
+
+        .link-arrow {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .link-item:hover .link-arrow {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        /* --- STOPKA --- */
+        footer {
+            margin-top: auto;
+            padding-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        /* --- BANER COOKIES (DYSKRETNY) --- */
+        .cookie-banner {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(200%);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 1rem 1.5rem;
             display: flex;
             align-items: center;
+            gap: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            z-index: 100;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cookie-banner.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .cookie-banner p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            max-width: 300px;
+        }
+
+        .cookie-actions {
+            display: flex;
             gap: 1rem;
         }
-        .link-name i {
-            font-style: normal;
-            color: var(--vermilion);
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            width: 20px;
-            text-align: center;
-        }
-        .link-arrow {
-            font-size: 1rem;
-            opacity: 0.3;
-            transition: opacity 0.3s ease;
-        }
-        .link-item:hover .link-arrow {
-            opacity: 1;
-        }
 
-        /* Regulamin */
-        .legal-content {
-            font-size: 0.85rem;
-            color: var(--charcoal);
-            opacity: 0.8;
-            max-height: 350px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-        .legal-content::-webkit-scrollbar { width: 3px; }
-        .legal-content::-webkit-scrollbar-thumb { background: rgba(42, 42, 42, 0.2); }
-        
-        .legal-content h2 {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            color: var(--indigo);
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .legal-content h2:first-child { margin-top: 0; }
-        .legal-content h3 {
-            font-size: 0.9rem;
-            color: var(--charcoal);
-            margin-top: 1rem;
-            margin-bottom: 0.3rem;
-        }
-        .legal-content p, .legal-content ul { margin-bottom: 0.8rem; }
-        .legal-content ul { padding-left: 1.2rem; }
-        .legal-content strong { color: var(--charcoal); font-weight: 600; }
-
-        /* --- STOPKA (ŻWIR) --- */
-        footer {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 3rem 0 1rem;
-            margin-top: 4rem;
-            background-image: radial-gradient(circle, rgba(42, 42, 42, 0.05) 1px, transparent 1px);
-            background-size: 8px 8px;
-            border-top: 1px solid rgba(42, 42, 42, 0.05);
-        }
-        footer p {
-            font-size: 0.8rem;
-            color: var(--charcoal);
-            opacity: 0.6;
-            letter-spacing: 2px;
-            background: var(--washi-bg);
-            display: inline-block;
-            padding: 0 1rem;
-        }
-
-        /* --- SAKURA (PŁATKI) --- */
-        .sakura-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .petal {
-            position: absolute;
-            background-color: #f2d4d7;
-            border-radius: 100% 0 100% 0;
-            opacity: 0.6;
-            animation: fall linear infinite;
-        }
-        @keyframes fall {
-            0% { transform: translate(0, -10vh) rotate(0deg); }
-            100% { transform: translate(20px, 110vh) rotate(360deg); }
-        }
-
-        /* --- BANER COOKIES --- */
-        .cookie-banner {
-            position: fixed; bottom: 20px; left: 50%;
-            transform: translateX(-50%) translateY(200%);
-            width: calc(100% - 2rem); max-width: 600px;
-            background: var(--washi-bg);
-            padding: 1.5rem; z-index: 9999;
-            transition: transform 0.5s ease;
-            border-left: 2px solid var(--vermilion);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        .cookie-banner.show { transform: translateX(-50%) translateY(0); }
-        .cookie-text { font-size: 0.8rem; margin-bottom: 1rem; color: var(--charcoal); }
-        .cookie-actions { display: flex; gap: 1rem; }
         .cookie-btn {
-            padding: 0.6rem 1.2rem; border: 1px solid var(--charcoal);
-            background: transparent; cursor: pointer; font-family: var(--font-sans);
-            font-size: 0.8rem; transition: all 0.2s;
+            background: none;
+            border: none;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            transition: var(--transition);
         }
-        .cookie-btn:hover { background: var(--charcoal); color: var(--washi-bg); }
+
+        .cookie-btn.accept {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
+        }
+
+        .cookie-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+
+        @media (max-width: 600px) {
+            .cookie-banner {
+                flex-direction: column;
+                width: calc(100% - 2rem);
+                gap: 1rem;
+                text-align: center;
+            }
+            .cookie-banner p { max-width: 100%; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="sakura-container" id="sakura"></div>
-
-    <div class="layout">
-        <!-- LEWA KOLUMNA (HERO) -->
-        <header class="hero">
-            <div class="enso"></div>
-            <div class="kanji">美</div>
-            <h1>ARUYEQ</h1>
-            <p class="tagline">"I use Arch btw"</p>
-            <p class="description">
-                Minimalizm, pełna kontrola i czysty kod. Tworzę treści o <strong>Arch Linux</strong>, <strong>Hyprland</strong> i customizacji systemu.
-            </p>
+    <div class="container">
+        <header class="top-bar">
+            <span>Portfolio & Links</span>
+            <span>2026</span>
         </header>
 
-        <!-- PRAWA KOLUMNA (ZAKŁADKI) -->
-        <section class="content-section">
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('links', this)">Links</button>
-                <button class="tab-btn" onclick="switchTab('legal', this)">Legal</button>
+        <section class="hero">
+            <div class="hero-text">
+                <h1>System<br><span>Customisation.</span></h1>
+                <p>
+                    I create content about <a href="https://archlinux.org/" target="_blank" rel="noopener noreferrer">Arch Linux</a>, 
+                    <a href="https://omarchy.org/" target="_blank" rel="noopener noreferrer">Omarchy</a> and 
+                    <a href="https://hypr.land/" target="_blank" rel="noopener noreferrer">Hyprland</a>.<br><br>
+                    Speed, style and complete control, rather than a slow, bloated Windows system.
+                </p>
             </div>
 
-            <div class="tab-wrapper">
-                <!-- ZAKŁADKA: LINKI -->
-                <div id="tab-links" class="tab-pane active">
-                    <nav class="links-list">
-                        <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="link-item">
-                            <span class="link-name"><i>𝕏</i> X (Twitter)</span>
-                            <span class="link-arrow">→</span>
-                        </a>
-                        <a href="#" class="link-item" onclick="copyDiscord(event)">
-                            <span class="link-name"><i>デ</i> Discord: @aruyeq</span>
-                            <span class="link-arrow">→</span>
-                        </a>
-                        <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-item">
-                            <span class="link-name"><i>▶</i> YouTube</span>
-                            <span class="link-arrow">→</span>
-                        </a>
-                        <a href="https://rumble.com/user/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-item">
-                            <span class="link-name"><i>▷</i> Rumble</span>
-                            <span class="link-arrow">→</span>
-                        </a>
-                        <a href="https://github.com/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-item">
-                            <span class="link-name"><i>⌥</i> GitHub</span>
-                            <span class="link-arrow">→</span>
-                        </a>
-                        <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" rel="noopener noreferrer" class="link-item">
-                            <span class="link-name"><i>◈</i> Steam</span>
-                            <span class="link-arrow">→</span>
-                        </a>
-                        <a href="https://medal.tv/u/aruyeq?invite=ur-MSxLdDcsNjYxNDQ1MTAx" target="_blank" rel="noopener noreferrer" class="link-item">
-                            <span class="link-name"><i>▣</i> Medal.tv</span>
-                            <span class="link-arrow">→</span>
-                        </a>
-                    </nav>
-                </div>
-
-                <!-- ZAKŁADKA: REGULAMIN -->
-                <div id="tab-legal" class="tab-pane">
-                    <div class="legal-content">
-                        <h2>Terms of Service</h2>
-                        <p><strong>Last updated:</strong> 2026</p>
-                        <h3>1. General Provisions</h3>
-                        <p>These Terms of Service govern the use of the ARUYEQ website. This site is purely informational (a "link-in-bio" page) and does not sell products or require registration.</p>
-                        <h3>2. Copyright & Intellectual Property</h3>
-                        <p><strong>&copy; 2026 ARUYEQ. All rights reserved.</strong></p>
-                        <ul>
-                            <li>All content, including source code, graphic design, and text, is the property of the ARUYEQ creator.</li>
-                            <li>Copying, modifying, or distributing the code and graphics without written permission is strictly prohibited.</li>
-                            <li>The logo design is a trademark of the creator.</li>
-                        </ul>
-                        <h3>3. Limitation of Liability</h3>
-                        <p>The website is provided "as-is". The creator is not liable for any damages resulting from the use of external links or any errors in the operation of the code.</p>
-                        
-                        <h2>Privacy Policy</h2>
-                        <p><strong>Last updated:</strong> 2026</p>
-                        <h3>1. What Data Do We Collect?</h3>
-                        <p>This website is designed with maximum privacy in mind. <strong>We do not collect, store, or process any of your personal data</strong>.</p>
-                        <ul>
-                            <li>We do not use tracking cookies.</li>
-                            <li>We do not use external analytics tools.</li>
-                            <li>All animations and backgrounds are generated locally in your browser.</li>
-                        </ul>
-                        <h3>2. Contact</h3>
-                        <p>If you have any privacy-related questions, please reach out via Discord: @aruyeq.</p>
-                    </div>
-                </div>
-            </div>
+            <nav class="links-list">
+                <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <span class="link-title">X (Twitter)</span>
+                    <span class="link-arrow">↗</span>
+                </a>
+                <a href="#" class="link-item" onclick="copyDiscord(event)">
+                    <span class="link-title">Discord: @aruyeq</span>
+                    <span class="link-arrow">↗</span>
+                </a>
+                <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <span class="link-title">YouTube</span>
+                    <span class="link-arrow">↗</span>
+                </a>
+                <a href="https://github.com/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <span class="link-title">GitHub</span>
+                    <span class="link-arrow">↗</span>
+                </a>
+                <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <span class="link-title">Steam</span>
+                    <span class="link-arrow">↗</span>
+                </a>
+                <a href="https://medal.tv/u/aruyeq?invite=ur-MSxLdDcsNjYxNDQ1MTAx" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <span class="link-title">Medal.tv</span>
+                    <span class="link-arrow">↗</span>
+                </a>
+            </nav>
         </section>
 
-        <!-- STOPKA -->
         <footer>
-            <p>&copy; 2026 ARUYEQ. Wszelkie prawa zastrzeżone.</p>
+            <div>&copy; 2026 ARUYEQ. All rights reserved.</div>
+            <a href="#" onclick="openLegal(event)">Legal & Privacy</a>
         </footer>
     </div>
 
-    <!-- COOKIE BANNER -->
     <div class="cookie-banner" id="cookie-banner">
-        <div class="cookie-text">Ta strona używa minimalnej ilości plików cookies, aby zapewnić poprawne działanie. Wybierz opcję.</div>
+        <p>We use cookies to ensure you get the best experience.</p>
         <div class="cookie-actions">
-            <button class="cookie-btn" onclick="setCookies('all')">Akceptuj wszystkie</button>
-            <button class="cookie-btn" onclick="setCookies('necessary')">Tylko niezbędne</button>
+            <button class="cookie-btn accept" onclick="setCookies('all')">Accept</button>
+            <button class="cookie-btn" onclick="setCookies('necessary')">Necessary only</button>
         </div>
     </div>
 
@@ -429,56 +325,36 @@
         const CONSENT_KEY = 'aruyeq_cookie_consent';
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Sakura
-            const sakuraContainer = document.getElementById('sakura');
-            const petalCount = 15;
-
-            for (let i = 0; i < petalCount; i++) {
-                const petal = document.createElement('div');
-                petal.classList.add('petal');
-                const size = Math.random() * 8 + 6;
-                petal.style.width = `${size}px`;
-                petal.style.height = `${size}px`;
-                petal.style.left = `${Math.random() * 100}%`;
-                const duration = Math.random() * 10 + 10;
-                petal.style.animationDuration = `${duration}s`;
-                petal.style.animationDelay = `${Math.random() * 5}s`;
-                sakuraContainer.appendChild(petal);
-            }
-
-            // Cookies
             if (!localStorage.getItem(CONSENT_KEY)) {
-                setTimeout(() => { document.getElementById('cookie-banner').classList.add('show'); }, 1500);
+                setTimeout(() => { document.getElementById('cookie-banner').classList.add('show'); }, 1000);
             }
         });
 
-        // Zakładki
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById('tab-' + tabId).classList.add('active');
-            btn.classList.add('active');
-        }
-
-        // Zapis cookies
         function setCookies(type) {
             localStorage.setItem(CONSENT_KEY, type);
             document.getElementById('cookie-banner').classList.remove('show');
         }
 
-        // Discord
         async function copyDiscord(e) {
             e.preventDefault();
             const btn = e.currentTarget;
-            const originalHtml = btn.innerHTML;
+            const titleEl = btn.querySelector('.link-title');
+            const originalText = titleEl.innerText;
+            
             if (!navigator.clipboard) return console.error('Clipboard API not supported');
             
             try {
                 await navigator.clipboard.writeText('@aruyeq');
-                btn.innerHTML = `<span class="link-name"><i style="color: #4caf50;">✓</i> Skopiowano!</span><span class="link-arrow">→</span>`;
-                setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+                titleEl.innerText = 'Copied!';
+                setTimeout(() => { titleEl.innerText = originalText; }, 2000);
             } catch (err) { console.error('Failed to copy text: ', err); }
+        }
+
+        function openLegal(e) {
+            e.preventDefault();
+            // Tutaj możesz dodać modal z regulaminem, jeśli chcesz.
+            // Na razie po prostu przekierowuje do starego linku.
+            window.location.href = 'https://archdashx.github.io/aruyeq-regulamin/index.html';
         }
     </script>
 </body>
