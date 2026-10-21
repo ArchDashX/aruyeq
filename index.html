@@ -4,20 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARUYEQ</title>
+    <title>ARUYEQ | Arch Linux</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
     <style>
         :root {
-            --bg: #f9f8f6;
+            --bg: #f7f5f0;
+            --surface: rgba(255, 255, 255, 0.7);
+            --surface-solid: #ffffff;
             --text: #1a1a1a;
             --text-light: #6b6b6b;
-            --accent: #c8312b;
-            --border: rgba(0, 0, 0, 0.08);
+            --accent: #b83a3a;
+            --border: rgba(0, 0, 0, 0.06);
             --font-serif: 'Instrument Serif', serif;
             --font-sans: 'Inter', sans-serif;
+            --radius: 20px;
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -27,297 +29,328 @@
             background-color: var(--bg);
             color: var(--text);
             font-family: var(--font-sans);
-            line-height: 1.5;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
             -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Delikatna tekstura papieru */
+        /* Papierowa tekstura */
         body::before {
             content: "";
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 0;
         }
 
-        /* --- GŁÓWNY UKŁAD --- */
+        /* Delikatna poświata */
+        .glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(184, 58, 58, 0.06) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            max-width: 680px;
             position: relative;
             z-index: 1;
-        }
-
-        /* --- NAGŁÓWEK (MAŁE ELEMENTY) --- */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-light);
-            margin-bottom: auto;
-        }
-
-        /* --- GŁÓWNA SEKCJA (HERO) --- */
-        .hero {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            margin: 4rem 0;
-        }
-
-        @media (min-width: 900px) {
-            .hero {
-                grid-template-columns: 1.2fr 0.8fr;
-                align-items: end;
-                margin: 6rem 0;
-            }
-        }
-
-        .hero-text h1 {
-            font-family: var(--font-serif);
-            font-size: clamp(4rem, 10vw, 8rem);
-            font-weight: 400;
-            line-height: 0.9;
-            letter-spacing: -0.02em;
-            margin-bottom: 2rem;
-        }
-
-        .hero-text h1 span {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .hero-text p {
-            font-size: 1rem;
-            color: var(--text-light);
-            max-width: 350px;
-            line-height: 1.6;
-        }
-
-        .hero-text p a {
-            color: var(--text);
-            text-decoration: none;
-            border-bottom: 1px solid var(--text);
-            transition: var(--transition);
-        }
-
-        .hero-text p a:hover {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
-
-        /* --- LINKI (REDAKCYJNE) --- */
-        .links-list {
             display: flex;
             flex-direction: column;
-            border-top: 1px solid var(--border);
+            gap: 1.5rem;
         }
 
-        .link-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 0;
+        /* --- NAGŁÓWEK --- */
+        .header {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--text);
+            margin: 0 auto 1rem;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid var(--surface-solid);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .logo-sun { position: absolute; top: 18%; left: 30%; width: 28px; height: 28px; background: var(--accent); border-radius: 50%; }
+        .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 46px; height: 18px; border: 2px solid #fff; border-bottom: none; border-radius: 50px 50px 0 0; }
+        .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: #fff; }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-light);
+        }
+
+        /* --- BENTO GRID --- */
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .tile {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
             text-decoration: none;
             color: var(--text);
-            border-bottom: 1px solid var(--border);
             transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100px;
             position: relative;
             overflow: hidden;
         }
 
-        .link-item:hover {
-            padding-left: 1rem;
-            padding-right: 1rem;
+        .tile:hover {
+            background: var(--surface-solid);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+            border-color: rgba(0,0,0,0.1);
         }
 
-        .link-item::before {
-            content: '';
+        .tile-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .tile-title {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .tile-arrow {
             position: absolute;
-            left: 0; top: 0; width: 2px; height: 100%;
-            background: var(--accent);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-            transform-origin: bottom;
-        }
-
-        .link-item:hover::before {
-            transform: scaleY(1);
-        }
-
-        .link-title {
-            font-size: 1.2rem;
-            font-weight: 400;
-        }
-
-        .link-arrow {
-            font-size: 1.2rem;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            font-size: 1.1rem;
             color: var(--text-light);
             transition: var(--transition);
         }
 
-        .link-item:hover .link-arrow {
+        .tile:hover .tile-arrow {
             color: var(--accent);
-            transform: translateX(5px);
+            transform: translate(2px, -2px);
+        }
+
+        /* Kafelki o różnych rozmiarach (bento) */
+        .tile-wide { grid-column: span 2; min-height: 80px; flex-direction: row; align-items: center; justify-content: space-between; }
+        .tile-wide .tile-content { display: flex; flex-direction: column; }
+        .tile-wide .tile-arrow { position: static; }
+
+        .tile-accent {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
+        }
+        .tile-accent:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+        .tile-accent .tile-label { color: rgba(255,255,255,0.6); }
+        .tile-accent .tile-arrow { color: rgba(255,255,255,0.6); }
+        .tile-accent:hover .tile-arrow { color: #fff; }
+
+        /* --- OPIS --- */
+        .bio {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .bio a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .bio a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
         }
 
         /* --- STOPKA --- */
-        footer {
-            margin-top: auto;
-            padding-top: 3rem;
+        .footer {
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
-            color: var(--text-light);
+            align-items: center;
+            padding-top: 1.5rem;
+            margin-top: 0.5rem;
             border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: var(--text-light);
         }
 
-        footer a {
-            color: var(--text);
+        .footer a {
+            color: var(--text-light);
             text-decoration: none;
             transition: var(--transition);
         }
 
-        footer a:hover {
-            color: var(--accent);
-        }
+        .footer a:hover { color: var(--accent); }
 
-        /* --- BANER COOKIES (DYSKRETNY) --- */
+        /* --- COOKIE BANNER --- */
         .cookie-banner {
             position: fixed;
-            bottom: 2rem;
+            bottom: 1.5rem;
             left: 50%;
             transform: translateX(-50%) translateY(200%);
-            background: var(--bg);
+            background: var(--surface-solid);
             border: 1px solid var(--border);
-            padding: 1rem 1.5rem;
+            border-radius: 100px;
+            padding: 0.5rem 0.5rem 0.5rem 1.25rem;
             display: flex;
             align-items: center;
-            gap: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            gap: 1.5rem;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
             z-index: 100;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .cookie-banner.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .cookie-banner p {
-            font-size: 0.8rem;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: 0.75rem;
             color: var(--text-light);
-            max-width: 300px;
+            white-space: nowrap;
         }
 
-        .cookie-actions {
-            display: flex;
-            gap: 1rem;
-        }
+        .cookie-banner.show { transform: translateX(-50%) translateY(0); }
+
+        .cookie-actions { display: flex; gap: 0.5rem; }
 
         .cookie-btn {
             background: none;
             border: none;
             font-family: var(--font-sans);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             padding: 0.5rem 1rem;
-            border: 1px solid var(--border);
+            border-radius: 100px;
             transition: var(--transition);
         }
 
-        .cookie-btn.accept {
-            background: var(--text);
-            color: var(--bg);
-            border-color: var(--text);
-        }
+        .cookie-btn.accept { background: var(--text); color: var(--bg); }
+        .cookie-btn.accept:hover { background: var(--accent); }
+        .cookie-btn:not(.accept):hover { background: rgba(0,0,0,0.04); }
 
-        .cookie-btn:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: var(--bg);
-        }
-
-        @media (max-width: 600px) {
-            .cookie-banner {
-                flex-direction: column;
-                width: calc(100% - 2rem);
-                gap: 1rem;
-                text-align: center;
-            }
-            .cookie-banner p { max-width: 100%; }
+        /* --- RESPONSYWNOŚĆ --- */
+        @media (max-width: 480px) {
+            .bento { grid-template-columns: 1fr; }
+            .tile-wide { grid-column: span 1; }
+            h1 { font-size: 2.2rem; }
+            .cookie-banner { flex-direction: column; white-space: normal; text-align: center; border-radius: 16px; padding: 1rem; width: calc(100% - 2rem); gap: 0.75rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header class="top-bar">
-            <span>Portfolio & Links</span>
-            <span>2026</span>
+    <div class="glow"></div>
+
+    <main class="container">
+        <header class="header">
+            <div class="logo" aria-hidden="true">
+                <div class="logo-sun"></div>
+                <div class="logo-bridge"></div>
+                <div class="logo-water"></div>
+            </div>
+            <h1>ARUYEQ</h1>
+            <p class="tagline">"I use Arch btw"</p>
         </header>
 
-        <section class="hero">
-            <div class="hero-text">
-                <h1>System<br><span>Customisation.</span></h1>
-                <p>
-                    I create content about <a href="https://archlinux.org/" target="_blank" rel="noopener noreferrer">Arch Linux</a>, 
-                    <a href="https://omarchy.org/" target="_blank" rel="noopener noreferrer">Omarchy</a> and 
-                    <a href="https://hypr.land/" target="_blank" rel="noopener noreferrer">Hyprland</a>.<br><br>
-                    Speed, style and complete control, rather than a slow, bloated Windows system.
-                </p>
-            </div>
+        <p class="bio">
+            I create content about <a href="https://archlinux.org/" target="_blank" rel="noopener noreferrer">Arch Linux</a>, 
+            <a href="https://omarchy.org/" target="_blank" rel="noopener noreferrer">Omarchy</a> and 
+            <a href="https://hypr.land/" target="_blank" rel="noopener noreferrer">Hyprland</a>. 
+            Speed, style and complete control, rather than a slow, bloated Windows system.
+        </p>
 
-            <nav class="links-list">
-                <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="link-item">
-                    <span class="link-title">X (Twitter)</span>
-                    <span class="link-arrow">↗</span>
-                </a>
-                <a href="#" class="link-item" onclick="copyDiscord(event)">
-                    <span class="link-title">Discord: @aruyeq</span>
-                    <span class="link-arrow">↗</span>
-                </a>
-                <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-item">
-                    <span class="link-title">YouTube</span>
-                    <span class="link-arrow">↗</span>
-                </a>
-                <a href="https://github.com/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-item">
-                    <span class="link-title">GitHub</span>
-                    <span class="link-arrow">↗</span>
-                </a>
-                <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" rel="noopener noreferrer" class="link-item">
-                    <span class="link-title">Steam</span>
-                    <span class="link-arrow">↗</span>
-                </a>
-                <a href="https://medal.tv/u/aruyeq?invite=ur-MSxLdDcsNjYxNDQ1MTAx" target="_blank" rel="noopener noreferrer" class="link-item">
-                    <span class="link-title">Medal.tv</span>
-                    <span class="link-arrow">↗</span>
-                </a>
-            </nav>
-        </section>
+        <div class="bento">
+            <!-- Główny kafelek (akcent) -->
+            <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="tile tile-wide tile-accent">
+                <div class="tile-content">
+                    <span class="tile-label">Watch</span>
+                    <span class="tile-title">YouTube</span>
+                </div>
+                <span class="tile-arrow">↗</span>
+            </a>
 
-        <footer>
-            <div>&copy; 2026 ARUYEQ. All rights reserved.</div>
-            <a href="#" onclick="openLegal(event)">Legal & Privacy</a>
+            <!-- Pozostałe kafelki -->
+            <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="tile">
+                <span class="tile-label">Follow</span>
+                <span class="tile-title">X (Twitter)</span>
+                <span class="tile-arrow">↗</span>
+            </a>
+
+            <a href="#" class="tile" onclick="copyDiscord(event)">
+                <span class="tile-label">Connect</span>
+                <span class="tile-title">Discord: @aruyeq</span>
+                <span class="tile-arrow">↗</span>
+            </a>
+
+            <a href="https://github.com/ArchDashX" target="_blank" rel="noopener noreferrer" class="tile">
+                <span class="tile-label">Code</span>
+                <span class="tile-title">GitHub</span>
+                <span class="tile-arrow">↗</span>
+            </a>
+
+            <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" rel="noopener noreferrer" class="tile">
+                <span class="tile-label">Play</span>
+                <span class="tile-title">Steam</span>
+                <span class="tile-arrow">↗</span>
+            </a>
+
+            <a href="https://medal.tv/u/aruyeq?invite=ur-MSxLdDcsNjYxNDQ1MTAx" target="_blank" rel="noopener noreferrer" class="tile tile-wide">
+                <div class="tile-content">
+                    <span class="tile-label">Clips</span>
+                    <span class="tile-title">Medal.tv</span>
+                </div>
+                <span class="tile-arrow">↗</span>
+            </a>
+        </div>
+
+        <footer class="footer">
+            <span>&copy; 2026 ARUYEQ.</span>
+            <a href="https://archdashx.github.io/aruyeq-regulamin/index.html">Legal & Privacy</a>
         </footer>
-    </div>
+    </main>
 
     <div class="cookie-banner" id="cookie-banner">
-        <p>We use cookies to ensure you get the best experience.</p>
+        <span>Cookies?</span>
         <div class="cookie-actions">
             <button class="cookie-btn accept" onclick="setCookies('all')">Accept</button>
-            <button class="cookie-btn" onclick="setCookies('necessary')">Necessary only</button>
+            <button class="cookie-btn" onclick="setCookies('necessary')">Necessary</button>
         </div>
     </div>
 
@@ -326,7 +359,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             if (!localStorage.getItem(CONSENT_KEY)) {
-                setTimeout(() => { document.getElementById('cookie-banner').classList.add('show'); }, 1000);
+                setTimeout(() => { document.getElementById('cookie-banner').classList.add('show'); }, 1200);
             }
         });
 
@@ -337,24 +370,17 @@
 
         async function copyDiscord(e) {
             e.preventDefault();
-            const btn = e.currentTarget;
-            const titleEl = btn.querySelector('.link-title');
+            const tile = e.currentTarget;
+            const titleEl = tile.querySelector('.tile-title');
             const originalText = titleEl.innerText;
-            
+
             if (!navigator.clipboard) return console.error('Clipboard API not supported');
-            
+
             try {
                 await navigator.clipboard.writeText('@aruyeq');
                 titleEl.innerText = 'Copied!';
                 setTimeout(() => { titleEl.innerText = originalText; }, 2000);
             } catch (err) { console.error('Failed to copy text: ', err); }
-        }
-
-        function openLegal(e) {
-            e.preventDefault();
-            // Tutaj możesz dodać modal z regulaminem, jeśli chcesz.
-            // Na razie po prostu przekierowuje do starego linku.
-            window.location.href = 'https://archdashx.github.io/aruyeq-regulamin/index.html';
         }
     </script>
 </body>
