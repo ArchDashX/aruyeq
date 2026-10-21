@@ -41,7 +41,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- BACKGROUND --- */
+        /* --- TŁO --- */
         .bg-decorations {
             position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
             background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%);
@@ -69,7 +69,7 @@
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(209, 18, 48, 0.06) 21px, transparent 22px) 20px 0 / 40px 20px;
         }
 
-        /* --- MAIN CARD --- */
+        /* --- KARTA --- */
         .card {
             width: 100%; max-width: 420px; background: var(--card-bg);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -122,84 +122,24 @@
         .link-icon { margin-right: 15px; font-size: 1.1rem; width: 24px; text-align: center; color: var(--text-main); transition: var(--transition-smooth); }
         .link-btn:hover .link-icon { color: var(--red); }
 
-        /* --- FOOTER --- */
+        /* --- STOPKA --- */
         .site-footer {
             margin-top: 2.5rem; padding-top: 1.5rem;
             border-top: 1px solid rgba(0,0,0,0.05);
             opacity: 0; animation: fadeUp 0.6s ease-out 2.5s forwards;
             text-align: center;
         }
-        .copyright-btn {
+        .copyright-link {
             display: inline-block; font-size: 0.8rem; color: #777;
-            cursor: pointer; transition: var(--transition-smooth);
+            text-decoration: none; transition: var(--transition-smooth);
             padding: 0.8rem 1rem; border-radius: 8px;
             border: 1px dashed transparent; line-height: 1.6;
-            user-select: none;
         }
-        .copyright-btn:hover {
+        .copyright-link:hover {
             color: var(--navy); background: rgba(255,255,255,0.6);
             border-color: rgba(35, 35, 107, 0.2);
         }
-        .copyright-btn strong { display: block; font-size: 0.9rem; color: var(--text-main); margin-bottom: 2px; }
-
-        /* --- MODAL WITH TABS --- */
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-            z-index: 9999; display: none; justify-content: center; align-items: center;
-            padding: 1rem; opacity: 0; transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        
-        .modal-content {
-            background: #ffffff; width: 100%; max-width: 600px;
-            max-height: 85vh; display: flex; flex-direction: column;
-            border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            position: relative; transform: translateY(20px); transition: transform 0.3s ease;
-            overflow: hidden;
-        }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
-        
-        .modal-close {
-            position: absolute; top: 1rem; right: 1rem; z-index: 10;
-            background: #f0f0f0; border: none; width: 36px; height: 36px;
-            border-radius: 50%; font-size: 1.2rem; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.2s;
-        }
-        .modal-close:hover { background: #e0e0e0; }
-
-        /* Tabs */
-        .modal-tabs {
-            display: flex; border-bottom: 1px solid #eee;
-            background: #fcfcfc; border-radius: 16px 16px 0 0;
-        }
-        .tab-btn {
-            flex: 1; padding: 1.2rem; background: none; border: none;
-            font-family: var(--font-main); font-weight: 600; font-size: 0.95rem;
-            color: #777; cursor: pointer; transition: all 0.2s;
-            border-bottom: 2px solid transparent;
-        }
-        .tab-btn:hover { color: var(--navy); background: #f4f4f4; }
-        .tab-btn.active {
-            color: var(--navy); border-bottom-color: var(--navy);
-            background: #ffffff;
-        }
-
-        /* Tab Content */
-        .modal-body {
-            padding: 2rem; overflow-y: auto; flex: 1;
-        }
-        .tab-content { display: none; animation: fadeIn 0.3s ease; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .modal-body h2 { color: var(--navy); font-size: 1.3rem; margin-bottom: 1rem; }
-        .modal-body h3 { color: var(--navy); font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
-        .modal-body p, .modal-body ul { font-size: 0.9rem; color: #555; line-height: 1.6; margin-bottom: 1rem; }
-        .modal-body ul { padding-left: 1.5rem; }
-        .modal-body li { margin-bottom: 0.5rem; }
-        .modal-body strong { color: #333; }
+        .copyright-link strong { display: block; font-size: 0.9rem; color: var(--text-main); margin-bottom: 2px; }
 
         /* --- ADMIN --- */
         #admin-view { display: none; }
@@ -219,8 +159,6 @@
         @media (max-width: 480px) {
             .card { padding: 2rem 1.5rem; }
             .brand-title { font-size: 1.8rem; letter-spacing: 5px; }
-            .modal-body { padding: 1.5rem; }
-            .tab-btn { padding: 1rem 0.5rem; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -290,45 +228,93 @@
         </section>
 
         <footer class="site-footer" id="public-footer">
-            <div class="copyright-btn" onclick="openModal()" role="button" tabindex="0">
+            <!-- BEZPOŚREDNI LINK DO TWOJEJ STRONY Z REGULAMINEM -->
+            <a href="https://archdashx.github.io/aruyeq-regulamin/index.html" class="copyright-link">
                 <strong>&copy; 2026 ARUYEQ.</strong>
                 All rights reserved.
-                <br><span style="font-size: 0.7rem; color: #aaa; margin-top: 4px; display: inline-block;">(Click to view legal info)</span>
-            </div>
+                <br><span style="font-size: 0.7rem; color: #aaa; margin-top: 4px; display: inline-block;">(Click to view Terms of Service)</span>
+            </a>
         </footer>
     </main>
 
-    <!-- MODAL -->
-    <div class="modal-overlay" id="legal-modal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal(event)">&times;</button>
-            
-            <!-- TABS -->
-            <div class="modal-tabs">
-                <button class="tab-btn active" data-target="terms" onclick="switchTab('terms')">Terms of Service</button>
-                <button class="tab-btn" data-target="privacy" onclick="switchTab('privacy')">Privacy Policy</button>
-            </div>
+    <script>
+        'use strict';
 
-            <!-- CONTENT -->
-            <div class="modal-body">
-                <!-- TERMS OF SERVICE -->
-                <div id="tab-terms" class="tab-content active">
-                    <h2>Terms of Service</h2>
-                    <p><strong>Last updated:</strong> 2026</p>
+        // --- SYSTEM ZABEZPIECZEŃ ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) return false;
+        };
+        setInterval(() => { console.clear(); console.log("%cSTOP! System protected.", "color: #d11230; font-size: 20px; font-weight: bold;"); }, 2000);
 
-                    <h3>1. General Provisions</h3>
-                    <p>These Terms of Service govern the use of the ARUYEQ website. This site is purely informational (a "link-in-bio" page) and does not sell products or require registration.</p>
+        // --- HASHOWANIE ---
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        const HASH_USER = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; 
+        const HASH_PASS = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 
-                    <h3>2. Copyright & Intellectual Property</h3>
-                    <p><strong>&copy; 2026 ARUYEQ. All rights reserved.</strong></p>
-                    <ul>
-                        <li>All content, including source code (HTML, CSS, JS), graphic design (bridge, sun), and text, is the property of the ARUYEQ creator.</li>
-                        <li>Copying, modifying, or distributing the code and graphics without written permission from the author is strictly prohibited.</li>
-                        <li>The logo design is a trademark of the creator.</li>
-                    </ul>
+        // --- ADMIN ROUTING ---
+        const DOM = {
+            publicView: document.getElementById('public-view'),
+            adminView: document.getElementById('admin-view'),
+            publicFooter: document.getElementById('public-footer'),
+            loginForm: document.getElementById('login-form'),
+            adminContent: document.getElementById('admin-panel-content'),
+            errorMsg: document.getElementById('error-msg'),
+            userInput: document.getElementById('username'),
+            passInput: document.getElementById('password')
+        };
 
-                    <h3>3. Limitation of Liability</h3>
-                    <p>The website is provided "as-is". The creator is not liable for any damages resulting from the use of external links or any errors in the operation of the code.</p>
+        function checkRoute() {
+            if (window.location.hash === '#admin') {
+                DOM.publicView.style.display = 'none';
+                DOM.publicFooter.style.display = 'none';
+                DOM.adminView.style.display = 'block';
+                DOM.loginForm.style.display = 'flex';
+                DOM.adminContent.style.display = 'none';
+                DOM.userInput.value = '';
+                DOM.passInput.value = '';
+            } else {
+                DOM.publicView.style.display = 'block';
+                DOM.publicFooter.style.display = 'block';
+                DOM.adminView.style.display = 'none';
+            }
+        }
 
-                    <h3>4. External Links</h3>
-                    <p>This site contains links to third-party platforms (X, YouTu
+        window.addEventListener('hashchange', checkRoute);
+        checkRoute();
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const inputUserHash = await sha256(DOM.userInput.value);
+            const inputPassHash = await sha256(DOM.passInput.value);
+
+            if (inputUserHash === HASH_USER && inputPassHash === HASH_PASS) {
+                DOM.loginForm.style.display = 'none';
+                DOM.adminContent.style.display = 'block';
+                DOM.errorMsg.style.display = 'none';
+            } else {
+                DOM.errorMsg.style.display = 'block';
+                setTimeout(() => { DOM.errorMsg.style.display = 'none'; }, 3000);
+            }
+        }
+
+        function logout() { window.location.hash = ''; }
+
+        function copyDiscord(e) {
+            e.preventDefault();
+            navigator.clipboard.writeText('@aruyeq').then(() => {
+                const btn = e.currentTarget;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="link-icon">✓</span> Copied!';
+                setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+            });
+        }
+    </script>
+
+</body>
+</html>
