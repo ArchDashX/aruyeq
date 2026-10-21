@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +41,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- TŁO --- */
+        /* --- BACKGROUND --- */
         .bg-decorations {
             position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
             background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%);
@@ -69,7 +69,7 @@
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(209, 18, 48, 0.06) 21px, transparent 22px) 20px 0 / 40px 20px;
         }
 
-        /* --- KARTA --- */
+        /* --- MAIN CARD --- */
         .card {
             width: 100%; max-width: 420px; background: var(--card-bg);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -122,7 +122,7 @@
         .link-icon { margin-right: 15px; font-size: 1.1rem; width: 24px; text-align: center; color: var(--text-main); transition: var(--transition-smooth); }
         .link-btn:hover .link-icon { color: var(--red); }
 
-        /* --- STOPKA --- */
+        /* --- FOOTER --- */
         .site-footer {
             margin-top: 2.5rem; padding-top: 1.5rem;
             border-top: 1px solid rgba(0,0,0,0.05);
@@ -134,6 +134,7 @@
             cursor: pointer; transition: var(--transition-smooth);
             padding: 0.8rem 1rem; border-radius: 8px;
             border: 1px dashed transparent; line-height: 1.6;
+            user-select: none;
         }
         .copyright-btn:hover {
             color: var(--navy); background: rgba(255,255,255,0.6);
@@ -141,7 +142,7 @@
         }
         .copyright-btn strong { display: block; font-size: 0.9rem; color: var(--text-main); margin-bottom: 2px; }
 
-        /* --- MODAL Z ZAKŁADKAMI --- */
+        /* --- MODAL WITH TABS --- */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
@@ -168,7 +169,7 @@
         }
         .modal-close:hover { background: #e0e0e0; }
 
-        /* Zakładki (Tabs) */
+        /* Tabs */
         .modal-tabs {
             display: flex; border-bottom: 1px solid #eee;
             background: #fcfcfc; border-radius: 16px 16px 0 0;
@@ -185,7 +186,7 @@
             background: #ffffff;
         }
 
-        /* Treść zakładek */
+        /* Tab Content */
         .modal-body {
             padding: 2rem; overflow-y: auto; flex: 1;
         }
@@ -292,41 +293,42 @@
             <div class="copyright-btn" onclick="openModal()" role="button" tabindex="0">
                 <strong>&copy; 2026 ARUYEQ.</strong>
                 All rights reserved.
-                <br><span style="font-size: 0.7rem; color: #aaa; margin-top: 4px; display: inline-block;">(Kliknij, aby zobaczyć regulamin)</span>
+                <br><span style="font-size: 0.7rem; color: #aaa; margin-top: 4px; display: inline-block;">(Click to view legal info)</span>
             </div>
         </footer>
     </main>
 
-    <!-- MODAL Z ZAKŁADKAMI -->
+    <!-- MODAL -->
     <div class="modal-overlay" id="legal-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal(event)">&times;</button>
             
-            <!-- Przyciski zakładek -->
+            <!-- TABS -->
             <div class="modal-tabs">
-                <button class="tab-btn active" onclick="switchTab('terms', this)">Regulamin</button>
-                <button class="tab-btn" onclick="switchTab('privacy', this)">Polityka Prywatności</button>
+                <button class="tab-btn active" onclick="switchTab(event, 'terms')">Terms of Service</button>
+                <button class="tab-btn" onclick="switchTab(event, 'privacy')">Privacy Policy</button>
             </div>
 
-            <!-- Treść -->
+            <!-- CONTENT -->
             <div class="modal-body">
-                <!-- ZAKŁADKA 1: REGULAMIN -->
+                <!-- TERMS OF SERVICE -->
                 <div id="tab-terms" class="tab-content active">
-                    <h2>Regulamin korzystania z serwisu</h2>
-                    <p><strong>Ostatnia aktualizacja:</strong> 2026</p>
+                    <h2>Terms of Service</h2>
+                    <p><strong>Last updated:</strong> 2026</p>
 
-                    <h3>1. Postanowienia ogólne</h3>
-                    <p>Niniejszy Regulamin określa zasady korzystania ze strony ARUYEQ. Strona ma charakter wyłącznie informacyjny (tzw. link-in-bio) i nie prowadzi sprzedaży ani nie wymaga rejestracji.</p>
+                    <h3>1. General Provisions</h3>
+                    <p>These Terms of Service govern the use of the ARUYEQ website. This site is purely informational (a "link-in-bio" page) and does not sell products or require registration.</p>
 
-                    <h3>2. Prawa autorskie (Copyright)</h3>
-                    <p><strong>&copy; 2026 ARUYEQ. Wszelkie prawa zastrzeżone (All rights reserved).</strong></p>
+                    <h3>2. Copyright & Intellectual Property</h3>
+                    <p><strong>&copy; 2026 ARUYEQ. All rights reserved.</strong></p>
                     <ul>
-                        <li>Wszelkie treści, w tym kod źródłowy (HTML, CSS, JS), projekt graficzny logo (most, słońce) oraz teksty, są własnością twórcy ARUYEQ.</li>
-                        <li>Zabrania się kopiowania, modyfikowania lub rozpowszechniania kodu i grafiki bez pisemnej zgody autora.</li>
-                        <li>Wizerunek logo jest znakiem rozpoznawczym twórcy.</li>
+                        <li>All content, including source code (HTML, CSS, JS), graphic design (bridge, sun), and text, is the property of the ARUYEQ creator.</li>
+                        <li>Copying, modifying, or distributing the code and graphics without written permission from the author is strictly prohibited.</li>
+                        <li>The logo design is a trademark of the creator.</li>
                     </ul>
 
-                    <h3>3. Odpowiedzialność</h3>
-                    <p>Strona jest dostarczana w stanie "takim, jakim jest" (as-is). Twórca nie ponosi odpowiedzialności za szkody wynikające z korzystania z linków zewnętrznych ani za ewentualne błędy w działaniu kodu.</p>
+                    <h3>3. Limitation of Liability</h3>
+                    <p>The website is provided "as-is". The creator is not liable for any damages resulting from the use of external links or any errors in the operation of the code.</p>
 
-                    <h3>4. Linki do stron zewnętrznych</h3>
+                    <h3>4. External Links</h3>
+                    <p>This site contains links to third-party platforms (X, YouTube, GitHub, Discord, etc.).
