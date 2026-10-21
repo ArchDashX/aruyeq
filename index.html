@@ -14,20 +14,19 @@
     <style>
         /* --- ZMIENNE GLOBALNE --- */
         :root {
-            --bg-paper: #faf9f6;
-            --text-main: #333333;
-            --text-muted: #666666;
-            --navy: #2b2b8a;
-            --navy-dark: #1e1e6b;
-            --red: #c8102e;
+            --bg-paper: #fbfbf9;
+            --text-main: #2c2c2c;
+            --text-muted: #6b6b6b;
+            --navy: #23236b;
+            --navy-light: #3a3aa0;
+            --red: #d11230;
             --white: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --border-light: #eaeaea;
-            --border-dark: #dddddd;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --border-light: rgba(0, 0, 0, 0.06);
             
             --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-            --shadow-card: 8px 10px 0 rgba(0, 0, 0, 0.04);
-            --transition: all 0.2s ease;
+            --shadow-premium: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0,0,0,0.02);
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         /* --- RESET & BAZA --- */
@@ -52,112 +51,96 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- ANIMACJE (Zdefiniowane na sztywno, żeby działały zawsze) --- */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes cardEntry {
-            from { opacity: 0; transform: translateY(40px) rotate(-0.5deg); }
-            to { opacity: 1; transform: translateY(0) rotate(-0.5deg); }
-        }
-
-        @keyframes fadeInBg {
-            from { opacity: 0; }
-            to { opacity: 0.5; }
-        }
-
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* --- TŁO --- */
+        /* --- TŁO (Premium) --- */
         .bg-decorations {
             position: fixed;
             inset: 0;
             z-index: -1;
             pointer-events: none;
             overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%);
         }
 
-        .bg-circle {
+        /* Pulsująca poświata z tyłu */
+        .glow {
             position: absolute;
-            border: 1px solid rgba(43, 43, 138, 0.08);
-            border-radius: 50%;
-            opacity: 0;
-            animation: scaleIn 1.5s ease-out forwards;
-        }
-        .bg-circle:nth-child(1) {
-            width: 400px; height: 400px;
-            top: -150px; left: -150px;
-            border-color: rgba(200, 16, 46, 0.05);
-            animation-delay: 0.2s;
-        }
-        .bg-circle:nth-child(2) {
-            width: 500px; height: 200px;
-            bottom: -80px; right: -150px;
-            transform: rotate(-15deg);
-            animation-delay: 0.4s;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(209, 18, 48, 0.05) 0%, transparent 60%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 8s ease-in-out infinite alternate;
         }
 
+        .glow-navy {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(35, 35, 107, 0.04) 0%, transparent 60%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 10s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+        }
+
+        /* Fale na dole */
         .bg-waves {
             position: absolute;
             bottom: 0; left: 0; right: 0;
             height: 250px;
-            opacity: 0;
+            opacity: 0.4;
             background-image: 
-                radial-gradient(circle at 50% 100%, transparent 20px, rgba(43, 43, 138, 0.06) 21px, transparent 22px) 0 0 / 40px 20px,
-                radial-gradient(circle at 50% 100%, transparent 20px, rgba(200, 16, 46, 0.04) 21px, transparent 22px) 20px 0 / 40px 20px;
-            animation: fadeInBg 2s ease-out 0.5s forwards;
+                radial-gradient(circle at 50% 100%, transparent 20px, rgba(35, 35, 107, 0.1) 21px, transparent 22px) 0 0 / 40px 20px,
+                radial-gradient(circle at 50% 100%, transparent 20px, rgba(209, 18, 48, 0.06) 21px, transparent 22px) 20px 0 / 40px 20px;
+            animation: fadeInBg 2s ease-out forwards;
         }
 
-        /* --- KARTA GŁÓWNA --- */
+        @keyframes fadeInBg { from { opacity: 0; } to { opacity: 0.4; } }
+
+        /* --- KARTA --- */
         .card {
             width: 100%;
-            max-width: 440px;
+            max-width: 420px;
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 2.5rem 2rem;
-            border-radius: 4px;
-            box-shadow: var(--shadow-card);
+            border-radius: 16px; /* Bardziej miękkie rogi */
+            box-shadow: var(--shadow-premium);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
             position: relative;
             z-index: 1;
-            border: 1px solid var(--border-light);
-            /* Animacja karty */
             opacity: 0;
             animation: cardEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        /* Elementy, które wchodzą kaskadowo */
-        .seal, .logo-wrapper, .brand-title, .tagline, .description, .site-footer {
-            opacity: 0;
-            animation: fadeUp 0.8s ease-out forwards;
+        @keyframes cardEntry {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .seal { animation-delay: 0.8s; }
-        .logo-wrapper { animation-delay: 1.0s; }
-        .brand-title { animation-delay: 1.2s; }
-        .tagline { animation-delay: 1.4s; }
-        .description { animation-delay: 1.6s; }
-        .site-footer { animation-delay: 3.0s; }
 
         /* Pieczęć */
         .seal {
             position: absolute;
-            top: 1.2rem; right: 1.5rem;
-            width: 32px; height: 32px;
+            top: 1.5rem; right: 1.5rem;
+            width: 34px; height: 34px;
             border: 2px solid var(--red);
-            border-radius: 4px;
+            border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
-            transform: rotate(8deg);
+            transform: rotate(6deg);
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.8s forwards;
         }
         .seal::before {
             content: '';
-            width: 12px; height: 12px;
+            width: 14px; height: 14px;
             background-color: var(--red);
-            border-radius: 2px;
+            border-radius: 3px;
             transform: rotate(45deg);
         }
 
@@ -165,172 +148,135 @@
         .logo-wrapper {
             display: flex; justify-content: center;
             margin-bottom: 1.5rem;
-            transform: translateX(-3px);
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 1s forwards;
         }
         .logo {
-            width: 100px; height: 100px;
+            width: 110px; height: 110px;
             border-radius: 50%;
             background: var(--navy);
             position: relative;
             overflow: hidden;
-            border: 3px solid var(--white);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 4px solid var(--white);
+            box-shadow: 0 10px 25px rgba(35, 35, 107, 0.2);
             transform: rotate(2deg);
+            transition: var(--transition-smooth);
         }
-        .logo-sun {
-            position: absolute;
-            top: 18%; left: 30%;
-            width: 40px; height: 40px;
-            background: var(--red);
-            border-radius: 50%;
-        }
-        .logo-bridge {
-            position: absolute;
-            bottom: 18%; left: 15%;
-            width: 70px; height: 25px;
-            border: 2px solid var(--white);
-            border-bottom: none;
-            border-radius: 50px 50px 0 0;
-        }
-        .logo-water {
-            position: absolute;
-            bottom: 0; left: -5%;
-            width: 110%; height: 30%;
-            background: var(--white);
-        }
+        .logo:hover { transform: rotate(0deg) scale(1.05); }
+        
+        .logo-sun { position: absolute; top: 18%; left: 30%; width: 45px; height: 45px; background: var(--red); border-radius: 50%; }
+        .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 75px; height: 28px; border: 3px solid var(--white); border-bottom: none; border-radius: 50px 50px 0 0; }
+        .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: var(--white); }
 
         /* Typografia */
         .brand-title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--navy);
-            text-align: center;
-            letter-spacing: 6px;
-            margin-bottom: 0.2rem;
-            transform: translateX(2px);
+            font-size: 2.2rem; font-weight: 800; color: var(--navy);
+            text-align: center; letter-spacing: 8px; margin-bottom: 0.2rem;
+            opacity: 0; animation: fadeUp 0.6s ease-out 1.2s forwards;
         }
         .tagline {
-            font-size: 0.75rem;
-            color: var(--red);
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 700;
-            margin-bottom: 1.8rem;
-            transform: rotate(-0.5deg);
+            font-size: 0.75rem; color: var(--red); text-align: center;
+            text-transform: uppercase; letter-spacing: 4px; font-weight: 700;
+            margin-bottom: 2rem;
+            opacity: 0; animation: fadeUp 0.6s ease-out 1.3s forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Opis */
         .description {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 2rem;
-            line-height: 1.6;
+            font-size: 0.95rem; color: var(--text-muted);
+            text-align: center; margin-bottom: 2.2rem; line-height: 1.7;
+            opacity: 0; animation: fadeUp 0.6s ease-out 1.4s forwards;
         }
         .description a {
-            color: var(--text-main);
-            font-weight: 600;
-            text-decoration: none;
-            border-bottom: 1px dashed var(--red);
-            transition: var(--transition);
+            color: var(--text-main); font-weight: 600; text-decoration: none;
+            border-bottom: 1px dashed var(--red); transition: var(--transition-smooth);
         }
-        .description a:hover, .description a:focus {
-            color: var(--red);
-            border-bottom-style: solid;
-            outline: none;
-        }
+        .description a:hover { color: var(--red); border-bottom-style: solid; }
 
         /* --- LINKI --- */
-        .links-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-        }
+        .links-nav { display: flex; flex-direction: column; gap: 0.8rem; }
 
         .link-btn {
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center;
             padding: 1rem 1.2rem;
             text-decoration: none;
-            background: #fcfcfc;
-            border: 1px solid var(--border-dark);
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 10px;
             color: var(--text-main);
             font-weight: 600;
             font-size: 0.9rem;
-            transition: var(--transition);
-            
-            /* Kaskadowe pojawianie się */
+            transition: var(--transition-smooth);
             opacity: 0;
-            animation: fadeUp 0.6s ease-out forwards;
+            animation: fadeUp 0.5s ease-out forwards;
+            backdrop-filter: blur(5px);
         }
 
-        /* Opóźnienia dla przycisków */
-        .link-btn:nth-child(1) { animation-delay: 1.8s; transform: rotate(-1deg); margin-left: -5px; margin-right: 10px; }
-        .link-btn:nth-child(2) { animation-delay: 1.9s; transform: rotate(1.2deg); margin-left: 8px; margin-right: -4px; }
-        .link-btn:nth-child(3) { animation-delay: 2.0s; transform: rotate(-0.6deg); margin-left: -2px; margin-right: 12px; }
-        .link-btn:nth-child(4) { animation-delay: 2.1s; transform: rotate(1.5deg); margin-left: 12px; margin-right: 0px; }
-        .link-btn:nth-child(5) { animation-delay: 2.2s; transform: rotate(-1.2deg); margin-left: 0px; margin-right: 8px; }
-        .link-btn:nth-child(6) { animation-delay: 2.3s; transform: rotate(0.8deg); margin-left: 6px; margin-right: -6px; }
-        .link-btn:nth-child(7) { animation-delay: 2.4s; transform: rotate(-0.9deg); margin-left: 10px; margin-right: 2px; }
-        .link-btn:nth-child(8) { animation-delay: 2.5s; transform: rotate(1.1deg); margin-left: -2px; margin-right: 9px; }
+        /* Zachowany "krzywy" układ, ale subtelniejszy */
+        .link-btn:nth-child(1) { animation-delay: 1.5s; transform: rotate(-0.8deg); margin-right: 5px; }
+        .link-btn:nth-child(2) { animation-delay: 1.6s; transform: rotate(0.5deg); margin-left: 5px; }
+        .link-btn:nth-child(3) { animation-delay: 1.7s; transform: rotate(-0.4deg); margin-right: 8px; }
+        .link-btn:nth-child(4) { animation-delay: 1.8s; transform: rotate(1deg); margin-left: 8px; }
+        .link-btn:nth-child(5) { animation-delay: 1.9s; transform: rotate(-0.7deg); margin-right: 4px; }
+        .link-btn:nth-child(6) { animation-delay: 2.0s; transform: rotate(0.6deg); margin-left: 4px; }
+        .link-btn:nth-child(7) { animation-delay: 2.1s; transform: rotate(-0.5deg); margin-right: 6px; }
+        .link-btn:nth-child(8) { animation-delay: 2.2s; transform: rotate(0.8deg); margin-left: 6px; }
 
-        /* Efekt najechania */
-        .link-btn:hover, .link-btn:focus {
-            background: #f0f2f5;
-            border-color: #b0b5c0;
-            transform: rotate(0deg) translateY(-2px) !important; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            outline: none;
+        /* Efekt najechania - podniesienie i wyprostowanie */
+        .link-btn:hover {
+            background: var(--white);
+            border-color: rgba(209, 18, 48, 0.2);
+            transform: rotate(0deg) translateY(-3px) !important;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.08);
+            color: var(--navy);
         }
 
         .link-icon {
-            margin-right: 15px;
-            font-size: 1.1rem;
-            width: 24px;
-            text-align: center;
-            color: var(--text-main);
+            margin-right: 15px; font-size: 1.1rem;
+            width: 24px; text-align: center; color: var(--text-main);
+            transition: var(--transition-smooth);
         }
+        .link-btn:hover .link-icon { color: var(--red); }
 
-        /* --- WIDOK ADMINA --- */
+        /* --- PANEL ADMINA --- */
         #admin-view { display: none; }
-
         .admin-title { text-align: center; font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; font-weight: 600; }
         .login-form { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
-        .input-field { padding: 1rem; border: 1px solid var(--border-dark); border-radius: 8px; font-family: var(--font-main); font-size: 0.9rem; background: #fcfcfc; transition: var(--transition); }
-        .input-field:focus { border-color: var(--navy); outline: none; box-shadow: 0 0 0 3px rgba(43, 43, 138, 0.1); }
-        .submit-btn { width: 100%; padding: 1rem; background: var(--navy); color: var(--white); border: none; border-radius: 8px; font-family: var(--font-main); font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--transition); }
-        .submit-btn:hover { background: var(--navy-dark); }
+        .input-field { padding: 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; font-family: var(--font-main); font-size: 0.9rem; background: rgba(255,255,255,0.7); transition: var(--transition-smooth); }
+        .input-field:focus { border-color: var(--navy); outline: none; background: #fff; box-shadow: 0 0 0 4px rgba(35, 35, 107, 0.1); }
+        .submit-btn { width: 100%; padding: 1rem; background: var(--navy); color: var(--white); border: none; border-radius: 10px; font-family: var(--font-main); font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--transition-smooth); }
+        .submit-btn:hover { background: var(--navy-light); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(35, 35, 107, 0.2); }
         .error-msg { color: var(--red); text-align: center; font-size: 0.85rem; margin-bottom: 1rem; display: none; font-weight: 600; }
         .admin-panel-content { display: none; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; }
         .admin-header h2 { color: var(--navy); font-size: 1.2rem; }
-        .logout-btn { background: var(--red); color: var(--white); border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.8rem; transition: var(--transition); }
+        .logout-btn { background: var(--red); color: var(--white); border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.8rem; transition: var(--transition-smooth); }
         .logout-btn:hover { background: #a00d25; }
 
         /* --- STOPKA --- */
         .site-footer {
-            margin-top: 2.5rem;
-            font-size: 0.7rem;
-            color: #999;
-            text-align: center;
-            line-height: 1.5;
-            border-top: 1px solid #eee;
-            padding-top: 1rem;
+            margin-top: 2.5rem; font-size: 0.7rem; color: #999;
+            text-align: center; line-height: 1.6; padding-top: 1rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            opacity: 0; animation: fadeUp 0.6s ease-out 2.5s forwards;
         }
 
         @media (max-width: 480px) {
-            .card { padding: 1.5rem; }
-            .brand-title { font-size: 1.6rem; letter-spacing: 4px; }
+            .card { padding: 2rem 1.5rem; }
+            .brand-title { font-size: 1.8rem; letter-spacing: 5px; }
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
     <div class="bg-decorations" aria-hidden="true">
-        <div class="bg-circle"></div>
-        <div class="bg-circle"></div>
+        <div class="glow"></div>
+        <div class="glow-navy"></div>
         <div class="bg-waves"></div>
     </div>
 
@@ -386,7 +332,7 @@
                     <h2>Admin Panel</h2>
                     <button class="logout-btn" onclick="logout()">Logout</button>
                 </div>
-                <p class="description" style="border: 1px solid #eee; padding: 1rem; border-radius: 8px;">
+                <p class="description" style="border: 1px solid rgba(0,0,0,0.05); padding: 1rem; border-radius: 10px; background: rgba(255,255,255,0.5);">
                     <strong>Authentication successful.</strong><br>
                     Welcome to the ARUYEQ management system.
                 </p>
@@ -408,7 +354,7 @@
                 return false;
             }
         };
-        setInterval(() => { console.clear(); console.log("%cSTOP! System protected.", "color: #c8102e; font-size: 20px; font-weight: bold;"); }, 2000);
+        setInterval(() => { console.clear(); console.log("%cSTOP! System protected.", "color: #d11230; font-size: 20px; font-weight: bold;"); }, 2000);
 
         async function sha256(message) {
             const msgBuffer = new TextEncoder().encode(message);
