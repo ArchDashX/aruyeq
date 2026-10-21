@@ -6,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ARUYEQ - Arch Linux, Hyprland and system customisation.">
     <title>ARUYEQ | Arch Linux</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --bg-base: #faf9f6;
@@ -20,7 +18,7 @@
             --navy-light: #3a3aa0;
             --red: #c8102e;
             --white: #ffffff;
-            --surface: rgba(255, 255, 255, 0.95);
+            --surface: #ffffff;
             --border-color: #eaeaea;
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
             --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
@@ -29,11 +27,7 @@
             --transition: all 0.2s ease;
         }
 
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: var(--font-main);
@@ -50,275 +44,68 @@
             overflow-x: hidden;
         }
 
-        /* Background */
-        .bg-decor {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%);
-        }
+        .bg-decor { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%); }
         
-        .bg-circle {
-            position: absolute;
-            border: 1px solid rgba(43, 43, 138, 0.06);
-            border-radius: 50%;
-        }
-        .bg-circle:nth-child(1) {
-            width: 400px; height: 400px;
-            top: -150px; left: -150px;
-            border-color: rgba(200, 16, 46, 0.04);
-        }
-        .bg-circle:nth-child(2) {
-            width: 500px; height: 200px;
-            bottom: -80px; right: -150px;
-            transform: rotate(-15deg);
-        }
+        .bg-circle { position: absolute; border: 1px solid rgba(43, 43, 138, 0.06); border-radius: 50%; }
+        .bg-circle:nth-child(1) { width: 400px; height: 400px; top: -150px; left: -150px; border-color: rgba(200, 16, 46, 0.04); }
+        .bg-circle:nth-child(2) { width: 500px; height: 200px; bottom: -80px; right: -150px; transform: rotate(-15deg); }
 
         .bg-waves {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 250px;
-            opacity: 0.4;
+            position: absolute; bottom: 0; left: 0; right: 0; height: 250px; opacity: 0.4;
             background-image: 
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(43, 43, 138, 0.08) 21px, transparent 22px) 0 0 / 40px 20px,
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(200, 16, 46, 0.05) 21px, transparent 22px) 20px 0 / 40px 20px;
         }
 
-        /* Card */
         .card {
-            width: 100%;
-            max-width: 440px;
-            background: var(--surface);
-            padding: 2.5rem 2rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
+            width: 100%; max-width: 440px; background: var(--surface);
+            padding: 2.5rem 2rem; border-radius: var(--radius);
+            box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
+            position: relative; z-index: 1; display: flex; flex-direction: column;
         }
 
-        /* Logo */
-        .logo-wrap {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
+        .logo-wrap { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+        .logo { width: 100px; height: 100px; border-radius: 50%; background: var(--navy); position: relative; overflow: hidden; border: 3px solid var(--white); box-shadow: var(--shadow-sm); }
+        .logo-sun { position: absolute; top: 18%; left: 30%; width: 40px; height: 40px; background: var(--red); border-radius: 50%; }
+        .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 70px; height: 25px; border: 2px solid var(--white); border-bottom: none; border-radius: 50px 50px 0 0; }
+        .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: var(--white); }
 
-        .logo {
-            width: 100px; height: 100px;
-            border-radius: 50%;
-            background: var(--navy);
-            position: relative;
-            overflow: hidden;
-            border: 3px solid var(--white);
-            box-shadow: var(--shadow-sm);
-        }
+        .brand { font-size: 2rem; font-weight: 800; color: var(--navy); text-align: center; letter-spacing: 6px; margin-bottom: 0.2rem; }
+        .tagline { font-size: 0.75rem; color: var(--red); text-align: center; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; margin-bottom: 1.8rem; }
+        .description { font-size: 0.95rem; color: var(--text-muted); text-align: center; margin-bottom: 2rem; }
+        .description a { color: var(--text-main); font-weight: 600; text-decoration: none; border-bottom: 1px dashed var(--red); transition: var(--transition); }
+        .description a:hover { color: var(--red); border-bottom-style: solid; }
 
-        .logo-sun {
-            position: absolute;
-            top: 18%; left: 30%;
-            width: 40px; height: 40px;
-            background: var(--red);
-            border-radius: 50%;
-        }
-
-        .logo-bridge {
-            position: absolute;
-            bottom: 18%; left: 15%;
-            width: 70px; height: 25px;
-            border: 2px solid var(--white);
-            border-bottom: none;
-            border-radius: 50px 50px 0 0;
-        }
-
-        .logo-water {
-            position: absolute;
-            bottom: 0; left: -5%;
-            width: 110%; height: 30%;
-            background: var(--white);
-        }
-
-        /* Typography */
-        .brand {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--navy);
-            text-align: center;
-            letter-spacing: 6px;
-            margin-bottom: 0.2rem;
-        }
-
-        .tagline {
-            font-size: 0.75rem;
-            color: var(--red);
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 700;
-            margin-bottom: 1.8rem;
-        }
-
-        .description {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .description a {
-            color: var(--text-main);
-            font-weight: 600;
-            text-decoration: none;
-            border-bottom: 1px dashed var(--red);
-            transition: var(--transition);
-        }
-
-        .description a:hover {
-            color: var(--red);
-            border-bottom-style: solid;
-        }
-
-        /* Links */
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
+        .links { display: flex; flex-direction: column; gap: 0.8rem; }
         .link-btn {
-            display: flex;
-            align-items: center;
-            padding: 1rem 1.2rem;
-            text-decoration: none;
-            background: #fcfcfc;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: var(--transition);
+            display: flex; align-items: center; padding: 1rem 1.2rem; text-decoration: none;
+            background: #fcfcfc; border: 1px solid var(--border-color); border-radius: 8px;
+            color: var(--text-main); font-weight: 600; font-size: 0.9rem; transition: var(--transition);
         }
+        .link-btn:hover { background: #f4f6fa; border-color: #d0d5e0; transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+        .link-icon { margin-right: 15px; font-size: 1.1rem; width: 24px; text-align: center; color: var(--text-main); }
+        .link-btn:hover .link-icon { color: var(--red); }
 
-        .link-btn:hover {
-            background: #f4f6fa;
-            border-color: #d0d5e0;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-        }
+        .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); text-align: center; }
+        .copyright { display: inline-block; font-size: 0.75rem; color: var(--text-muted); text-decoration: none; transition: var(--transition); line-height: 1.5; }
+        .copyright:hover { color: var(--navy); }
+        .copyright strong { display: block; color: var(--text-main); font-size: 0.85rem; margin-bottom: 2px; }
 
-        .link-icon {
-            margin-right: 15px;
-            font-size: 1.1rem;
-            width: 24px;
-            text-align: center;
-            color: var(--text-main);
-        }
-
-        .link-btn:hover .link-icon {
-            color: var(--red);
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 2.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        .copyright {
-            display: inline-block;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: var(--transition);
-            line-height: 1.5;
-        }
-
-        .copyright:hover {
-            color: var(--navy);
-        }
-
-        .copyright strong {
-            display: block;
-            color: var(--text-main);
-            font-size: 0.85rem;
-            margin-bottom: 2px;
-        }
-
-        /* Cookie Banner */
         .cookie-banner {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(200%);
-            width: calc(100% - 2rem);
-            max-width: 500px;
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            padding: 1.5rem;
-            z-index: 9999;
-            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            border: 1px solid var(--border-color);
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(200%);
+            width: calc(100% - 2rem); max-width: 500px; background: var(--white);
+            border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 1.5rem;
+            z-index: 9999; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); border: 1px solid var(--border-color);
         }
-
-        .cookie-banner.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .cookie-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .cookie-text a {
-            color: var(--navy);
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .cookie-actions {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-        }
-
-        .cookie-btn {
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            font-family: var(--font-main);
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            border: none;
-            transition: var(--transition);
-            flex: 1;
-            text-align: center;
-        }
-
-        .btn-accept {
-            background: var(--navy);
-            color: var(--white);
-        }
-
-        .btn-accept:hover {
-            background: var(--navy-light);
-        }
-
-        .btn-necessary {
-            background: #f0f0f0;
-            color: var(--text-main);
-        }
-
-        .btn-necessary:hover {
-            background: #e0e0e0;
-        }
+        .cookie-banner.show { transform: translateX(-50%) translateY(0); }
+        .cookie-text { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; }
+        .cookie-text a { color: var(--navy); font-weight: 600; text-decoration: none; }
+        .cookie-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .cookie-btn { padding: 0.8rem 1rem; border-radius: 8px; font-family: var(--font-main); font-weight: 600; font-size: 0.85rem; cursor: pointer; border: none; transition: var(--transition); flex: 1; text-align: center; }
+        .btn-accept { background: var(--navy); color: var(--white); }
+        .btn-accept:hover { background: var(--navy-light); }
+        .btn-necessary { background: #f0f0f0; color: var(--text-main); }
+        .btn-necessary:hover { background: #e0e0e0; }
 
         @media (max-width: 480px) {
             .card { padding: 2rem 1.5rem; }
@@ -328,7 +115,6 @@
     </style>
 </head>
 <body>
-
     <div class="bg-decor" aria-hidden="true">
         <div class="bg-circle"></div>
         <div class="bg-circle"></div>
