@@ -1,15 +1,23 @@
-<!-- plik: index.html -->
+<!-- plik: index.html (główna strona) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ARUYEQ - Arch Linux, Hyprland and system customisation.">
     <title>ARUYEQ | Arch Linux</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-base: #faf9f6; --text-main: #1a1a1a; --text-muted: #555555; --navy: #2b2b8a; --navy-light: #3a3aa0; --red: #c8102e; --white: #ffffff; --surface: #ffffff; --border-color: #eaeaea; --shadow-sm: 0 2px 8px rgba(0,0,0,0.04); --shadow-lg: 0 12px 32px rgba(0,0,0,0.08); --radius: 12px; --font-main: 'Inter', system-ui, -apple-system, sans-serif; --transition: all 0.2s ease; }
+        :root { 
+            --bg-base: #faf9f6; --text-main: #1a1a1a; --text-muted: #555555; 
+            --navy: #2b2b8a; --navy-light: #3a3aa0; --red: #c8102e; 
+            --white: #ffffff; --surface: #ffffff; --border-color: #eaeaea; 
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04); --shadow-lg: 0 12px 32px rgba(0,0,0,0.08); 
+            --radius: 12px; --font-main: 'Inter', system-ui, -apple-system, sans-serif; 
+            --transition: all 0.2s ease; 
+        }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: var(--font-main); background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 2rem 1rem; line-height: 1.5; -webkit-font-smoothing: antialiased; position: relative; overflow-x: hidden; }
         
@@ -43,8 +51,8 @@
         .copyright:hover { color: var(--navy); }
         .copyright strong { display: block; color: var(--text-main); font-size: 0.85rem; margin-bottom: 2px; }
 
-        .cookie-banner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(200%); width: calc(100% - 2rem); max-width: 500px; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 1.5rem; z-index: 9999; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); border: 1px solid var(--border-color); }
-        .cookie-banner.show { transform: translateX(-50%) translateY(0); }
+        .cookie-banner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: calc(100% - 2rem); max-width: 500px; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 1.5rem; z-index: 9999; border: 1px solid var(--border-color); display: none; }
+        .cookie-banner.show { display: block; }
         .cookie-text { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; }
         .cookie-text a { color: var(--navy); font-weight: 600; text-decoration: none; }
         .cookie-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
@@ -92,36 +100,14 @@
 
     <script>
         const CONSENT_KEY = 'aruyeq_cookie_consent';
-        const LOGS_KEY = 'aruyeq_consent_logs';
-
-        // Sprawdzenie po ciasteczku, a nie localStorage (między subdomenami)
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
-
-        if (!getCookie(CONSENT_KEY)) {
-            setTimeout(() => { document.getElementById('cookie-banner').classList.add('show'); }, 1000);
+        
+        if (!localStorage.getItem(CONSENT_KEY)) {
+            document.getElementById('cookie-banner').classList.add('show');
         }
 
         function setCookies(type) {
-            // Zapis ciasteczka na poziomie całej domeny (archdashx.github.io)
-            document.cookie = `${CONSENT_KEY}=${type}; path=/; max-age=31536000; SameSite=Lax`;
-            
-            // Zapis do logów w localStorage (lokalnie dla archiwizacji, ale admin użyje ciasteczka)
-            let sessionId = sessionStorage.getItem('user_session_id');
-            if (!sessionId) {
-                sessionId = Math.random().toString(36).substring(2, 10);
-                sessionStorage.setItem('user_session_id', sessionId);
-            }
-            const logs = JSON.parse(localStorage.getItem(LOGS_KEY) || '[]');
-            logs.push({ timestamp: new Date().toISOString(), sessionId: sessionId, choice: type });
-            localStorage.setItem(LOGS_KEY, JSON.stringify(logs));
-
-            const banner = document.getElementById('cookie-banner');
-            banner.classList.remove('show');
-            setTimeout(() => { banner.remove(); }, 500);
+            localStorage.setItem(CONSENT_KEY, type);
+            document.getElementById('cookie-banner').classList.remove('show');
         }
 
         async function copyDiscord(e) {
