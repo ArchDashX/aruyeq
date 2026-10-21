@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,6 +38,12 @@
             z-index: 0;
             filter: grayscale(100%) contrast(120%); 
             pointer-events: none;
+            animation: fadeInBg 2s ease-out forwards;
+        }
+
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 0.08; }
         }
 
         .bg-lines {
@@ -51,17 +57,25 @@
             position: absolute;
             border: 1px solid rgba(43, 43, 138, 0.1);
             border-radius: 50%;
+            animation: scaleIn 1.5s ease-out forwards;
+            opacity: 0;
         }
         .line:nth-child(1) {
             width: 300px; height: 300px;
             top: -100px; left: -100px;
-            transform: rotate(15deg);
+            transform: rotate(15deg) scale(0.8);
             border-color: rgba(200, 16, 46, 0.05);
+            animation-delay: 0.2s;
         }
         .line:nth-child(2) {
             width: 400px; height: 150px;
             bottom: -50px; right: -100px;
-            transform: rotate(-10deg);
+            transform: rotate(-10deg) scale(0.8);
+            animation-delay: 0.4s;
+        }
+
+        @keyframes scaleIn {
+            to { opacity: 1; transform: rotate(var(--rot)) scale(1); }
         }
 
         /* --- GŁÓWNA KARTA --- */
@@ -77,21 +91,34 @@
             position: relative;
             z-index: 1;
             border: 1px solid #eaeaea;
+            /* Animacja pojawiania się karty */
+            animation: cardEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px) rotate(-0.5deg);
+        }
+
+        @keyframes cardEntry {
+            to { opacity: 1; transform: translateY(0) rotate(-0.5deg); }
+        }
+
+        /* --- POSZCZEGÓLNE ELEMENTY (Kaskadowe pojawianie) --- */
+        .seal, .logo-container, .brand, .tagline, .description, .footer {
+            opacity: 0;
+            animation: fadeUp 0.8s ease-out forwards;
         }
 
         .seal {
             position: absolute;
             top: 1.2rem;
             right: 1.5rem;
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             border: 2px solid #c8102e;
             border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             transform: rotate(8deg);
-            opacity: 0.85;
+            animation-delay: 0.8s;
         }
         .seal::before {
             content: '';
@@ -106,6 +133,7 @@
             justify-content: center;
             margin-bottom: 1.5rem;
             transform: translateX(-3px);
+            animation-delay: 1s;
         }
 
         .logo {
@@ -151,6 +179,7 @@
             letter-spacing: 6px;
             margin-bottom: 0.2rem;
             transform: translateX(2px);
+            animation-delay: 1.2s;
         }
 
         .tagline {
@@ -162,15 +191,16 @@
             font-weight: 700;
             margin-bottom: 1.8rem;
             transform: rotate(-0.5deg);
+            animation-delay: 1.4s;
         }
 
-        /* --- WIDOK PUBLICZNY (Linki) --- */
         .description {
             font-size: 0.95rem;
             color: #555;
             line-height: 1.6;
             text-align: center;
             margin-bottom: 2rem;
+            animation-delay: 1.6s;
         }
         
         .description a {
@@ -198,18 +228,23 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: all 0.2s ease;
+            
+            /* Kaskadowe pojawianie się przycisków */
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out forwards;
         }
 
-        /* Krzywe ułożenie */
-        .btn:nth-child(1) { transform: rotate(-1deg); margin-left: -5px; margin-right: 10px; }
-        .btn:nth-child(2) { transform: rotate(1.2deg); margin-left: 8px; margin-right: -4px; }
-        .btn:nth-child(3) { transform: rotate(-0.6deg); margin-left: -2px; margin-right: 12px; }
-        .btn:nth-child(4) { transform: rotate(1.5deg); margin-left: 12px; margin-right: 0px; }
-        .btn:nth-child(5) { transform: rotate(-1.2deg); margin-left: 0px; margin-right: 8px; }
-        .btn:nth-child(6) { transform: rotate(0.8deg); margin-left: 6px; margin-right: -6px; }
-        .btn:nth-child(7) { transform: rotate(-0.9deg); margin-left: 10px; margin-right: 2px; }
-        .btn:nth-child(8) { transform: rotate(1.1deg); margin-left: -2px; margin-right: 9px; }
+        /* Opóźnienia dla każdego przycisku z osobna (żeby leciały jeden po drugim) */
+        .btn:nth-child(1) { animation-delay: 1.8s; transform: rotate(-1deg); margin-left: -5px; margin-right: 10px; }
+        .btn:nth-child(2) { animation-delay: 1.9s; transform: rotate(1.2deg); margin-left: 8px; margin-right: -4px; }
+        .btn:nth-child(3) { animation-delay: 2.0s; transform: rotate(-0.6deg); margin-left: -2px; margin-right: 12px; }
+        .btn:nth-child(4) { animation-delay: 2.1s; transform: rotate(1.5deg); margin-left: 12px; margin-right: 0px; }
+        .btn:nth-child(5) { animation-delay: 2.2s; transform: rotate(-1.2deg); margin-left: 0px; margin-right: 8px; }
+        .btn:nth-child(6) { animation-delay: 2.3s; transform: rotate(0.8deg); margin-left: 6px; margin-right: -6px; }
+        .btn:nth-child(7) { animation-delay: 2.4s; transform: rotate(-0.9deg); margin-left: 10px; margin-right: 2px; }
+        .btn:nth-child(8) { animation-delay: 2.5s; transform: rotate(1.1deg); margin-left: -2px; margin-right: 9px; }
 
+        /* Efekt najechania (znosi rotację) */
         .btn:hover {
             background: #f0f2f5;
             border-color: #b0b5c0;
@@ -224,92 +259,34 @@
             text-align: center;
         }
 
-        /* --- WIDOK ADMINA (Logowanie/Panel) --- */
-        #admin-view {
-            display: none; /* Domyślnie ukryte */
+        /* --- ANIMACJA DLA WSZYSTKICH ELEMENTÓW --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .login-title {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .input-group input {
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            outline: none;
-            background: #fcfcfc;
-        }
-
-        .input-group input:focus { border-color: #2b2b8a; }
-
-        .login-btn {
-            width: 100%;
-            padding: 1rem;
-            background: #2b2b8a;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .error-msg {
-            color: #c8102e;
-            text-align: center;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            display: none;
-            font-weight: 600;
-        }
-
-        #admin-panel-content {
-            display: none;
-        }
-
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
+        /* --- WIDOK ADMINA --- */
+        #admin-view { display: none; }
+        
+        .login-title { text-align: center; font-size: 1.1rem; color: #555; margin-bottom: 1.5rem; font-weight: 600; }
+        .input-group { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+        .input-group input { padding: 1rem; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; outline: none; background: #fcfcfc; }
+        .login-btn { width: 100%; padding: 1rem; background: #2b2b8a; color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .error-msg { color: #c8102e; text-align: center; font-size: 0.85rem; margin-bottom: 1rem; display: none; font-weight: 600; }
+        
+        #admin-panel-content { display: none; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 1rem; margin-bottom: 1.5rem; }
         .admin-header h2 { color: #2b2b8a; font-size: 1.2rem; }
+        .logout-btn { background: #c8102e; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.8rem; }
 
-        .logout-btn {
-            background: #c8102e;
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-
-        /* Stopka */
+        /* --- STOPKA --- */
         .footer {
             margin-top: 2.5rem;
             font-size: 0.7rem;
             color: #999;
             text-align: center;
             line-height: 1.5;
+            animation-delay: 2.8s;
         }
 
         @media (max-width: 480px) {
@@ -321,8 +298,8 @@
 
     <div class="bg-image"></div>
     <div class="bg-lines">
-        <div class="line"></div>
-        <div class="line"></div>
+        <div class="line" style="--rot: 15deg;"></div>
+        <div class="line" style="--rot: -10deg;"></div>
     </div>
 
     <div class="card">
@@ -340,9 +317,7 @@
         <div class="brand">ARUYEQ</div>
         <div class="tagline">"I use Arch btw"</div>
 
-        <!-- ========================================== -->
-        <!-- WIDOK PUBLICZNY (To widzą wszyscy)         -->
-        <!-- ========================================== -->
+        <!-- WIDOK PUBLICZNY -->
         <div id="public-view">
             <div class="description">
                 I create content about <a href="https://archlinux.org/" target="_blank">Arch Linux</a>, <a href="https://omarchy.org/" target="_blank">Omarchy</a> and <a href="https://hypr.land/" target="_blank">Hyprland</a> and system customisation.<br><br>
@@ -361,44 +336,34 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- WIDOK ADMINA (Ukryty, dostępny pod #admin) -->
-        <!-- ========================================== -->
+        <!-- WIDOK ADMINA -->
         <div id="admin-view">
-            <div class="login-title">Autoryzacja systemu</div>
+            <div class="login-title">System Authorization</div>
+            <div class="error-msg" id="error-msg">Access denied. Invalid credentials.</div>
             
-            <div class="error-msg" id="error-msg">Odmowa dostępu. Błędne dane.</div>
-            
-            <!-- Formularz logowania -->
             <div id="login-form">
                 <div class="input-group">
-                    <input type="text" id="username" placeholder="Identyfikator" autocomplete="off">
-                    <input type="password" id="password" placeholder="Klucz dostępu" autocomplete="off">
+                    <input type="text" id="username" placeholder="Identifier" autocomplete="off">
+                    <input type="password" id="password" placeholder="Access Key" autocomplete="off">
                 </div>
-                <button class="login-btn" onclick="secureCheck()">Weryfikuj</button>
+                <button class="login-btn" onclick="secureCheck()">Verify</button>
             </div>
 
-            <!-- Panel po zalogowaniu -->
             <div id="admin-panel-content">
                 <div class="admin-header">
-                    <h2>Panel Admina</h2>
-                    <button class="logout-btn" onclick="logout()">Wyloguj</button>
+                    <h2>Admin Panel</h2>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
                 </div>
-                
                 <div class="description" style="margin-bottom: 1rem; border: 1px solid #eee; padding: 1rem; border-radius: 8px;">
-                    <strong>Zalogowano pomyślnie.</strong><br>
-                    Witaj w systemie zarządzania ARUYEQ.
-                </div>
-
-                <div class="footer" style="border-top: none;">
-                    System Zabezpieczony<br>&copy; 2026 ARUYEQ.
+                    <strong>Authentication successful.</strong><br>
+                    Welcome to the ARUYEQ management system.
                 </div>
             </div>
         </div>
 
         <!-- Stopka publiczna -->
         <div class="footer" id="public-footer">
-            &copy; 2026 ARUYEQ.<br>Wszelkie prawa zastrzeżone.
+            &copy; 2026 ARUYEQ.<br>All rights reserved.
         </div>
 
     </div>
@@ -409,7 +374,7 @@
         document.onkeydown = function(e) {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) return false;
         };
-        setInterval(function() { console.clear(); console.log("%cSTOP! System chroniony.", "color: red; font-size: 20px; font-weight: bold;"); }, 2000);
+        setInterval(function() { console.clear(); console.log("%cSTOP! System protected.", "color: red; font-size: 20px; font-weight: bold;"); }, 2000);
 
         // --- 2. HASHOWANIE SHA-256 ---
         async function sha256(message) {
@@ -419,11 +384,11 @@
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
         
-        // Hashe dla: admin / admin
+        // Hasła: admin / admin
         const HASH_USER = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; 
         const HASH_PASS = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
 
-        // --- 3. ROUTING (Wykrywanie #admin) ---
+        // --- 3. ROUTING ---
         function checkRoute() {
             const hash = window.location.hash;
             const publicView = document.getElementById('public-view');
@@ -435,7 +400,6 @@
                 publicFooter.style.display = 'none';
                 adminView.style.display = 'block';
                 
-                // Reset formularza przy wejściu
                 document.getElementById('login-form').style.display = 'block';
                 document.getElementById('admin-panel-content').style.display = 'none';
                 document.getElementById('username').value = '';
@@ -447,10 +411,7 @@
             }
         }
 
-        // Nasłuchiwanie zmian w pasku adresu
         window.addEventListener('hashchange', checkRoute);
-        
-        // Sprawdź przy starcie
         checkRoute();
 
         // --- 4. LOGIKA LOGOWANIA ---
@@ -473,7 +434,7 @@
         }
 
         function logout() {
-            window.location.hash = ''; // Wraca do normalnego widoku
+            window.location.hash = ''; 
         }
 
         document.getElementById('password').addEventListener('keypress', function (e) {
