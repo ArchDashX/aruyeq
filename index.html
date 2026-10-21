@@ -27,26 +27,28 @@
         .bg-circle:nth-child(2) { width: 500px; height: 200px; bottom: -80px; right: -150px; transform: rotate(-15deg); }
         .bg-waves { position: absolute; bottom: 0; left: 0; right: 0; height: 250px; opacity: 0.4; background-image: radial-gradient(circle at 50% 100%, transparent 20px, rgba(43, 43, 138, 0.08) 21px, transparent 22px) 0 0 / 40px 20px, radial-gradient(circle at 50% 100%, transparent 20px, rgba(200, 16, 46, 0.05) 21px, transparent 22px) 20px 0 / 40px 20px; }
 
-        /* Animacje */
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes cardIn { from { opacity: 0; transform: translateY(30px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-
         .card { 
             width: 100%; max-width: 440px; background: var(--surface); padding: 2.5rem 2rem; border-radius: var(--radius); 
             box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); position: relative; z-index: 1; 
             display: flex; flex-direction: column;
-            animation: cardIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .logo-wrap { display: flex; justify-content: center; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.6s ease-out 0.2s forwards; }
+        /* Klasy animacji sterowane przez JS */
+        .animate-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .animate-up.visible { opacity: 1; transform: translateY(0); }
+
+        .card.animate-card { opacity: 0; transform: translateY(30px) scale(0.98); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .card.animate-card.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+        .logo-wrap { display: flex; justify-content: center; margin-bottom: 1.5rem; }
         .logo { width: 100px; height: 100px; border-radius: 50%; background: var(--navy); position: relative; overflow: hidden; border: 3px solid var(--white); box-shadow: var(--shadow-sm); }
         .logo-sun { position: absolute; top: 18%; left: 30%; width: 40px; height: 40px; background: var(--red); border-radius: 50%; }
         .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 70px; height: 25px; border: 2px solid var(--white); border-bottom: none; border-radius: 50px 50px 0 0; }
         .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: var(--white); }
 
-        .brand { font-size: 2rem; font-weight: 800; color: var(--navy); text-align: center; letter-spacing: 6px; margin-bottom: 0.2rem; opacity: 0; animation: fadeUp 0.6s ease-out 0.3s forwards; }
-        .tagline { font-size: 0.75rem; color: var(--red); text-align: center; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; margin-bottom: 1.8rem; opacity: 0; animation: fadeUp 0.6s ease-out 0.4s forwards; }
-        .description { font-size: 0.95rem; color: var(--text-muted); text-align: center; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.6s ease-out 0.5s forwards; }
+        .brand { font-size: 2rem; font-weight: 800; color: var(--navy); text-align: center; letter-spacing: 6px; margin-bottom: 0.2rem; }
+        .tagline { font-size: 0.75rem; color: var(--red); text-align: center; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; margin-bottom: 1.8rem; }
+        .description { font-size: 0.95rem; color: var(--text-muted); text-align: center; margin-bottom: 2rem; }
         .description a { color: var(--text-main); font-weight: 600; text-decoration: none; border-bottom: 1px dashed var(--red); transition: var(--transition); }
         .description a:hover { color: var(--red); border-bottom-style: solid; }
 
@@ -55,24 +57,14 @@
             display: flex; align-items: center; padding: 1rem 1.2rem; text-decoration: none; 
             background: #fcfcfc; border: 1px solid var(--border-color); border-radius: 8px; 
             color: var(--text-main); font-weight: 600; font-size: 0.9rem; 
-            transition: var(--transition); opacity: 0; animation: fadeUp 0.5s ease-out forwards;
+            transition: var(--transition);
         }
-        
-        .link-btn:nth-child(1) { animation-delay: 0.6s; }
-        .link-btn:nth-child(2) { animation-delay: 0.65s; }
-        .link-btn:nth-child(3) { animation-delay: 0.7s; }
-        .link-btn:nth-child(4) { animation-delay: 0.75s; }
-        .link-btn:nth-child(5) { animation-delay: 0.8s; }
-        .link-btn:nth-child(6) { animation-delay: 0.85s; }
-        .link-btn:nth-child(7) { animation-delay: 0.9s; }
-        .link-btn:nth-child(8) { animation-delay: 0.95s; }
-        .link-btn:nth-child(9) { animation-delay: 1.0s; }
 
         .link-btn:hover { background: #f4f6fa; border-color: #d0d5e0; transform: translateY(-2px); box-shadow: var(--shadow-sm); }
         .link-icon { margin-right: 15px; font-size: 1.1rem; width: 24px; text-align: center; color: var(--text-main); }
         .link-btn:hover .link-icon { color: var(--red); }
 
-        .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); text-align: center; opacity: 0; animation: fadeUp 0.6s ease-out 1.2s forwards; }
+        .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); text-align: center; }
         .copyright { display: inline-block; font-size: 0.75rem; color: var(--text-muted); text-decoration: none; transition: var(--transition); line-height: 1.5; }
         .copyright:hover { color: var(--navy); }
         .copyright strong { display: block; color: var(--text-main); font-size: 0.85rem; margin-bottom: 2px; }
@@ -94,24 +86,24 @@
 <body>
     <div class="bg-decor" aria-hidden="true"><div class="bg-circle"></div><div class="bg-circle"></div><div class="bg-waves"></div></div>
 
-    <main class="card">
-        <div class="logo-wrap"><div class="logo" aria-hidden="true"><div class="logo-sun"></div><div class="logo-bridge"></div><div class="logo-water"></div></div></div>
-        <header><h1 class="brand">ARUYEQ</h1><p class="tagline">"I use Arch btw"</p></header>
-        <section>
+    <main class="card animate-card" id="main-card">
+        <div class="logo-wrap animate-up"><div class="logo" aria-hidden="true"><div class="logo-sun"></div><div class="logo-bridge"></div><div class="logo-water"></div></div></div>
+        <header class="animate-up"><h1 class="brand">ARUYEQ</h1><p class="tagline">"I use Arch btw"</p></header>
+        <section class="animate-up">
             <p class="description">I create content about <a href="https://archlinux.org/" target="_blank" rel="noopener noreferrer">Arch Linux</a>, <a href="https://omarchy.org/" target="_blank" rel="noopener noreferrer">Omarchy</a> and <a href="https://hypr.land/" target="_blank" rel="noopener noreferrer">Hyprland</a> and system customisation.<br><br>Speed, style and complete control, rather than a slow, bloated Windows system.</p>
             <nav class="links" aria-label="Social Media Links">
-                <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">𝕏</span> X (Twitter)</a>
-                <a href="#" class="link-btn" onclick="copyDiscord(event)"><span class="link-icon">›</span> Discord: @aruyeq</a>
-                <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">▶</span> YouTube</a>
-                <a href="https://rumble.com/user/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">▷</span> Rumble</a>
-                <a href="https://github.com/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">⌥</span> GitHub</a>
-                <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">◈</span> Steam</a>
-                <a href="https://tiktok.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">♪</span> TikTok</a>
-                <a href="https://www.roblox.com/pl/users/4366923635/profile" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">◆</span> Roblox</a>
-                <a href="https://medal.tv/u/aruyeq?invite=ur-MSxLdDcsNjYxNDQ1MTAx" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">▣</span> Medal.tv</a>
+                <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn animate-up"><span class="link-icon">𝕏</span> X (Twitter)</a>
+                <a href="#" class="link-btn animate-up" onclick="copyDiscord(event)"><span class="link-icon">›</span> Discord: @aruyeq</a>
+                <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn animate-up"><span class="link-icon">▶</span> YouTube</a>
+                <a href="https://rumble.com/user/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-btn animate-up"><span class="link-icon">▷</span> Rumble</a>
+                <a href="https://github.com/ArchDashX" target="_blank" rel="noopener noreferrer" class="link-btn animate-up"><span class="link-icon">⌥</span> GitHub</a>
+                <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" rel="noopener noreferrer" class="link-btn animate-up"><span class="link-icon">◈</span> Steam</a>
+                <a href="https://tiktok.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn animate-up"><span class="link-icon">♪</span> TikTok</a>
+                <a href="https://www.roblox.com/pl/users/4366923635/profile" target="_blank" rel="noopener noreferrer" class="link-btn animate-up"><span class="link-icon">◆</span> Roblox</a>
+                <a href="https://medal.tv/u/aruyeq?invite=ur-MSxLdDcsNjYxNDQ1MTAx" target="_blank" rel="noopener noreferrer" class="link-btn animate-up"><span class="link-icon">▣</span> Medal.tv</a>
             </nav>
         </section>
-        <footer class="footer">
+        <footer class="footer animate-up">
             <a href="https://archdashx.github.io/aruyeq-regulamin/index.html" class="copyright"><strong>&copy; 2026 ARUYEQ.</strong>All rights reserved.<br><span>(Click to view Terms of Service)</span></a>
         </footer>
     </main>
@@ -125,6 +117,22 @@
     </div>
 
     <script>
+        // Animacja wejścia (sterowana JS dla pewności)
+        document.addEventListener("DOMContentLoaded", () => {
+            const elements = document.querySelectorAll('.animate-up');
+            const card = document.getElementById('main-card');
+            
+            // Karta
+            requestAnimationFrame(() => { card.classList.add('visible'); });
+
+            // Elementy kaskadowo
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, 200 + (index * 100)); // 200ms start + 100ms opóźnienia dla każdego kolejnego
+            });
+        });
+
         const CONSENT_KEY = 'aruyeq_cookie_consent';
         
         if (!localStorage.getItem(CONSENT_KEY)) {
