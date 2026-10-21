@@ -7,27 +7,35 @@
     <title>ARUYEQ | Arch Linux</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- SYSTEM ZMIENNYCH --- */
         :root {
-            --bg: #f7f5f0;
-            --surface: rgba(255, 255, 255, 0.7);
-            --surface-solid: #ffffff;
-            --text: #1a1a1a;
-            --text-light: #6b6b6b;
-            --accent: #b83a3a;
-            --border: rgba(0, 0, 0, 0.06);
-            --font-serif: 'Instrument Serif', serif;
-            --font-sans: 'Inter', sans-serif;
-            --radius: 20px;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Kolorystyka inspirowana japońskim minimalizmem (Wabi-sabi) */
+            --bg-base: #f4f2eb; /* Ciepły odcień papieru washi */
+            --text-main: #1c1c1c; /* Głęboka czerń (sumi) */
+            --text-muted: #7a7a7a;
+            --accent: #b33939; /* Czynobrowa czerwień */
+            --surface: rgba(255, 255, 255, 0.6);
+            --surface-hover: rgba(255, 255, 255, 0.95);
+            --border: rgba(28, 28, 28, 0.08);
+            --border-hover: rgba(28, 28, 28, 0.2);
+            
+            /* Typografia */
+            --font-sans: 'Inter', system-ui, sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            
+            /* Animacje */
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.4s var(--ease-out);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--bg-base);
+            color: var(--text-main);
             font-family: var(--font-sans);
             min-height: 100vh;
             display: flex;
@@ -35,168 +43,118 @@
             align-items: center;
             padding: 2rem 1rem;
             -webkit-font-smoothing: antialiased;
-            position: relative;
+            line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Papierowa tekstura */
+        /* --- TEKSTURA PAPIERU (Subtelny szum) --- */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 0;
         }
 
-        /* Delikatna poświata */
-        .glow {
+        /* --- POŚWIATA (Soft glow) --- */
+        .ambient-light {
             position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(184, 58, 58, 0.06) 0%, transparent 70%);
+            width: 80vw;
+            height: 80vw;
+            max-width: 800px;
+            max-height: 800px;
+            background: radial-gradient(circle, rgba(179, 57, 57, 0.04) 0%, transparent 60%);
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 0;
+            border-radius: 50%;
         }
 
-        .container {
+        /* --- GŁÓWNY KONTENER --- */
+        .wrapper {
             width: 100%;
             max-width: 680px;
             position: relative;
             z-index: 1;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 3rem;
+            animation: fadeIn 1.2s var(--ease-out) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* --- NAGŁÓWEK --- */
         .header {
-            text-align: center;
-            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
         }
 
-        .logo {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: var(--text);
-            margin: 0 auto 1rem;
-            position: relative;
-            overflow: hidden;
-            border: 3px solid var(--surface-solid);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-        }
-
-        .logo-sun { position: absolute; top: 18%; left: 30%; width: 28px; height: 28px; background: var(--accent); border-radius: 50%; }
-        .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 46px; height: 18px; border: 2px solid #fff; border-bottom: none; border-radius: 50px 50px 0 0; }
-        .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: #fff; }
-
-        h1 {
+        .brand-box h1 {
             font-family: var(--font-serif);
-            font-size: 2.8rem;
+            font-size: clamp(3rem, 8vw, 4.5rem);
             font-weight: 400;
-            letter-spacing: 2px;
-            line-height: 1;
+            letter-spacing: -0.02em;
+            line-height: 0.9;
             margin-bottom: 0.5rem;
+        }
+
+        .brand-box h1 span {
+            font-style: italic;
+            color: var(--accent);
         }
 
         .tagline {
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.2em;
-            color: var(--text-light);
-        }
-
-        /* --- BENTO GRID --- */
-        .bento {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
-        }
-
-        .tile {
-            background: var(--surface);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.25rem;
-            text-decoration: none;
-            color: var(--text);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 100px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tile:hover {
-            background: var(--surface-solid);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.06);
-            border-color: rgba(0,0,0,0.1);
-        }
-
-        .tile-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-        }
-
-        .tile-title {
-            font-size: 1rem;
+            color: var(--text-muted);
             font-weight: 500;
         }
 
-        .tile-arrow {
-            position: absolute;
-            bottom: 1.25rem;
-            right: 1.25rem;
-            font-size: 1.1rem;
-            color: var(--text-light);
-            transition: var(--transition);
+        /* Logo w rogu */
+        .logo-mark {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--border-hover);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .tile:hover .tile-arrow {
-            color: var(--accent);
-            transform: translate(2px, -2px);
+        .logo-mark::before {
+            content: '';
+            width: 24px; height: 24px;
+            border: 1px solid var(--accent);
+            border-radius: 50%;
         }
-
-        /* Kafelki o różnych rozmiarach (bento) */
-        .tile-wide { grid-column: span 2; min-height: 80px; flex-direction: row; align-items: center; justify-content: space-between; }
-        .tile-wide .tile-content { display: flex; flex-direction: column; }
-        .tile-wide .tile-arrow { position: static; }
-
-        .tile-accent {
-            background: var(--text);
-            color: var(--bg);
-            border-color: var(--text);
-        }
-        .tile-accent:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-        .tile-accent .tile-label { color: rgba(255,255,255,0.6); }
-        .tile-accent .tile-arrow { color: rgba(255,255,255,0.6); }
-        .tile-accent:hover .tile-arrow { color: #fff; }
 
         /* --- OPIS --- */
         .bio {
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--text-light);
-            line-height: 1.7;
-            max-width: 480px;
-            margin: 0 auto;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 500px;
+        }
+
+        .bio strong {
+            color: var(--text-main);
+            font-weight: 500;
         }
 
         .bio a {
-            color: var(--text);
+            color: var(--text-main);
             text-decoration: none;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-hover);
             transition: var(--transition);
         }
 
@@ -205,88 +163,157 @@
             border-bottom-color: var(--accent);
         }
 
+        /* --- SIATKA LINKÓW (BENTO) --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 4px; /* Ostre, japońskie krawędzie */
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 120px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .card-wide { grid-column: span 2; flex-direction: row; align-items: center; min-height: 90px; }
+        
+        .card-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 400;
+        }
+
+        .card-icon {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .card:hover .card-icon {
+            color: var(--accent);
+            transform: translate(2px, -2px);
+        }
+
+        /* Karta z akcentem (np. YouTube) */
+        .card-accent {
+            background: var(--text-main);
+            color: var(--bg-base);
+            border-color: var(--text-main);
+        }
+        .card-accent:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg-base);
+        }
+        .card-accent .card-label,
+        .card-accent .card-icon { color: rgba(255,255,255,0.6); }
+        .card-accent:hover .card-icon { color: #fff; }
+
         /* --- STOPKA --- */
         .footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 1.5rem;
-            margin-top: 0.5rem;
             border-top: 1px solid var(--border);
-            font-size: 0.7rem;
-            color: var(--text-light);
+            padding-top: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
         }
 
         .footer a {
-            color: var(--text-light);
+            color: var(--text-muted);
             text-decoration: none;
             transition: var(--transition);
         }
-
         .footer a:hover { color: var(--accent); }
 
-        /* --- COOKIE BANNER --- */
-        .cookie-banner {
+        /* --- BANER COOKIES --- */
+        .cookie-bar {
             position: fixed;
-            bottom: 1.5rem;
+            bottom: 2rem;
             left: 50%;
             transform: translateX(-50%) translateY(200%);
-            background: var(--surface-solid);
-            border: 1px solid var(--border);
+            background: var(--text-main);
+            color: var(--bg-base);
+            padding: 0.8rem 1.5rem;
             border-radius: 100px;
-            padding: 0.5rem 0.5rem 0.5rem 1.25rem;
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+            gap: 2rem;
+            font-size: 0.8rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
             z-index: 100;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            font-size: 0.75rem;
-            color: var(--text-light);
-            white-space: nowrap;
+            transition: transform 0.6s var(--ease-out);
         }
 
-        .cookie-banner.show { transform: translateX(-50%) translateY(0); }
+        .cookie-bar.show { transform: translateX(-50%) translateY(0); }
 
         .cookie-actions { display: flex; gap: 0.5rem; }
 
         .cookie-btn {
             background: none;
-            border: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
             font-family: var(--font-sans);
             font-size: 0.75rem;
             cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 100px;
             transition: var(--transition);
         }
 
-        .cookie-btn.accept { background: var(--text); color: var(--bg); }
-        .cookie-btn.accept:hover { background: var(--accent); }
-        .cookie-btn:not(.accept):hover { background: rgba(0,0,0,0.04); }
+        .cookie-btn:hover { background: rgba(255,255,255,0.1); }
+        .cookie-btn.accept { background: var(--bg-base); color: var(--text-main); border-color: var(--bg-base); }
+        .cookie-btn.accept:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-        /* --- RESPONSYWNOŚĆ --- */
-        @media (max-width: 480px) {
-            .bento { grid-template-columns: 1fr; }
-            .tile-wide { grid-column: span 1; }
-            h1 { font-size: 2.2rem; }
-            .cookie-banner { flex-direction: column; white-space: normal; text-align: center; border-radius: 16px; padding: 1rem; width: calc(100% - 2rem); gap: 0.75rem; }
+        /* --- RWD --- */
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; gap: 0.8rem; }
+            .card-wide { grid-column: span 1; flex-direction: column; align-items: flex-start; gap: 1rem; min-height: 120px; }
+            .header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+            .logo-mark { display: none; }
+            .cookie-bar { flex-direction: column; gap: 1rem; width: calc(100% - 2rem); text-align: center; border-radius: 16px; padding: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="glow"></div>
+    <div class="ambient-light"></div>
 
-    <main class="container">
+    <main class="wrapper">
         <header class="header">
-            <div class="logo" aria-hidden="true">
-                <div class="logo-sun"></div>
-                <div class="logo-bridge"></div>
-                <div class="logo-water"></div>
+            <div class="brand-box">
+                <h1>ARUYEQ<br><span>btw.</span></h1>
+                <p class="tagline">System Customisation</p>
             </div>
-            <h1>ARUYEQ</h1>
-            <p class="tagline">"I use Arch btw"</p>
+            <div class="logo-mark" aria-hidden="true"></div>
         </header>
 
         <p class="bio">
@@ -296,47 +323,55 @@
             Speed, style and complete control, rather than a slow, bloated Windows system.
         </p>
 
-        <div class="bento">
-            <!-- Główny kafelek (akcent) -->
-            <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="tile tile-wide tile-accent">
-                <div class="tile-content">
-                    <span class="tile-label">Watch</span>
-                    <span class="tile-title">YouTube</span>
+        <div class="grid">
+            <!-- Główny kafelek -->
+            <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="card card-wide card-accent">
+                <div>
+                    <div class="card-label">Watch</div>
+                    <div class="card-title">YouTube</div>
                 </div>
-                <span class="tile-arrow">↗</span>
+                <div class="card-icon">↗</div>
             </a>
 
-            <!-- Pozostałe kafelki -->
-            <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="tile">
-                <span class="tile-label">Follow</span>
-                <span class="tile-title">X (Twitter)</span>
-                <span class="tile-arrow">↗</span>
-            </a>
-
-            <a href="#" class="tile" onclick="copyDiscord(event)">
-                <span class="tile-label">Connect</span>
-                <span class="tile-title">Discord: @aruyeq</span>
-                <span class="tile-arrow">↗</span>
-            </a>
-
-            <a href="https://github.com/ArchDashX" target="_blank" rel="noopener noreferrer" class="tile">
-                <span class="tile-label">Code</span>
-                <span class="tile-title">GitHub</span>
-                <span class="tile-arrow">↗</span>
-            </a>
-
-            <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" rel="noopener noreferrer" class="tile">
-                <span class="tile-label">Play</span>
-                <span class="tile-title">Steam</span>
-                <span class="tile-arrow">↗</span>
-            </a>
-
-            <a href="https://medal.tv/u/aruyeq?invite=ur-MSxLdDcsNjYxNDQ1MTAx" target="_blank" rel="noopener noreferrer" class="tile tile-wide">
-                <div class="tile-content">
-                    <span class="tile-label">Clips</span>
-                    <span class="tile-title">Medal.tv</span>
+            <!-- Pozostałe -->
+            <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="card">
+                <div>
+                    <div class="card-label">Follow</div>
+                    <div class="card-title">X (Twitter)</div>
                 </div>
-                <span class="tile-arrow">↗</span>
+                <div class="card-icon" style="align-self: flex-end;">↗</div>
+            </a>
+
+            <a href="#" class="card" onclick="copyDiscord(event)">
+                <div>
+                    <div class="card-label">Connect</div>
+                    <div class="card-title" id="discord-title">Discord</div>
+                </div>
+                <div class="card-icon" style="align-self: flex-end;">↗</div>
+            </a>
+
+            <a href="https://github.com/ArchDashX" target="_blank" rel="noopener noreferrer" class="card">
+                <div>
+                    <div class="card-label">Code</div>
+                    <div class="card-title">GitHub</div>
+                </div>
+                <div class="card-icon" style="align-self: flex-end;">↗</div>
+            </a>
+
+            <a href="https://steamcommunity.com/profiles/76561199828261881/" target="_blank" rel="noopener noreferrer" class="card">
+                <div>
+                    <div class="card-label">Play</div>
+                    <div class="card-title">Steam</div>
+                </div>
+                <div class="card-icon" style="align-self: flex-end;">↗</div>
+            </a>
+
+            <a href="https://medal.tv/u/aruyeq?invite=ur-MSxLdDcsNjYxNDQ1MTAx" target="_blank" rel="noopener noreferrer" class="card card-wide">
+                <div>
+                    <div class="card-label">Clips</div>
+                    <div class="card-title">Medal.tv</div>
+                </div>
+                <div class="card-icon">↗</div>
             </a>
         </div>
 
@@ -346,8 +381,8 @@
         </footer>
     </main>
 
-    <div class="cookie-banner" id="cookie-banner">
-        <span>Cookies?</span>
+    <div class="cookie-bar" id="cookie-bar">
+        <span>We use cookies.</span>
         <div class="cookie-actions">
             <button class="cookie-btn accept" onclick="setCookies('all')">Accept</button>
             <button class="cookie-btn" onclick="setCookies('necessary')">Necessary</button>
@@ -359,19 +394,18 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             if (!localStorage.getItem(CONSENT_KEY)) {
-                setTimeout(() => { document.getElementById('cookie-banner').classList.add('show'); }, 1200);
+                setTimeout(() => { document.getElementById('cookie-bar').classList.add('show'); }, 1500);
             }
         });
 
         function setCookies(type) {
             localStorage.setItem(CONSENT_KEY, type);
-            document.getElementById('cookie-banner').classList.remove('show');
+            document.getElementById('cookie-bar').classList.remove('show');
         }
 
         async function copyDiscord(e) {
             e.preventDefault();
-            const tile = e.currentTarget;
-            const titleEl = tile.querySelector('.tile-title');
+            const titleEl = document.getElementById('discord-title');
             const originalText = titleEl.innerText;
 
             if (!navigator.clipboard) return console.error('Clipboard API not supported');
