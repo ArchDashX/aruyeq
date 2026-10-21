@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ZMIENNE --- */
         :root {
             --bg-paper: #fbfbf9;
             --text-main: #2c2c2c;
@@ -21,14 +20,11 @@
             --red: #d11230;
             --white: #ffffff;
             --card-bg: rgba(255, 255, 255, 0.85);
-            --border-light: rgba(0, 0, 0, 0.06);
-            
             --font-main: 'Inter', system-ui, -apple-system, sans-serif;
             --shadow-premium: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0,0,0,0.02);
             --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* --- RESET --- */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -48,8 +44,7 @@
 
         /* --- TŁO --- */
         .bg-decorations {
-            position: fixed; inset: 0; z-index: -1;
-            pointer-events: none; overflow: hidden;
+            position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
             background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%);
         }
         .glow {
@@ -69,8 +64,7 @@
             100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
         }
         .bg-waves {
-            position: absolute; bottom: 0; left: 0; right: 0; height: 250px;
-            opacity: 0.4;
+            position: absolute; bottom: 0; left: 0; right: 0; height: 250px; opacity: 0.4;
             background-image: 
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(35, 35, 107, 0.1) 21px, transparent 22px) 0 0 / 40px 20px,
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(209, 18, 48, 0.06) 21px, transparent 22px) 20px 0 / 40px 20px;
@@ -78,36 +72,25 @@
 
         /* --- KARTA --- */
         .card {
-            width: 100%; max-width: 420px;
-            background: var(--card-bg);
+            width: 100%; max-width: 420px; background: var(--card-bg);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 2.5rem 2rem;
-            border-radius: 16px;
-            box-shadow: var(--shadow-premium);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 2.5rem 2rem; border-radius: 16px;
+            box-shadow: var(--shadow-premium); border: 1px solid rgba(255, 255, 255, 0.5);
             border-top: 1px solid rgba(255, 255, 255, 0.8);
             position: relative; z-index: 1;
             opacity: 0; animation: cardEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-        @keyframes cardEntry {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes cardEntry { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Pieczęć i Logo */
         .seal {
-            position: absolute; top: 1.5rem; right: 1.5rem;
-            width: 34px; height: 34px;
+            position: absolute; top: 1.5rem; right: 1.5rem; width: 34px; height: 34px;
             border: 2px solid var(--red); border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
-            transform: rotate(6deg); opacity: 0;
-            animation: fadeUp 0.6s ease-out 0.8s forwards;
+            transform: rotate(6deg); opacity: 0; animation: fadeUp 0.6s ease-out 0.8s forwards;
         }
         .seal::before { content: ''; width: 14px; height: 14px; background-color: var(--red); border-radius: 3px; transform: rotate(45deg); }
+        
         .logo-wrapper { display: flex; justify-content: center; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.6s ease-out 1s forwards; }
         .logo { width: 110px; height: 110px; border-radius: 50%; background: var(--navy); position: relative; overflow: hidden; border: 4px solid var(--white); box-shadow: 0 10px 25px rgba(35, 35, 107, 0.2); transform: rotate(2deg); transition: var(--transition-smooth); }
         .logo:hover { transform: rotate(0deg) scale(1.05); }
@@ -115,21 +98,18 @@
         .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 75px; height: 28px; border: 3px solid var(--white); border-bottom: none; border-radius: 50px 50px 0 0; }
         .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: var(--white); }
 
-        /* Typografia */
         .brand-title { font-size: 2.2rem; font-weight: 800; color: var(--navy); text-align: center; letter-spacing: 8px; margin-bottom: 0.2rem; opacity: 0; animation: fadeUp 0.6s ease-out 1.2s forwards; }
         .tagline { font-size: 0.75rem; color: var(--red); text-align: center; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.6s ease-out 1.3s forwards; }
         .description { font-size: 0.95rem; color: var(--text-muted); text-align: center; margin-bottom: 2.2rem; line-height: 1.7; opacity: 0; animation: fadeUp 0.6s ease-out 1.4s forwards; }
         .description a { color: var(--text-main); font-weight: 600; text-decoration: none; border-bottom: 1px dashed var(--red); transition: var(--transition-smooth); }
         .description a:hover { color: var(--red); border-bottom-style: solid; }
 
-        /* Linki */
         .links-nav { display: flex; flex-direction: column; gap: 0.8rem; }
         .link-btn {
             display: flex; align-items: center; padding: 1rem 1.2rem; text-decoration: none;
             background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(0,0,0,0.05); border-radius: 10px;
             color: var(--text-main); font-weight: 600; font-size: 0.9rem;
-            transition: var(--transition-smooth); opacity: 0; animation: fadeUp 0.5s ease-out forwards;
-            backdrop-filter: blur(5px);
+            transition: var(--transition-smooth); opacity: 0; animation: fadeUp 0.5s ease-out forwards; backdrop-filter: blur(5px);
         }
         .link-btn:nth-child(1) { animation-delay: 1.5s; transform: rotate(-0.8deg); margin-right: 5px; }
         .link-btn:nth-child(2) { animation-delay: 1.6s; transform: rotate(0.5deg); margin-left: 5px; }
@@ -143,7 +123,37 @@
         .link-icon { margin-right: 15px; font-size: 1.1rem; width: 24px; text-align: center; color: var(--text-main); transition: var(--transition-smooth); }
         .link-btn:hover .link-icon { color: var(--red); }
 
-        /* --- MODAL (Regulamin / Prywatność) --- */
+        /* --- NOWA STOPKA (KLIKALNA) --- */
+        .site-footer {
+            margin-top: 2.5rem; padding-top: 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            opacity: 0; animation: fadeUp 0.6s ease-out 2.5s forwards;
+            text-align: center;
+        }
+        .copyright-btn {
+            display: inline-block;
+            font-size: 0.8rem;
+            color: #777;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px dashed transparent;
+            line-height: 1.6;
+        }
+        .copyright-btn:hover {
+            color: var(--navy);
+            background: rgba(255,255,255,0.6);
+            border-color: rgba(35, 35, 107, 0.2);
+        }
+        .copyright-btn strong {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        /* --- MODAL --- */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
@@ -177,12 +187,6 @@
         .modal-content ul { padding-left: 1.5rem; }
         .modal-content li { margin-bottom: 0.5rem; }
         .modal-content strong { color: #333; }
-
-        /* --- STOPKA --- */
-        .site-footer { margin-top: 2.5rem; font-size: 0.7rem; color: #999; text-align: center; line-height: 1.6; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.05); opacity: 0; animation: fadeUp 0.6s ease-out 2.5s forwards; }
-        .footer-links { margin-top: 0.5rem; }
-        .footer-links a { color: #999; text-decoration: none; margin: 0 5px; cursor: pointer; transition: color 0.2s; }
-        .footer-links a:hover { color: var(--red); }
 
         /* --- ADMIN --- */
         #admin-view { display: none; }
@@ -271,55 +275,60 @@
             </div>
         </section>
 
+        <!-- NOWA STOPKA (KLIKALNA) -->
         <footer class="site-footer" id="public-footer">
-            &copy; 2026 ARUYEQ. Wszelkie prawa zastrzeżone.
-            <div class="footer-links">
-                <a onclick="openModal('privacy')">Polityka Prywatności</a> | 
-                <a onclick="openModal('terms')">Regulamin</a>
+            <div class="copyright-btn" onclick="openModal()" role="button" tabindex="0" aria-label="Zobacz prawa autorskie i regulamin">
+                <strong>&copy; 2026 ARUYEQ.</strong>
+                All rights reserved.
+                <br><span style="font-size: 0.7rem; color: #aaa; margin-top: 4px; display: inline-block;">(Kliknij, aby zobaczyć regulamin)</span>
             </div>
         </footer>
     </main>
 
-    <!-- ========================================== -->
-    <!-- MODAL: REGULAMIN I POLITYKA PRYWATNOŚCI    -->
-    <!-- ========================================== -->
+    <!-- MODAL -->
     <div class="modal-overlay" id="legal-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal(event)">&times;</button>
             
-            <!-- TREŚĆ: POLITYKA PRYWATNOŚCI -->
-            <div id="modal-privacy" style="display: none;">
-                <h2>Polityka Prywatności (Privacy Policy)</h2>
+            <div>
+                <h2>Regulamin i Prawa Autorskie</h2>
                 <p><strong>Ostatnia aktualizacja:</strong> 2026</p>
-                
-                <h3>1. Postanowienia ogólne</h3>
-                <p>Niniejsza Polityka Prywatności określa zasady przetwarzania i ochrony danych osobowych użytkowników odwiedzających stronę ARUYEQ. Strona ma charakter wyłącznie informacyjny (tzw. link-in-bio) i nie prowadzi sprzedaży ani nie wymaga rejestracji.</p>
 
-                <h3>2. Jakie dane zbieramy?</h3>
-                <p>Strona została zaprojektowana z myślą o maksymalnej prywatności. <strong>Nie zbieramy, nie przechowujemy ani nie przetwarzamy żadnych Twoich danych osobowych</strong> (takich jak imię, nazwisko, adres e-mail, adres IP).</p>
+                <h3>1. Prawa autorskie (Copyright)</h3>
+                <p><strong>&copy; 2026 ARUYEQ. Wszelkie prawa zastrzeżone (All rights reserved).</strong></p>
                 <ul>
-                    <li>Nie używamy plików cookies (ciasteczek) do śledzenia.</li>
+                    <li>Wszelkie treści, w tym kod źródłowy (HTML, CSS, JS), projekt graficzny logo (most, słońce) oraz teksty, są własnością twórcy ARUYEQ.</li>
+                    <li>Zabrania się kopiowania, modyfikowania lub rozpowszechniania kodu i grafiki bez pisemnej zgody autora.</li>
+                    <li>Wizerunek logo jest znakiem rozpoznawczym twórcy.</li>
+                </ul>
+
+                <h3>2. Polityka Prywatności (Privacy Policy)</h3>
+                <p>Strona ma charakter wyłącznie informacyjny i <strong>nie zbiera, nie przechowuje ani nie przetwarza żadnych danych osobowych</strong>.</p>
+                <ul>
+                    <li>Nie używamy plików cookies do śledzenia.</li>
                     <li>Nie stosujemy zewnętrznych narzędzi analitycznych (np. Google Analytics).</li>
                     <li>Wszystkie animacje i tła są generowane lokalnie w Twojej przeglądarce.</li>
                 </ul>
 
                 <h3>3. Linki do stron zewnętrznych</h3>
-                <p>Nasza strona zawiera linki do zewnętrznych platform (X, YouTube, GitHub, Discord, itp.). Po kliknięciu w link opuszczasz naszą stronę i przechodzisz do serwisu, który posiada własną, niezależną Politykę Prywatności. Nie ponosimy odpowiedzialności za praktyki stosowane przez te serwisy.</p>
+                <p>Strona zawiera linki do platform zewnętrznych (X, YouTube, GitHub, Discord, itp.). Po kliknięciu opuszczasz naszą stronę i przechodzisz do serwisu, który posiada własną Politykę Prywatności. Nie ponosimy odpowiedzialności za praktyki stosowane przez te serwisy.</p>
 
-                <h3>4. Prawa autorskie (Copyright)</h3>
-                <p>Wszelkie treści, w tym kod źródłowy, projekt graficzny logo (most, słońce) oraz teksty, są własnością twórcy ARUYEQ i podlegają ochronie prawnej. Zabrania się kopiowania, modyfikowania lub rozpowszechniania bez pisemnej zgody.</p>
+                <h3>4. Regulamin korzystania z serwisu (Terms of Service)</h3>
+                <p>Korzystając z tej strony, akceptujesz niniejszy Regulamin.</p>
+                <ul>
+                    <li>Strona to prywatny projekt informacyjny promujący Arch Linux i Hyprland.</li>
+                    <li>Strona nie świadczy usług komercyjnych.</li>
+                    <li>Strona jest dostarczana w stanie "takim, jakim jest" (as-is). Twórca nie ponosi odpowiedzialności za szkody wynikające z korzystania z linków zewnętrznych.</li>
+                </ul>
 
                 <h3>5. Kontakt</h3>
-                <p>W razie jakichkolwiek pytań dotyczących prywatności, prosimy o kontakt przez jeden z podanych kanałów (np. Discord: @aruyeq).</p>
+                <p>W razie pytań prosimy o kontakt przez jeden z podanych kanałów (np. Discord: @aruyeq).</p>
             </div>
+        </div>
+    </div>
 
-            <!-- TREŚĆ: REGULAMIN -->
-            <div id="modal-terms" style="display: none;">
-                <h2>Regulamin korzystania z serwisu (Terms of Service)</h2>
-                <p><strong>Ostatnia aktualizacja:</strong> 2026</p>
+    <script>
+        'use strict';
 
-                <h3>1. Akceptacja regulaminu</h3>
-                <p>Korzystając z tej strony, akceptujesz niniejszy Regulamin. Jeśli nie zgadzasz się z którymkolwiek z punktów, prosimy o natychmiastowe opuszczenie strony.</p>
-
-                <h3>2. Charakter strony</h3>
-                <p>Strona ARUYEQ to prywatny projekt in
+        // --- SYSTEM ZABEZPIECZEŃ ---
+        document.addEventListener('contextmenu', event => event.p
