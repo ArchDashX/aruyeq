@@ -1,8 +1,10 @@
+<!-- plik: index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ARUYEQ - Arch Linux, Hyprland and system customisation.">
     <title>ARUYEQ | Arch Linux</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,40 +13,52 @@
     
     <style>
         :root {
-            --bg-paper: #faf9f6; /* Ciepły, papierowy odcień */
-            --text-main: #2c2c2c;
-            --text-muted: #6b6b6b;
+            --bg-base: #faf9f6;
+            --text-main: #1a1a1a;
+            --text-muted: #555555;
             --navy: #2b2b8a;
             --navy-light: #3a3aa0;
             --red: #c8102e;
             --white: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --surface: rgba(255, 255, 255, 0.95);
+            --border-color: #eaeaea;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
+            --radius: 12px;
             --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-            --shadow-premium: 8px 10px 0px rgba(0, 0, 0, 0.04); /* Ręczny, przesunięty cień */
-            --transition-smooth: all 0.2s ease;
+            --transition: all 0.2s ease;
         }
 
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: var(--font-main);
-            background-color: var(--bg-paper);
+            background-color: var(--bg-base);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 2rem 1rem;
-            overflow-x: hidden;
-            position: relative;
-            line-height: 1.6;
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* --- DELIKATNE TŁO --- */
-        .bg-decorations {
-            position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+        /* Background */
+        .bg-decor {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0eb 100%);
         }
+        
         .bg-circle {
             position: absolute;
             border: 1px solid rgba(43, 43, 138, 0.06);
@@ -60,165 +74,269 @@
             bottom: -80px; right: -150px;
             transform: rotate(-15deg);
         }
-        /* Japoński wzór fal (Seigaiha) na dole */
+
         .bg-waves {
-            position: absolute; bottom: 0; left: 0; right: 0; height: 250px; opacity: 0.4;
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 250px;
+            opacity: 0.4;
             background-image: 
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(43, 43, 138, 0.08) 21px, transparent 22px) 0 0 / 40px 20px,
                 radial-gradient(circle at 50% 100%, transparent 20px, rgba(200, 16, 46, 0.05) 21px, transparent 22px) 20px 0 / 40px 20px;
         }
 
-        /* --- KARTA --- */
+        /* Card */
         .card {
-            width: 100%; max-width: 440px; 
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            padding: 2.5rem 2rem; 
-            border-radius: 12px;
-            box-shadow: var(--shadow-premium); 
-            border: 1px solid #eaeaea;
-            transform: rotate(-0.5deg); /* Lekkie przekrzywienie */
-            position: relative; z-index: 1;
-            display: flex; flex-direction: column;
-            animation: cardEntry 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            width: 100%;
+            max-width: 440px;
+            background: var(--surface);
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
         }
-        @keyframes cardEntry { from { opacity: 0; transform: translateY(20px) rotate(-0.5deg); } to { opacity: 1; transform: translateY(0) rotate(-0.5deg); } }
 
-        /* --- PIECZĘĆ (Klasyczna, ręcznie przybita) --- */
-        .seal {
-            position: absolute; top: 1.5rem; right: 1.5rem; width: 32px; height: 32px;
-            border: 2px solid var(--red); border-radius: 4px;
-            display: flex; align-items: center; justify-content: center;
-            transform: rotate(8deg);
+        /* Logo */
+        .logo-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
         }
-        .seal::before { content: ''; width: 12px; height: 12px; background-color: var(--red); border-radius: 2px; transform: rotate(45deg); }
-        
-        /* --- LOGO --- */
-        .logo-wrapper { display: flex; justify-content: center; margin-bottom: 1.5rem; transform: translateX(-3px); }
-        .logo { 
-            width: 100px; height: 100px; border-radius: 50%; 
-            background: var(--navy); position: relative; overflow: hidden; 
-            border: 3px solid var(--white); box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-            transform: rotate(2deg); 
+
+        .logo {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            background: var(--navy);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid var(--white);
+            box-shadow: var(--shadow-sm);
         }
-        .logo-sun { position: absolute; top: 18%; left: 30%; width: 40px; height: 40px; background: var(--red); border-radius: 50%; }
-        .logo-bridge { position: absolute; bottom: 18%; left: 15%; width: 70px; height: 25px; border: 2px solid var(--white); border-bottom: none; border-radius: 50px 50px 0 0; }
-        .logo-water { position: absolute; bottom: 0; left: -5%; width: 110%; height: 30%; background: var(--white); }
 
-        /* --- TYPOGRAFIA --- */
-        .brand-title { font-size: 2rem; font-weight: 800; color: var(--navy); text-align: center; letter-spacing: 6px; margin-bottom: 0.2rem; transform: translateX(2px); }
-        .tagline { font-size: 0.75rem; color: var(--red); text-align: center; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; margin-bottom: 1.8rem; transform: rotate(-0.5deg); }
-        
-        .description { font-size: 0.95rem; color: var(--text-muted); text-align: center; margin-bottom: 2rem; line-height: 1.6; }
-        .description a { color: var(--text-main); font-weight: 600; text-decoration: none; border-bottom: 1px dashed var(--red); transition: var(--transition-smooth); }
-        .description a:hover { color: var(--red); border-bottom-style: solid; }
+        .logo-sun {
+            position: absolute;
+            top: 18%; left: 30%;
+            width: 40px; height: 40px;
+            background: var(--red);
+            border-radius: 50%;
+        }
 
-        /* --- "KRZYWE" PRZYCISKI --- */
-        .links-nav { display: flex; flex-direction: column; gap: 0.9rem; }
+        .logo-bridge {
+            position: absolute;
+            bottom: 18%; left: 15%;
+            width: 70px; height: 25px;
+            border: 2px solid var(--white);
+            border-bottom: none;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .logo-water {
+            position: absolute;
+            bottom: 0; left: -5%;
+            width: 110%; height: 30%;
+            background: var(--white);
+        }
+
+        /* Typography */
+        .brand {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--navy);
+            text-align: center;
+            letter-spacing: 6px;
+            margin-bottom: 0.2rem;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            color: var(--red);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 700;
+            margin-bottom: 1.8rem;
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .description a {
+            color: var(--text-main);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--red);
+            transition: var(--transition);
+        }
+
+        .description a:hover {
+            color: var(--red);
+            border-bottom-style: solid;
+        }
+
+        /* Links */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
         .link-btn {
-            display: flex; align-items: center; padding: 1rem 1.2rem; text-decoration: none;
-            background: #fcfcfc; border: 1px solid #ddd; border-radius: 8px;
-            color: var(--text-main); font-weight: 600; font-size: 0.9rem;
-            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            text-decoration: none;
+            background: #fcfcfc;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
         }
-
-        /* Ręcznie ułożone, krzywe przyciski */
-        .link-btn:nth-child(1) { transform: rotate(-1deg); margin-left: -5px; margin-right: 10px; }
-        .link-btn:nth-child(2) { transform: rotate(1.2deg); margin-left: 8px; margin-right: -4px; }
-        .link-btn:nth-child(3) { transform: rotate(-0.6deg); margin-left: -2px; margin-right: 12px; }
-        .link-btn:nth-child(4) { transform: rotate(1.5deg); margin-left: 12px; margin-right: 0px; }
-        .link-btn:nth-child(5) { transform: rotate(-1.2deg); margin-left: 0px; margin-right: 8px; }
-        .link-btn:nth-child(6) { transform: rotate(0.8deg); margin-left: 6px; margin-right: -6px; }
-        .link-btn:nth-child(7) { transform: rotate(-0.9deg); margin-left: 10px; margin-right: 2px; }
-        .link-btn:nth-child(8) { transform: rotate(1.1deg); margin-left: -2px; margin-right: 9px; }
-        .link-btn:nth-child(9) { transform: rotate(-0.5deg); margin-left: 5px; margin-right: -5px; }
 
         .link-btn:hover {
-            background: #f0f2f5; border-color: #b0b5c0;
-            transform: rotate(0deg) translateY(-2px) !important; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            background: #f4f6fa;
+            border-color: #d0d5e0;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
         }
-        .link-icon { margin-right: 15px; font-size: 1.1rem; width: 24px; text-align: center; color: var(--text-main); }
-        .link-btn:hover .link-icon { color: var(--red); }
 
-        /* --- STOPKA --- */
-        .site-footer {
-            margin-top: 2.5rem; padding-top: 1rem;
-            border-top: 1px solid #eee;
+        .link-icon {
+            margin-right: 15px;
+            font-size: 1.1rem;
+            width: 24px;
             text-align: center;
-            transform: rotate(0.5deg);
+            color: var(--text-main);
         }
-        .copyright-link {
-            display: inline-block; font-size: 0.75rem; color: #999;
-            text-decoration: none; transition: var(--transition-smooth);
-            padding: 0.5rem; line-height: 1.5;
-        }
-        .copyright-link:hover { color: var(--navy); }
-        .copyright-link strong { display: block; color: var(--text-main); font-size: 0.85rem; margin-bottom: 2px; }
 
-        /* --- COOKIE BANNER --- */
+        .link-btn:hover .link-icon {
+            color: var(--red);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 2.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .copyright {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+            line-height: 1.5;
+        }
+
+        .copyright:hover {
+            color: var(--navy);
+        }
+
+        .copyright strong {
+            display: block;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            margin-bottom: 2px;
+        }
+
+        /* Cookie Banner */
         .cookie-banner {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(200%);
-            width: calc(100% - 2rem); max-width: 500px;
-            background: var(--white); border-radius: 12px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            padding: 1.5rem; z-index: 99999;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(200%);
+            width: calc(100% - 2rem);
+            max-width: 500px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 1.5rem;
+            z-index: 9999;
             transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            border: 1px solid rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
         }
-        .cookie-banner.show { transform: translateX(-50%) translateY(0); }
-        .cookie-text { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; }
-        .cookie-text a { color: var(--navy); font-weight: 600; text-decoration: none; }
-        
-        .cookie-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; }
-        .cookie-btn {
-            padding: 0.8rem; border-radius: 8px; font-family: var(--font-main);
-            font-weight: 600; font-size: 0.85rem; cursor: pointer; border: none;
-            transition: var(--transition-smooth); flex: 1;
-        }
-        .btn-accept { background: var(--navy); color: var(--white); }
-        .btn-accept:hover { background: var(--navy-light); }
-        .btn-necessary { background: #f0f0f0; color: var(--text-main); }
-        .btn-necessary:hover { background: #e0e0e0; }
-        .btn-customize { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
-        .btn-customize:hover { background: rgba(43, 43, 138, 0.05); }
 
-        .cookie-settings { display: none; margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1rem; }
-        .cookie-settings.show { display: block; }
-        .setting-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
-        .setting-info h4 { font-size: 0.9rem; color: var(--text-main); }
-        .setting-info p { font-size: 0.75rem; color: var(--text-muted); }
-        
-        .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--navy); }
-        input:disabled + .slider { background-color: #e0e0e0; cursor: not-allowed; }
-        input:checked + .slider:before { transform: translateX(18px); }
-        .save-settings-btn { width: 100%; margin-top: 0.5rem; padding: 0.8rem; background: var(--navy); color: var(--white); border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .cookie-banner.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .cookie-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .cookie-text a {
+            color: var(--navy);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .cookie-actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .cookie-btn {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-accept {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .btn-accept:hover {
+            background: var(--navy-light);
+        }
+
+        .btn-necessary {
+            background: #f0f0f0;
+            color: var(--text-main);
+        }
+
+        .btn-necessary:hover {
+            background: #e0e0e0;
+        }
 
         @media (max-width: 480px) {
             .card { padding: 2rem 1.5rem; }
-            .brand-title { font-size: 1.8rem; letter-spacing: 4px; }
-            .cookie-buttons { flex-direction: column; }
-            /* Na telefonie prostujemy przyciski, żeby dało się w nie klikać */
-            .link-btn:nth-child(n) { transform: rotate(0deg) !important; margin-left: 0 !important; margin-right: 0 !important; }
-            .card { transform: rotate(0deg); }
+            .brand { font-size: 1.8rem; letter-spacing: 4px; }
+            .cookie-actions { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-decorations" aria-hidden="true">
+    <div class="bg-decor" aria-hidden="true">
         <div class="bg-circle"></div>
         <div class="bg-circle"></div>
         <div class="bg-waves"></div>
     </div>
 
     <main class="card">
-        <div class="seal" aria-hidden="true"></div>
-        <div class="logo-wrapper">
+        <div class="logo-wrap">
             <div class="logo" aria-hidden="true">
                 <div class="logo-sun"></div>
                 <div class="logo-bridge"></div>
@@ -227,7 +345,7 @@
         </div>
 
         <header>
-            <h1 class="brand-title">ARUYEQ</h1>
+            <h1 class="brand">ARUYEQ</h1>
             <p class="tagline">"I use Arch btw"</p>
         </header>
 
@@ -239,7 +357,7 @@
                 Speed, style and complete control, rather than a slow, bloated Windows system.
             </p>
 
-            <nav class="links-nav" aria-label="Social Media Links">
+            <nav class="links" aria-label="Social Media Links">
                 <a href="https://x.com/aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">𝕏</span> X (Twitter)</a>
                 <a href="#" class="link-btn" onclick="copyDiscord(event)"><span class="link-icon">›</span> Discord: @aruyeq</a>
                 <a href="https://youtube.com/@aruyeq" target="_blank" rel="noopener noreferrer" class="link-btn"><span class="link-icon">▶</span> YouTube</a>
@@ -252,92 +370,59 @@
             </nav>
         </section>
 
-        <footer class="site-footer">
-            <a href="https://archdashx.github.io/aruyeq-regulamin/index.html" class="copyright-link">
+        <footer class="footer">
+            <a href="https://archdashx.github.io/aruyeq-regulamin/index.html" class="copyright">
                 <strong>&copy; 2026 ARUYEQ.</strong>
                 All rights reserved.
-                <br><span style="color: #bbb;">(Click to view Terms of Service)</span>
+                <br><span>(Click to view Terms of Service)</span>
             </a>
         </footer>
     </main>
 
-    <!-- COOKIE BANNER -->
     <div class="cookie-banner" id="cookie-banner">
         <div class="cookie-text">
             We use cookies to enhance your browsing experience. Read our <a href="https://archdashx.github.io/aruyeq-regulamin/index.html" target="_blank">Privacy Policy</a>.
         </div>
-        
-        <div class="cookie-buttons" id="main-buttons">
+        <div class="cookie-actions">
             <button class="cookie-btn btn-accept" onclick="setCookies('all')">Accept All</button>
             <button class="cookie-btn btn-necessary" onclick="setCookies('necessary')">Only Necessary</button>
-            <button class="cookie-btn btn-customize" onclick="toggleSettings()">Customize</button>
-        </div>
-
-        <div class="cookie-settings" id="cookie-settings">
-            <div class="setting-item">
-                <div class="setting-info"><h4>Strictly Necessary</h4><p>Required for the site.</p></div>
-                <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
-            </div>
-            <div class="setting-item">
-                <div class="setting-info"><h4>Analytics</h4><p>Helps us understand traffic.</p></div>
-                <label class="switch"><input type="checkbox" id="cookie-analytics"><span class="slider"></span></label>
-            </div>
-            <div class="setting-item">
-                <div class="setting-info"><h4>Marketing</h4><p>Used to track visitors.</p></div>
-                <label class="switch"><input type="checkbox" id="cookie-marketing"><span class="slider"></span></label>
-            </div>
-            <button class="save-settings-btn" onclick="setCookies('custom')">Save Preferences</button>
         </div>
     </div>
 
     <script>
-        'use strict';
-
-        // --- COOKIE LOGIC ---
-        const cookieBanner = document.getElementById('cookie-banner');
-        const cookieSettings = document.getElementById('cookie-settings');
-        const mainButtons = document.getElementById('main-buttons');
-
-        if (!localStorage.getItem('cookieConsent')) {
-            window.addEventListener('load', () => {
-                setTimeout(() => { cookieBanner.classList.add('show'); }, 1000); 
-            });
+        const CONSENT_KEY = 'aruyeq_cookie_consent';
+        
+        if (!localStorage.getItem(CONSENT_KEY)) {
+            setTimeout(() => {
+                document.getElementById('cookie-banner').classList.add('show');
+            }, 1000);
         }
 
         function setCookies(type) {
-            if (type === 'all') localStorage.setItem('cookieConsent', 'all');
-            else if (type === 'necessary') localStorage.setItem('cookieConsent', 'necessary');
-            else if (type === 'custom') {
-                const analytics = document.getElementById('cookie-analytics').checked;
-                const marketing = document.getElementById('cookie-marketing').checked;
-                localStorage.setItem('cookieConsent', JSON.stringify({ necessary: true, analytics, marketing }));
-            }
-            cookieBanner.classList.remove('show');
-            setTimeout(() => { cookieBanner.style.display = 'none'; }, 500);
+            localStorage.setItem(CONSENT_KEY, type);
+            const banner = document.getElementById('cookie-banner');
+            banner.classList.remove('show');
+            setTimeout(() => { banner.remove(); }, 500);
         }
 
-        function toggleSettings() {
-            mainButtons.style.display = 'none';
-            cookieSettings.classList.add('show');
-        }
-
-        // --- FUNKCJE POMOCNICZE ---
-        function copyDiscord(e) {
+        async function copyDiscord(e) {
             e.preventDefault();
-            navigator.clipboard.writeText('@aruyeq').then(() => {
-                const btn = e.currentTarget;
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<span class="link-icon">✓</span> Copied!';
-                btn.style.color = '#2e7d32';
-                btn.style.borderColor = '#2e7d32';
-                setTimeout(() => { 
-                    btn.innerHTML = originalText; 
-                    btn.style.color = 'var(--text-main)';
-                    btn.style.borderColor = '#ddd';
-                }, 2000);
-            });
+            const btn = e.currentTarget;
+            
+            if (!navigator.clipboard) {
+                console.error('Clipboard API not supported');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText('@aruyeq');
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<span class="link-icon" style="color: #2e7d32;">✓</span> Copied!';
+                setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
         }
     </script>
-
 </body>
 </html>
