@@ -11,18 +11,17 @@
     
     <style>
         :root {
-            --bg-light: #f8f9fa;
-            --text-dark: #1a1a1a;
-            --text-muted: #666666;
-            --accent: #2b2b8a;
-            --accent-hover: #1e1e6b;
-            --red: #c8102e;
-            --white: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.9);
+            --bg-dark: #0f1016;
+            --card-bg: rgba(25, 27, 36, 0.7);
+            --text-light: #f4f4f5;
+            --text-muted: #9ca3af;
+            --gold: #d4af37;
+            --red: #e63946;
+            --navy: #2b2b8a;
+            --glass-border: rgba(255, 255, 255, 0.08);
             --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-            --shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 32px 64px -12px rgba(0, 0, 0, 0.15);
+            --shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.6);
+            --shadow-hover: 0 32px 64px -12px rgba(0, 0, 0, 0.8);
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -30,8 +29,8 @@
 
         body {
             font-family: var(--font);
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -47,13 +46,13 @@
         .bg-orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
+            filter: blur(100px);
             z-index: -1;
-            opacity: 0.6;
+            opacity: 0.4;
             animation: float 20s infinite alternate;
         }
-        .orb-1 { width: 400px; height: 400px; background: #e0e4ff; top: -10%; left: -10%; }
-        .orb-2 { width: 500px; height: 500px; background: #ffe0e4; bottom: -20%; right: -10%; animation-delay: -10s; }
+        .orb-1 { width: 400px; height: 400px; background: var(--navy); top: -10%; left: -10%; }
+        .orb-2 { width: 500px; height: 500px; background: var(--red); bottom: -20%; right: -10%; animation-delay: -10s; opacity: 0.2; }
         
         @keyframes float {
             0% { transform: translate(0, 0) scale(1); }
@@ -64,14 +63,14 @@
         .card {
             width: 100%; 
             max-width: 440px; 
-            background: var(--glass-bg);
+            background: var(--card-bg);
             backdrop-filter: blur(24px); 
             -webkit-backdrop-filter: blur(24px);
             padding: 3rem 2.5rem; 
             border-radius: 24px;
             box-shadow: var(--shadow); 
             border: 1px solid var(--glass-border);
-            border-top: 2px solid var(--white);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
             position: relative; 
             z-index: 1;
             display: flex;
@@ -85,44 +84,46 @@
         .logo-container {
             width: 110px; height: 110px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), #4a4ac4);
+            background: linear-gradient(135deg, #1e1e2f, #2b2b8a);
             display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 12px 24px -6px rgba(43, 43, 138, 0.4);
+            box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.1);
             margin-bottom: 1.5rem;
             position: relative;
             transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .logo-container:hover { transform: scale(1.05) rotate(5deg); }
+        .logo-container:hover { transform: scale(1.05) rotate(5deg); box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.3); }
         
         .logo-inner {
             width: 90px; height: 90px;
-            background: var(--white);
+            background: #151723;
             border-radius: 50%;
             position: relative;
             overflow: hidden;
         }
-        .logo-sun { position: absolute; top: 20%; left: 30%; width: 35px; height: 35px; background: var(--red); border-radius: 50%; }
-        .logo-bridge { position: absolute; bottom: 20%; left: 15%; width: 60px; height: 22px; border: 3px solid var(--accent); border-bottom: none; border-radius: 50px 50px 0 0; }
-        .logo-water { position: absolute; bottom: 0; left: 0; width: 100%; height: 25%; background: var(--accent); }
+        .logo-sun { position: absolute; top: 20%; left: 30%; width: 35px; height: 35px; background: var(--red); border-radius: 50%; box-shadow: 0 0 15px rgba(230, 57, 70, 0.6); }
+        .logo-bridge { position: absolute; bottom: 20%; left: 15%; width: 60px; height: 22px; border: 3px solid var(--text-light); border-bottom: none; border-radius: 50px 50px 0 0; opacity: 0.9; }
+        .logo-water { position: absolute; bottom: 0; left: 0; width: 100%; height: 25%; background: var(--text-light); opacity: 0.9; }
 
         /* --- TYPOGRAFIA --- */
         .brand-title { 
-            font-size: 2.2rem; font-weight: 800; color: var(--text-dark); 
-            letter-spacing: 4px; margin-bottom: 0.2rem; 
+            font-size: 2.4rem; font-weight: 800; color: var(--white); 
+            letter-spacing: 6px; margin-bottom: 0.3rem; 
             animation: fadeUp 0.8s ease-out 0.2s both;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
         .tagline { 
-            font-size: 0.8rem; color: var(--red); text-transform: uppercase; 
-            letter-spacing: 2px; font-weight: 700; margin-bottom: 2rem;
+            font-size: 0.8rem; color: var(--gold); text-transform: uppercase; 
+            letter-spacing: 3px; font-weight: 700; margin-bottom: 2.5rem;
             animation: fadeUp 0.8s ease-out 0.3s both;
         }
         .description { 
             font-size: 0.95rem; color: var(--text-muted); text-align: center; 
-            margin-bottom: 2.5rem; line-height: 1.6; font-weight: 400;
+            margin-bottom: 2.5rem; line-height: 1.7; font-weight: 400;
             animation: fadeUp 0.8s ease-out 0.4s both;
         }
-        .description a { color: var(--accent); font-weight: 600; text-decoration: none; transition: var(--transition); }
-        .description a:hover { color: var(--red); }
+        .description a { color: var(--text-light); font-weight: 600; text-decoration: none; border-bottom: 1px dashed var(--gold); transition: var(--transition); }
+        .description a:hover { color: var(--gold); border-bottom-style: solid; }
 
         @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -137,18 +138,16 @@
         .link-btn {
             display: flex; align-items: center;
             width: 100%; padding: 1rem 1.25rem;
-            background: var(--white);
-            border: 1px solid #eaeaea;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            color: var(--text-dark); text-decoration: none;
+            color: var(--text-light); text-decoration: none;
             font-weight: 600; font-size: 0.95rem;
             transition: var(--transition);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
             opacity: 0;
             animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Płynne opóźnienia dla każdego przycisku */
         .link-btn:nth-child(1) { animation-delay: 0.5s; }
         .link-btn:nth-child(2) { animation-delay: 0.55s; }
         .link-btn:nth-child(3) { animation-delay: 0.6s; }
@@ -162,8 +161,9 @@
         .link-btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: var(--shadow-hover);
-            border-color: var(--accent);
-            color: var(--accent);
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--gold);
         }
 
         .link-icon {
@@ -174,11 +174,11 @@
             color: var(--text-muted);
             transition: var(--transition);
         }
-        .link-btn:hover .link-icon { color: var(--accent); }
+        .link-btn:hover .link-icon { color: var(--gold); }
 
         /* --- STOPKA --- */
         .footer {
-            margin-top: 2.5rem;
+            margin-top: 3rem;
             width: 100%;
             text-align: center;
             animation: fadeUp 0.8s ease-out 1.2s both;
@@ -186,14 +186,14 @@
         .copyright {
             display: inline-block;
             font-size: 0.8rem;
-            color: #999;
+            color: #6b7280;
             text-decoration: none;
             transition: var(--transition);
             padding: 0.5rem;
             border-radius: 8px;
         }
-        .copyright:hover { color: var(--accent); background: rgba(43, 43, 138, 0.05); }
-        .copyright strong { display: block; color: var(--text-dark); font-size: 0.9rem; margin-bottom: 2px; }
+        .copyright:hover { color: var(--gold); background: rgba(255, 255, 255, 0.03); }
+        .copyright strong { display: block; color: var(--text-light); font-size: 0.9rem; margin-bottom: 4px; }
 
         /* --- BANER COOKIES --- */
         .cookie-banner {
@@ -201,19 +201,19 @@
             bottom: 24px; left: 50%; 
             transform: translateX(-50%) translateY(150%);
             width: calc(100% - 2rem); max-width: 480px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(25, 27, 36, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             padding: 1.5rem;
             z-index: 9999;
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
         }
         .cookie-banner.show { transform: translateX(-50%) translateY(0); }
         
         .cookie-text { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.5; }
-        .cookie-text a { color: var(--accent); font-weight: 600; text-decoration: none; }
+        .cookie-text a { color: var(--gold); font-weight: 600; text-decoration: none; }
 
         .cookie-buttons { display: flex; gap: 0.6rem; }
         .cookie-btn {
@@ -221,14 +221,14 @@
             font-family: var(--font); font-weight: 600; font-size: 0.85rem;
             cursor: pointer; transition: var(--transition);
         }
-        .btn-accept { background: var(--accent); color: var(--white); }
-        .btn-accept:hover { background: var(--accent-hover); transform: translateY(-2px); }
-        .btn-necessary { background: #f0f0f0; color: var(--text-dark); }
-        .btn-necessary:hover { background: #e0e0e0; }
+        .btn-accept { background: var(--gold); color: var(--bg-dark); }
+        .btn-accept:hover { background: #e6c86e; transform: translateY(-2px); }
+        .btn-necessary { background: rgba(255, 255, 255, 0.1); color: var(--text-light); }
+        .btn-necessary:hover { background: rgba(255, 255, 255, 0.15); }
 
         @media (max-width: 480px) {
             .card { padding: 2.5rem 1.5rem; }
-            .brand-title { font-size: 1.8rem; }
+            .brand-title { font-size: 2rem; }
             .cookie-buttons { flex-direction: column; }
         }
     </style>
@@ -279,7 +279,7 @@
             <a href="https://archdashx.github.io/aruyeq-regulamin/index.html" class="copyright">
                 <strong>&copy; 2026 ARUYEQ.</strong>
                 All rights reserved.
-                <br><span style="font-size: 0.75rem; color: #bbb;">(Click to view Terms of Service)</span>
+                <br><span style="font-size: 0.75rem; color: #4b5563;">(Click to view Terms of Service)</span>
             </a>
         </div>
     </main>
@@ -318,14 +318,14 @@
                 const btn = e.currentTarget;
                 const originalText = btn.innerHTML;
                 // Zmiana tekstu na "Copied!" po kliknięciu
-                btn.innerHTML = '<span class="link-icon" style="color: #2e7d32;">✓</span> Copied!';
-                btn.style.borderColor = '#2e7d32';
-                btn.style.color = '#2e7d32';
+                btn.innerHTML = '<span class="link-icon" style="color: #4ade80;">✓</span> Copied!';
+                btn.style.borderColor = 'rgba(74, 222, 128, 0.4)';
+                btn.style.color = '#4ade80';
                 
                 setTimeout(() => { 
                     btn.innerHTML = originalText; 
-                    btn.style.borderColor = '#eaeaea';
-                    btn.style.color = 'var(--text-dark)';
+                    btn.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                    btn.style.color = 'var(--text-light)';
                 }, 2000);
             });
         }
